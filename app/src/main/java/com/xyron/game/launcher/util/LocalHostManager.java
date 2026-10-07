@@ -130,7 +130,7 @@ public final class LocalHostManager {
     }
 
     public static ServerConfigManager.ServerOption addLoopbackServer(Context context) {
-        return ServerConfigManager.addOrUpdateServer(context, "Servidor local", LOCAL_HOST, LOCAL_PORT, false);
+        return ServerConfigManager.addOrUpdateServer(context, "Server lokal", LOCAL_HOST, LOCAL_PORT, false);
     }
 
     public static boolean selectLoopbackServer(Context context) {
@@ -300,11 +300,11 @@ public final class LocalHostManager {
         File rootDir = getSharedRootDir();
         File serverDir = getSharedServerDirectory();
         if (rootDir == null || serverDir == null) {
-            return "A pasta compartilhada do host ainda nao esta disponivel.";
+            return "Folder bersama host belum tersedia.";
         }
 
         StringBuilder summary = new StringBuilder();
-        summary.append("Pasta editavel:\n");
+        summary.append("Folder yang dapat diedit:\n");
         summary.append(serverDir.getAbsolutePath()).append("\n\n");
 
         appendSingleFileSummary(summary, "server.cfg", getSharedServerCfgFile());
@@ -371,15 +371,15 @@ public final class LocalHostManager {
     public static String buildJoinInfo() {
         String lanIp = getBestLanAddress();
         StringBuilder info = new StringBuilder();
-        info.append("Servidor local: ").append(getLoopbackAddress()).append("\n");
+        info.append("Server lokal: ").append(getLoopbackAddress()).append("\n");
         if (TextUtils.isEmpty(lanIp)) {
-            info.append("Rede local: conecte o celular na Wi-Fi ou hotspot para gerar um IP compartilhavel.\n");
+            info.append("Jaringan lokal: hubungkan ponsel ke Wi-Fi atau hotspot untuk memperoleh alamat IP yang dapat dibagikan.\n");
         } else {
-            info.append("Mesma Wi-Fi/hotspot: ").append(lanIp).append(":").append(LOCAL_PORT).append("\n");
+            info.append("Wi-Fi/hotspot yang sama: ").append(lanIp).append(":").append(LOCAL_PORT).append("\n");
         }
-        info.append("Internet sem login fixo: use Abrir tunel remoto no Host. Em ARM64 o APK abre Pinggy UDP sem Termux.\n");
-        info.append("Fallback: Termux/CLI ou roteador quando o motor interno nao estiver disponivel.\n");
-        info.append("Internet padrao: abra UDP ").append(LOCAL_PORT).append(" no roteador e use seu IP publico.");
+        info.append("Akses internet tanpa login permanen: pilih Buka terowongan jarak jauh di Host. Pada perangkat ARM64, APK membuka terowongan Pinggy UDP tanpa Termux.\n");
+        info.append("Cadangan: Termux/CLI atau router ketika mesin internal tidak tersedia.\n");
+        info.append("Akses internet langsung: buka/teruskan port UDP ").append(LOCAL_PORT).append(" pada router, lalu gunakan IP publik Anda.");
         return info.toString();
     }
 
@@ -496,16 +496,16 @@ public final class LocalHostManager {
 
     private static String buildReadme(File rootDir) {
         String basePath = rootDir == null ? "Android/data/.../files/LocalHost" : rootDir.getAbsolutePath();
-        return "Host local experimental do launcher News RP.\n"
+        return "Host lokal eksperimental untuk launcher News RP.\n"
                 + "\n"
-                + "O launcher prepara a base do servidor em:\n"
+                + "Launcher menyiapkan basis server di:\n"
                 + basePath + "\n"
                 + "\n"
-                + "O loopback usado pelo app e " + getLoopbackAddress() + ".\n"
+                + "Loopback yang digunakan oleh aplikasi adalah " + getLoopbackAddress() + ".\n"
                 + "\n"
-                + "A estrutura aceita runtime SA-MP compativel com Android em:\n"
+                + "Struktur menerima runtime SA-MP yang kompatibel dengan Android di:\n"
                 + basePath + "/" + SERVER_DIR_NAME + "\n"
-                + "com components em " + basePath + "/" + SERVER_DIR_NAME + "/" + COMPONENTS_DIR_NAME + ".\n";
+                + "dengan komponen di " + basePath + "/" + SERVER_DIR_NAME + "/" + COMPONENTS_DIR_NAME + ".\n";
     }
 
     private static String buildServerCfg() {
@@ -528,42 +528,42 @@ public final class LocalHostManager {
     }
 
     private static String buildGamemodePlaceholder() {
-        return "Coloque aqui o seu gamemode real quando a integracao do host local tiver motor nativo.\n";
+        return "Letakkan gamemode asli Anda di sini ketika integrasi host lokal sudah memiliki mesin native.\n";
     }
 
     private static String buildPluginPlaceholder() {
-        return "Coloque aqui os plugins/componentes do servidor quando essa fase avancar.\n";
+        return "Letakkan plugin/komponen server di sini ketika fase ini maju.\n";
     }
 
     private static String buildComponentsPlaceholder() {
-        return "Coloque aqui os componentes .so do runtime local, por exemplo server/components/Pawn.so.\n";
+        return "Letakkan komponen .so dari runtime lokal di sini, misalnya server/components/Pawn.so.\n";
     }
 
     private static String buildBinaryPlaceholder() {
-        return "Fallback para binarios soltos do servidor.\n"
-                + "O layout preferido agora e um bundle completo em server/.\n"
+        return "Cadangan untuk runtime server terpisah.\n"
+                + "Tata letak yang disarankan saat ini adalah paket lengkap di server/.\n"
                 + "\n"
-                + "Bundle aceito:\n"
+                + "Paket yang didukung:\n"
                 + "- server/samp-server\n"
                 + "- server/samp03svr\n"
                 + "- server/components/*.so\n"
                 + "\n"
-                + "Fallbacks aceitos em bin/:\n"
+                + "Alternatif yang didukung di bin/:\n"
                 + "- samp03svr-arm\n"
-                + "- samp-server (Linux x86, exige box86)\n"
-                + "- samp03svr (Linux x86, exige box86)\n";
+                + "- samp-server (Linux x86, memerlukan box86)\n"
+                + "- samp03svr (Linux x86, memerlukan box86)\n";
     }
 
     private static String buildSharedReadme(File rootDir) {
         String basePath = rootDir == null ? "/sdcard/Download/" + SHARED_ROOT_DIR_NAME : rootDir.getAbsolutePath();
-        return "Pacote de host local para Termux.\n"
+        return "Paket host lokal untuk Termux.\n"
                 + "\n"
-                + "Diretorio exportado pelo launcher:\n"
+                + "Direktori diekspor oleh launcher:\n"
                 + basePath + "\n"
                 + "\n"
-                + "Loopback usado pelo launcher: " + getLoopbackAddress() + "\n"
+                + "Loopback yang digunakan oleh launcher: " + getLoopbackAddress() + "\n"
                 + "\n"
-                + "Arquivos principais:\n"
+                + "Berkas utama:\n"
                 + "- server/server.cfg\n"
                 + "- server/config.json\n"
                 + "- server/samp-server\n"
@@ -574,31 +574,31 @@ public final class LocalHostManager {
 
     private static String buildEditorReadme(File rootDir) {
         String basePath = rootDir == null ? "/sdcard/Download/" + SHARED_ROOT_DIR_NAME : rootDir.getAbsolutePath();
-        return "Editor Pawn dentro do launcher.\n"
+        return "Editor Pawn di dalam launcher.\n"
                 + "\n"
-                + "Pasta de projetos:\n"
+                + "Folder proyek:\n"
                 + basePath + "/" + EDITOR_DIR_NAME + "/" + EDITOR_PROJECTS_DIR_NAME + "\n"
                 + "\n"
-                + "Includes oficiais:\n"
+                + "Include resmi:\n"
                 + basePath + "/" + EDITOR_DIR_NAME + "/" + EDITOR_INCLUDE_DIR_NAME + "\n"
                 + "\n"
-                + "Se voce compilar um .pwn dentro de server/gamemodes, o launcher pode ativar o .amx gerado no host.\n";
+                + "Jika Anda mengompilasi file .pwn di server/gamemodes, launcher dapat mengaktifkan file .amx yang dihasilkan pada host.\n";
     }
 
     private static String buildTermuxSetup(File rootDir) {
         String basePath = rootDir == null ? "/sdcard/Download/" + SHARED_ROOT_DIR_NAME : rootDir.getAbsolutePath();
-        return "Setup via Termux\n"
+        return "Penyiapan melalui Termux\n"
                 + "\n"
-                + "1. Instale o Termux oficial.\n"
-                + "2. Em Termux, execute termux-setup-storage.\n"
-                + "3. Em ~/.termux/termux.properties, deixe allow-external-apps=true.\n"
-                + "4. Nas configuracoes do Android, conceda ao launcher a permissao extra\n"
+                + "1. Instal Termux resmi.\n"
+                + "2. Di Termux, jalankan termux-setup-storage.\n"
+                + "3. Di ~/.termux/termux.properties, atur allow-external-apps=true.\n"
+                + "4. Di setelan Android, berikan izin tambahan kepada launcher\n"
                 + "   \"Run commands in Termux environment\".\n"
-                + "5. Coloque o bundle do servidor em:\n"
+                + "5. Letakkan bundle server di:\n"
                 + "   " + basePath + "/server\n"
-                + "   com components em " + basePath + "/server/components\n"
-                + "   ou use fallback em " + basePath + "/bin\n"
-                + "6. O launcher pode pedir ao Termux para abrir:\n"
+                + "   dengan komponen di " + basePath + "/server/components\n"
+                + "   atau gunakan alternatif di " + basePath + "/bin\n"
+                + "6. Launcher mungkin meminta Termux untuk membuka:\n"
                 + "   " + getSharedTermuxScriptPath() + "\n";
     }
 
@@ -639,7 +639,7 @@ public final class LocalHostManager {
                 + "cd \"$SERVER_DIR\" || exit 1\n"
                 + "chmod +x \"$SERVER_DIR\"/samp* \"$SERVER_DIR/" + COMPONENTS_DIR_NAME + "\"/*.so 2>/dev/null || true\n"
                 + "chmod +x \"$BIN_DIR\"/* 2>/dev/null || true\n"
-                + "echo \"News RP Host: iniciando ambiente local em " + getLoopbackAddress() + "\"\n"
+                + "echo \"News RP Host: memulai lingkungan lokal di " + getLoopbackAddress() + "\"\n"
                 + "if [ -x \"$SERVER_DIR/samp-server\" ]; then\n"
                 + "  exec \"$SERVER_DIR/samp-server\"\n"
                 + "fi\n"
@@ -647,7 +647,7 @@ public final class LocalHostManager {
                 + "  if command -v box86 >/dev/null 2>&1; then\n"
                 + "    exec box86 \"$BIN_DIR/samp-server\"\n"
                 + "  fi\n"
-                + "  echo \"Encontrado samp-server x86, mas box86 nao esta instalado no Termux.\"\n"
+                + "  echo \"Ditemukan samp-server x86, tetapi box86 belum terpasang di Termux.\"\n"
                 + "  exit 1\n"
                 + "fi\n"
                 + "if [ -x \"$BIN_DIR/samp03svr-arm\" ]; then\n"
@@ -657,12 +657,12 @@ public final class LocalHostManager {
                 + "  if command -v box86 >/dev/null 2>&1; then\n"
                 + "    exec box86 \"$BIN_DIR/samp03svr\"\n"
                 + "  fi\n"
-                + "  echo \"Encontrado samp03svr x86, mas box86 nao esta instalado no Termux.\"\n"
+                + "  echo \"Ditemukan samp03svr x86, tetapi box86 tidak terpasang di Termux.\"\n"
                 + "  exit 1\n"
                 + "fi\n"
-                + "echo \"Nenhum binario de servidor foi encontrado em $SERVER_DIR ou $BIN_DIR.\"\n"
-                + "echo \"Coloque um binario compativel e tente de novo.\"\n"
-                + "echo \"Aceitos: server/samp-server, bin/samp03svr-arm, bin/samp-server, bin/samp03svr\"\n"
+                + "echo \"Tidak ada file biner server yang ditemukan di $SERVER_DIR atau $BIN_DIR.\"\n"
+                + "echo \"Tempatkan file biner yang kompatibel, lalu coba lagi.\"\n"
+                + "echo \"Didukung: server/samp-server, bin/samp03svr-arm, bin/samp-server, bin/samp03svr\"\n"
                 + "exit 1\n";
     }
 
@@ -670,34 +670,34 @@ public final class LocalHostManager {
         String basePath = rootDir == null ? "/sdcard/Download/" + SHARED_ROOT_DIR_NAME : rootDir.getAbsolutePath();
         String lanIp = getBestLanAddress();
         String lanAddress = TextUtils.isEmpty(lanIp)
-                ? "(conecte o aparelho na Wi-Fi ou hotspot para gerar um IP local)"
+                ? "(sambungkan perangkat ke Wi-Fi atau hotspot untuk menghasilkan IP lokal)"
                 : lanIp + ":" + LOCAL_PORT;
 
-        return "Como deixar outra pessoa entrar no host local\n"
+        return "Cara agar orang lain bisa masuk ke host lokal\n"
                 + "\n"
-                + "1. Mesmo aparelho:\n"
+                + "1. Perangkat yang sama:\n"
                 + "   " + getLoopbackAddress() + "\n"
                 + "\n"
-                + "2. Mesma Wi-Fi ou hotspot:\n"
+                + "2. Jaringan Wi-Fi atau hotspot yang sama:\n"
                 + "   " + lanAddress + "\n"
-                + "   Quem estiver na mesma rede pode testar esse IP direto.\n"
+                + "   Perangkat lain di jaringan yang sama dapat mencoba IP ini secara langsung.\n"
                 + "\n"
-                + "3. Internet sem login fixo:\n"
-                + "   No launcher, abra Host > Abrir tunel remoto.\n"
-                + "   Em aparelho ARM64, o APK abre Pinggy UDP internamente sem Termux.\n"
-                + "   A porta publica muda a cada nova sessao na faixa gratis.\n"
-                + "   Fallback via Termux, se precisar:\n"
+                + "3. Akses internet tanpa login permanen:\n"
+                + "   Di launcher, buka Host > Buka terowongan jarak jauh.\n"
+                + "   Pada perangkat ARM64, APK membuka Pinggy UDP secara internal tanpa Termux.\n"
+                + "   Port publik berubah setiap sesi baru pada rentang gratis.\n"
+                + "   Alternatif melalui Termux jika diperlukan:\n"
                 + "   pkg update\n"
                 + "   pkg install nodejs-lts\n"
                 + "   npm install -g pinggy\n"
                 + "   pinggy --type udp -l " + LOCAL_PORT + "\n"
-                + "   Script gerado pelo launcher:\n"
+                + "   Skrip yang dihasilkan oleh launcher:\n"
                 + "   " + getSharedPinggyScriptPath() + "\n"
                 + "\n"
-                + "4. Internet pelo seu roteador:\n"
-                + "   Abra/encaminhe UDP " + LOCAL_PORT + " para o IP local do aparelho e compartilhe o IP publico.\n"
+                + "4. Internet melalui router Anda:\n"
+                + "   Buka/teruskan port UDP " + LOCAL_PORT + " ke alamat IP lokal perangkat, lalu bagikan IP publik.\n"
                 + "\n"
-                + "Pasta do host:\n"
+                + "Folder host:\n"
                 + basePath + "\n";
     }
 
@@ -706,18 +706,18 @@ public final class LocalHostManager {
                 + "set -u\n"
                 + "PORT=\"" + LOCAL_PORT + "\"\n"
                 + "if ! command -v node >/dev/null 2>&1; then\n"
-                + "  echo \"Node.js nao encontrado. Rode: pkg update && pkg install nodejs-lts\"\n"
+                + "  echo \"Node.js tidak ditemukan. Jalankan: pkg update && pkg install nodejs-lts\"\n"
                 + "  exit 1\n"
                 + "fi\n"
                 + "if ! command -v npm >/dev/null 2>&1; then\n"
-                + "  echo \"npm nao encontrado. Rode: pkg install nodejs-lts\"\n"
+                + "  echo \"npm tidak ditemukan. Jalankan: pkg install nodejs-lts\"\n"
                 + "  exit 1\n"
                 + "fi\n"
                 + "if ! command -v pinggy >/dev/null 2>&1; then\n"
-                + "  echo \"Pinggy CLI nao encontrado. Instalando via npm...\"\n"
+                + "  echo \"Pinggy CLI tidak ditemukan. Menginstal via npm...\"\n"
                 + "  npm install -g pinggy || exit 1\n"
                 + "fi\n"
-                + "echo \"Abrindo tunel UDP para localhost:$PORT\"\n"
+                + "echo \"Membuka terowongan UDP ke localhost:$PORT\"\n"
                 + "exec pinggy --type udp -l \"$PORT\"\n";
     }
 
@@ -777,7 +777,7 @@ public final class LocalHostManager {
     private static void appendSingleFileSummary(StringBuilder summary, String label, File file) {
         summary.append(label).append(": ");
         if (file == null || !file.exists() || !file.isFile()) {
-            summary.append("ausente\n");
+            summary.append("tidak tersedia\n");
             return;
         }
         summary.append(formatSize(file.length())).append("  |  ");
@@ -802,7 +802,7 @@ public final class LocalHostManager {
             summary.append("\n");
         }
         if (files.size() > visibleCount) {
-            summary.append("- +").append(files.size() - visibleCount).append(" arquivo(s)\n");
+            summary.append("- +").append(files.size() - visibleCount).append(" berkas\n");
         }
         summary.append("\n");
     }

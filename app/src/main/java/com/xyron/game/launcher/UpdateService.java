@@ -355,7 +355,7 @@ public class UpdateService extends Service {
         }
 
         if(i5 == 2) {
-            throw new IOException("Unable to fetch files manifest: " + response);
+            throw new IOException("Tidak dapat mengambil manifes berkas: " + response);
         }
 
         Log.d("x1y2z", "Info: " + Util.responseFiles);
@@ -391,7 +391,7 @@ public class UpdateService extends Service {
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode < 200 || responseCode >= 300) {
-                    throw new IOException("Unexpected Hugging Face response code: " + responseCode);
+                    throw new IOException("Kode respons Hugging Face tidak terduga: " + responseCode);
                 }
 
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

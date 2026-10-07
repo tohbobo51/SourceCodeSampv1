@@ -153,12 +153,12 @@ public final class HostFileManager {
         }
 
         StringBuilder overview = new StringBuilder();
-        overview.append("Pasta atual: ").append(getDisplayPath(relativePath)).append("\n");
-        overview.append(directoryCount).append(" pasta(s) | ");
-        overview.append(fileCount).append(" arquivo(s)");
+        overview.append("Folder saat ini: ").append(getDisplayPath(relativePath)).append("\n");
+        overview.append(directoryCount).append(" folder(s) | ");
+        overview.append(fileCount).append(" file(s)");
 
         if (entries == null || entries.isEmpty()) {
-            overview.append("\nEsta pasta ainda esta vazia.");
+            overview.append("\nFolder ini masih kosong.");
         }
         return overview.toString();
     }
@@ -166,71 +166,71 @@ public final class HostFileManager {
     public static FileActionResult createDirectory(String parentRelativePath, String requestedName) {
         File target = resolveChildPath(parentRelativePath, requestedName);
         if (target == null) {
-            return FileActionResult.error("Digite um nome de pasta valido.");
+            return FileActionResult.error("Masukkan nama folder yang valid.");
         }
         if (target.exists()) {
-            return FileActionResult.error("Ja existe um item com esse nome.");
+            return FileActionResult.error("Sudah ada item dengan nama tersebut.");
         }
         if (!target.mkdirs()) {
-            return FileActionResult.error("Nao foi possivel criar a pasta.");
+            return FileActionResult.error("Tidak dapat membuat folder.");
         }
-        return FileActionResult.success("Pasta criada.", toRelativePath(LocalHostManager.getSharedRootDirectory(), target));
+        return FileActionResult.success("Folder dibuat.", toRelativePath(LocalHostManager.getSharedRootDirectory(), target));
     }
 
     public static FileActionResult createEmptyFile(String parentRelativePath, String requestedName) {
         File target = resolveChildPath(parentRelativePath, requestedName);
         if (target == null) {
-            return FileActionResult.error("Digite um nome de arquivo valido.");
+            return FileActionResult.error("Masukkan nama file yang valid.");
         }
         if (target.exists()) {
-            return FileActionResult.error("Ja existe um item com esse nome.");
+            return FileActionResult.error("Sudah ada item dengan nama tersebut.");
         }
 
         File parent = target.getParentFile();
         if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            return FileActionResult.error("Nao foi possivel criar a pasta do arquivo.");
+            return FileActionResult.error("Tidak dapat membuat folder untuk file.");
         }
 
         try (FileOutputStream ignored = new FileOutputStream(target)) {
-            return FileActionResult.success("Arquivo criado.", toRelativePath(LocalHostManager.getSharedRootDirectory(), target));
+            return FileActionResult.success("File dibuat.", toRelativePath(LocalHostManager.getSharedRootDirectory(), target));
         } catch (Exception ignored) {
-            return FileActionResult.error("Nao foi possivel criar o arquivo.");
+            return FileActionResult.error("Tidak dapat membuat file.");
         }
     }
 
     public static RenameResult renameEntry(String relativePath, String requestedName) {
         File source = resolveManagedPath(relativePath);
         if (source == null || !source.exists()) {
-            return RenameResult.error("Arquivo ou pasta nao encontrado.");
+            return RenameResult.error("File atau folder tidak ditemukan.");
         }
 
         File root = LocalHostManager.getSharedRootDirectory();
         if (root == null || safePath(root).equals(safePath(source))) {
-            return RenameResult.error("A raiz do host nao pode ser renomeada.");
+            return RenameResult.error("Root host tidak dapat diubah namanya.");
         }
 
         String sanitized = sanitizeName(requestedName);
         if (TextUtils.isEmpty(sanitized) || ".".equals(sanitized) || "..".equals(sanitized)) {
-            return RenameResult.error("Digite um nome valido.");
+            return RenameResult.error("Masukkan nama yang valid.");
         }
 
         File parent = source.getParentFile();
         if (parent == null || !parent.exists()) {
-            return RenameResult.error("A pasta pai nao existe.");
+            return RenameResult.error("Folder induk tidak ditemukan.");
         }
 
         File target = resolveChildPath(toRelativePath(root, parent), sanitized);
         if (target == null) {
-            return RenameResult.error("Nao foi possivel gerar o novo caminho.");
+            return RenameResult.error("Tidak dapat menghasilkan jalur baru.");
         }
         if (target.exists()) {
-            return RenameResult.error("Ja existe outro item com esse nome.");
+            return RenameResult.error("Sudah ada item lain dengan nama tersebut.");
         }
 
         String oldGamemode = source.isFile() ? extractGamemodeBaseName(source) : "";
         boolean renamed = source.renameTo(target);
         if (!renamed) {
-            return RenameResult.error("Nao foi possivel renomear este item.");
+            return RenameResult.error("Tidak dapat mengganti nama item ini.");
         }
 
         String newGamemode = target.isFile() ? extractGamemodeBaseName(target) : "";
@@ -247,26 +247,26 @@ public final class HostFileManager {
         File file = resolveManagedPath(relativePath);
         File root = LocalHostManager.getSharedRootDirectory();
         if (file == null || !file.exists()) {
-            return FileActionResult.error("Arquivo ou pasta nao encontrado.");
+            return FileActionResult.error("File atau folder tidak ditemukan.");
         }
         if (root == null || safePath(root).equals(safePath(file))) {
-            return FileActionResult.error("A raiz do host nao pode ser removida.");
+            return FileActionResult.error("Root host tidak dapat dihapus.");
         }
 
         if (!deleteRecursively(file)) {
-            return FileActionResult.error("Nao foi possivel remover este item.");
+            return FileActionResult.error("Tidak dapat menghapus item ini.");
         }
 
-        return FileActionResult.success("Item removido.", "");
+        return FileActionResult.success("Item dihapus.", "");
     }
 
     public static String readEditableText(String relativePath) throws Exception {
         File file = resolveManagedPath(relativePath);
         if (file == null || !file.exists() || !file.isFile()) {
-            throw new IllegalArgumentException("Arquivo nao encontrado.");
+            throw new IllegalArgumentException("File tidak ditemukan.");
         }
         if (!isEditableText(file)) {
-            throw new IllegalArgumentException("Esse arquivo nao e editavel como texto dentro do launcher.");
+            throw new IllegalArgumentException("File ini tidak dapat diedit sebagai teks di dalam launcher.");
         }
 
         StringBuilder content = new StringBuilder();
@@ -357,8 +357,8 @@ public final class HostFileManager {
         appendDirectory(result, root, LocalHostManager.getSharedGamemodesDirectory(), "Gamemodes");
         appendDirectory(result, root, LocalHostManager.getSharedScriptfilesDirectory(), "Scriptfiles");
         appendDirectory(result, root, LocalHostManager.getSharedPluginsDirectory(), "Plugins");
-        appendDirectory(result, root, LocalHostManager.getSharedComponentsDirectory(), "Componentes");
-        appendDirectory(result, root, LocalHostManager.getSharedBinDirectory(), "Binarios");
+        appendDirectory(result, root, LocalHostManager.getSharedComponentsDirectory(), "Komponen");
+        appendDirectory(result, root, LocalHostManager.getSharedBinDirectory(), "Biner");
         appendDirectory(result, root, LocalHostManager.getSharedLogsDirectory(), "Logs");
 
         appendRootHelpers(result, root);
@@ -378,7 +378,7 @@ public final class HostFileManager {
 
     public static String buildOverview(List<ManagedFile> files) {
         if (files == null || files.isEmpty()) {
-            return "Nenhum arquivo do servidor foi encontrado ainda.";
+            return "Belum ada file server yang ditemukan.";
         }
 
         Map<String, Integer> counts = new LinkedHashMap<>();
@@ -388,7 +388,7 @@ public final class HostFileManager {
         }
 
         StringBuilder overview = new StringBuilder();
-        overview.append(files.size()).append(" arquivo(s) carregado(s)");
+        overview.append(files.size()).append(" file(s) diunggah");
         for (Map.Entry<String, Integer> entry : counts.entrySet()) {
             overview.append("\n")
                     .append(entry.getKey())
@@ -427,7 +427,7 @@ public final class HostFileManager {
 
     private static String resolveCategory(String relativePath, boolean directory) {
         if (TextUtils.isEmpty(relativePath)) {
-            return directory ? "Raiz" : "Arquivo";
+            return directory ? "Root" : "File";
         }
 
         String normalized = relativePath.replace('\\', '/');
@@ -440,7 +440,7 @@ public final class HostFileManager {
         }
         if ("server".equals(first)) {
             if (parts.length == 1) {
-                return "Servidor";
+                return "Server";
             }
             String second = parts[1].toLowerCase(Locale.US);
             if ("gamemodes".equals(second)) {
@@ -453,17 +453,17 @@ public final class HostFileManager {
                 return "Plugins";
             }
             if ("components".equals(second)) {
-                return "Componentes";
+                return "Komponen";
             }
-            return "Servidor";
+            return "Server";
         }
         if ("bin".equals(first)) {
-            return "Binarios";
+            return "Biner";
         }
         if ("logs".equals(first)) {
             return "Logs";
         }
-        return directory ? "Pasta" : "Pacote";
+        return directory ? "Folder" : "Paket";
     }
 
     private static int countImmediateChildren(File directory) {
@@ -511,7 +511,7 @@ public final class HostFileManager {
             if ("server".equalsIgnoreCase(name)) {
                 continue;
             }
-            appendFileIfPresent(out, root, child, "Pacote");
+            appendFileIfPresent(out, root, child, "Paket");
         }
     }
 
@@ -602,10 +602,10 @@ public final class HostFileManager {
         if ("Plugins".equals(category)) {
             return 3;
         }
-        if ("Componentes".equals(category)) {
+        if ("Komponen".equals(category)) {
             return 4;
         }
-        if ("Binarios".equals(category)) {
+        if ("Biner".equals(category)) {
             return 5;
         }
         if ("Logs".equals(category)) {
@@ -737,7 +737,7 @@ public final class HostFileManager {
                      int childCount) {
             this.displayName = displayName == null ? "" : displayName;
             this.relativePath = relativePath == null ? "" : relativePath;
-            this.category = category == null ? "Pacote" : category;
+            this.category = category == null ? "Paket" : category;
             this.directory = directory;
             this.sizeBytes = Math.max(0L, sizeBytes);
             this.editableText = editableText;
@@ -779,7 +779,7 @@ public final class HostFileManager {
                     boolean editableText) {
             this.displayName = displayName == null ? "" : displayName;
             this.relativePath = relativePath == null ? "" : relativePath;
-            this.category = category == null ? "Pacote" : category;
+            this.category = category == null ? "Paket" : category;
             this.sizeBytes = Math.max(0L, sizeBytes);
             this.editableText = editableText;
         }
@@ -797,7 +797,7 @@ public final class HostFileManager {
         }
 
         public static RenameResult success(String relativePath) {
-            return new RenameResult(true, "Item renomeado.", relativePath);
+            return new RenameResult(true, "Item diganti namanya.", relativePath);
         }
 
         public static RenameResult error(String message) {

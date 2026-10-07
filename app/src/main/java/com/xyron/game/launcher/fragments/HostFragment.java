@@ -168,28 +168,37 @@ public class HostFragment extends Fragment {
 
     private String extractToastMessage(HostShellEngine.CommandResult result) {
         if (result == null || TextUtils.isEmpty(result.output)) {
-            return "Operacao do host concluida.";
+            return "Operasi host selesai.";
         }
 
         String output = result.output.trim();
         String[] lines = output.split("\\r?\\n");
         for (String rawLine : lines) {
             String line = rawLine == null ? "" : rawLine.trim();
-            if (line.isEmpty() || "Fluxo rapido do host".equalsIgnoreCase(line)) {
+            if (line.isEmpty() || "Fluxo rapido do host".equalsIgnoreCase(line)
+                    || "Proses penyiapan host".equalsIgnoreCase(line)) {
                 continue;
             }
             String normalized = line.toLowerCase(java.util.Locale.US);
             if (normalized.contains("falha")
                     || normalized.contains("erro")
                     || normalized.contains("processo saiu")
+                    || normalized.contains("proses keluar")
+                    || normalized.contains("keluar segera")
+                    || normalized.contains("gagal")
+                    || normalized.contains("tidak berhasil")
+                    || normalized.contains("tidak dapat")
+                    || normalized.contains("tidak bisa")
                     || normalized.contains("nao foi possivel")
-                    || normalized.contains("servidor pronto")) {
+                    || normalized.contains("servidor pronto")
+                    || normalized.contains("server siap di")) {
                 return line;
             }
         }
         for (String rawLine : lines) {
             String line = rawLine == null ? "" : rawLine.trim();
-            if (!line.isEmpty() && !"Fluxo rapido do host".equalsIgnoreCase(line)) {
+            if (!line.isEmpty() && !"Fluxo rapido do host".equalsIgnoreCase(line)
+                    && !"Proses penyiapan host".equalsIgnoreCase(line)) {
                 return line;
             }
         }
@@ -229,7 +238,7 @@ public class HostFragment extends Fragment {
                     || HostShellEngine.isHostRunning(appContext)
                     || HostShellEngine.isHostStarting(appContext);
             HostShellEngine.CommandResult result = hostAlreadyAvailable
-                    ? HostShellEngine.CommandResult.success("Host local ja esta ligado.", false, true)
+                    ? HostShellEngine.CommandResult.success("Host lokal sudah menyala.", false, true)
                     : HostShellEngine.bootHost(appContext);
 
             if (getActivity() != null) {
@@ -262,7 +271,7 @@ public class HostFragment extends Fragment {
         String loopback = LocalHostManager.getLoopbackAddress();
         String lanIp = LocalHostManager.getBestLanAddress();
         String lanAddress = TextUtils.isEmpty(lanIp)
-                ? "Conecte em uma Wi-Fi ou hotspot"
+                ? "Hubungkan ke Wi-Fi atau hotspot"
                 : lanIp + ":" + LocalHostManager.LOCAL_PORT;
         PinggyTunnelManager.TunnelState tunnelState = PinggyTunnelManager.getState(requireContext());
         boolean tunnelRunning = PinggyTunnelManager.isTunnelRunning(requireContext());
@@ -272,15 +281,15 @@ public class HostFragment extends Fragment {
         if (tunnelRunning && !TextUtils.isEmpty(tunnelState.publicUrl)) {
             remoteMode = tunnelState.publicUrl;
         } else if (tunnelRunning || tunnelState.isStarting()) {
-            remoteMode = "Tunel interno abrindo pelo APK";
+            remoteMode = "Terowongan internal sedang dibuka lewat APK";
         } else if (tunnelState.isError()) {
-            remoteMode = "Tunel interno falhou. Toque para tentar de novo";
+            remoteMode = "Terowongan internal gagal. Ketuk untuk mencoba lagi";
         } else if (internalTunnelSupported) {
-            remoteMode = "Pronto no APK, sem Termux";
+            remoteMode = "Siap di APK, tanpa Termux";
         } else if (termuxReady) {
-            remoteMode = "Fallback via Termux disponivel";
+            remoteMode = "Alternatif melalui Termux tersedia";
         } else {
-            remoteMode = "Use roteador ou Termux em aparelho sem ARM64";
+            remoteMode = "Gunakan router atau Termux pada perangkat tanpa ARM64";
         }
 
         if (localAddressValue != null) {
@@ -296,23 +305,23 @@ public class HostFragment extends Fragment {
             StringBuilder helper = new StringBuilder();
             String effectiveMode = tunnelRunning ? ACCESS_REMOTE : selectedAccessMode;
             if (ACCESS_LAN.equals(effectiveMode)) {
-                helper.append("Opcao selecionada: mesma rede\n");
-                helper.append("Compartilhe: ").append(lanAddress).append("\n");
-                helper.append("Sem tunel remoto. O host continua sendo um so, na porta 7777.");
+                helper.append("Opsi yang dipilih: jaringan yang sama\n");
+                helper.append("Bagikan: ").append(lanAddress).append("\n");
+                helper.append("Tidak ada terowongan jarak jauh. Host hanya dapat diakses pada port 7777.");
             } else if (ACCESS_REMOTE.equals(effectiveMode)) {
-                helper.append("Opcao selecionada: acesso remoto\n");
+                helper.append("Opsi yang dipilih: akses jarak jauh\n");
                 if (tunnelRunning && !TextUtils.isEmpty(tunnelState.publicUrl)) {
-                    helper.append("Compartilhe: ").append(tunnelState.publicUrl).append("\n");
-                    helper.append("Formato pronto para SA-MP: IP numerico + porta.");
+                    helper.append("Bagikan: ").append(tunnelState.publicUrl).append("\n");
+                    helper.append("Format siap untuk SA-MP: IP numerik + port.");
                 } else if (internalTunnelSupported) {
-                    helper.append("Toque em Acesso remoto para abrir o Pinggy UDP pelo APK.");
+                    helper.append("Ketuk Akses jarak jauh untuk membuka Pinggy UDP lewat APK.");
                 } else {
-                    helper.append("Abra UDP 7777 no roteador ou use o fallback via Termux.");
+                    helper.append("Buka port UDP 7777 di router atau gunakan alternatif melalui Termux.");
                 }
             } else {
-                helper.append("Opcao selecionada: mesmo aparelho\n");
-                helper.append("Use no seu celular: ").append(loopback).append("\n");
-                helper.append("Sem tunel remoto. Ideal para testar sozinho.");
+                helper.append("Opsi yang dipilih: perangkat yang sama\n");
+                helper.append("Gunakan di ponsel Anda: ").append(loopback).append("\n");
+                helper.append("Tanpa terowongan jarak jauh. Cocok untuk pengujian di perangkat sendiri.");
             }
             hostJoinInfo.setText(helper.toString());
         }
@@ -372,7 +381,7 @@ public class HostFragment extends Fragment {
                 if (bootResult == null || !bootResult.success) {
                     String message = extractToastMessage(bootResult);
                     tunnelStatus = PinggyTunnelManager.LaunchStatus.failure(
-                            "Antes do tunel, o host precisa ligar. " + message
+                            "Sebelum membuka terowongan, host perlu dinyalakan." + message
                     );
                 } else {
                     tunnelStatus = PinggyTunnelManager.startTunnel(appContext);
@@ -433,22 +442,22 @@ public class HostFragment extends Fragment {
         message.append(LocalHostManager.buildJoinInfo());
         message.append("\n\n");
         if (!TextUtils.isEmpty(tunnelState.publicUrl)) {
-            message.append("Tunel remoto online pelo APK:\n");
+            message.append("Terowongan jarak jauh online lewat APK:\n");
             message.append(tunnelState.publicUrl);
-            message.append("\n\nCompartilhe esse endereco com quem vai entrar pela internet.");
+            message.append("\n\nBagikan alamat ini dengan orang yang akan masuk melalui internet.");
         } else if (PinggyTunnelManager.isTunnelRunning(requireContext()) || tunnelState.isStarting()) {
-            message.append("O motor interno do APK esta abrindo o Pinggy UDP. Assim que o endereco publico aparecer, ele fica neste painel.");
+            message.append("Mesin internal APK sedang membuka Pinggy UDP. Begitu alamat publik muncul, ia akan berada di panel ini.");
         } else if (tunnelState.isError()) {
             message.append(tunnelState.note);
-            message.append("\n\nToque em Abrir tunel remoto para tentar de novo.");
+            message.append("\n\nKetuk Buka terowongan jarak jauh untuk mencoba lagi.");
         } else if (internalTunnelSupported) {
             message.append(tunnelStarted
-                    ? "O launcher tentou abrir o tunel remoto pelo APK. Se a rede do chip oscilar, toque de novo."
-                    : "Este APK ja tem motor interno para abrir Pinggy UDP sem Termux.");
+                    ? "Launcher mencoba membuka terowongan jarak jauh lewat APK. Jika jaringan SIM tidak stabil, ketuk lagi."
+                    : "APK ini sudah memiliki mesin internal untuk membuka Pinggy UDP tanpa Termux.");
         } else if (termuxReady) {
-            message.append("Este aparelho nao liberou ARM64 para o motor interno. O fallback via Termux ainda pode abrir o Pinggy UDP.");
+            message.append("Perangkat ini belum mengizinkan ARM64 untuk mesin internal. Fallback lewat Termux masih dapat membuka Pinggy UDP.");
         } else {
-            message.append("Este aparelho nao liberou ARM64 para o motor interno. Para internet, abra UDP 7777 no roteador ou use Termux como fallback.");
+            message.append("Perangkat ini belum mengizinkan ARM64 untuk mesin internal. Untuk internet, buka UDP 7777 di router atau gunakan Termux sebagai fallback.");
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
@@ -486,8 +495,8 @@ public class HostFragment extends Fragment {
         if (workspaceValue != null) {
             String sharedPath = LocalHostManager.getSharedWorkspacePath();
             workspaceValue.setText(state.workspacePrepared
-                    ? state.workspacePath + "\nDownloads: " + sharedPath
-                    : "A base local ainda nao foi preparada.");
+                    ? state.workspacePath + "\nUnduhan: " + sharedPath
+                    : "Basis lokal belum disiapkan.");
         }
 
         if (loopbackValue != null) {
@@ -495,9 +504,9 @@ public class HostFragment extends Fragment {
             if (state.loopbackSelected) {
                 loopbackLabel = state.loopbackAddress + " ativo no launcher";
             } else if (state.loopbackSaved) {
-                loopbackLabel = state.loopbackAddress + " salvo, mas nao ativo";
+                loopbackLabel = state.loopbackAddress + " tersimpan, tapi tidak aktif";
             } else {
-                loopbackLabel = state.loopbackAddress + " ainda nao foi salvo";
+                loopbackLabel = state.loopbackAddress + " belum disimpan";
             }
             loopbackValue.setText(loopbackLabel);
         }
@@ -543,7 +552,7 @@ public class HostFragment extends Fragment {
                 }
             } else if (hostErrored) {
                 statusBody.setText(TextUtils.isEmpty(runtimeMessage)
-                        ? "O host nao conseguiu iniciar. Toque em Ligar host para tentar preparar a base de novo."
+                        ? "Host tidak berhasil dimulai. Ketuk Nyalakan host untuk mencoba menyiapkan basis lagi."
                         : runtimeMessage);
             } else if (!state.workspacePrepared) {
                 statusBody.setText("Ketuk Nyalakan host untuk menyiapkan basis, mengaktifkan loopback dan menaikkan server lokal secara otomatis.");

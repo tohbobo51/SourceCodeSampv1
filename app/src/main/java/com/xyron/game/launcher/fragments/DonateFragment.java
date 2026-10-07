@@ -33,17 +33,17 @@ public class DonateFragment extends Fragment {
         selectedOfferSummary = view.findViewById(R.id.selected_offer_summary);
         donateButton = view.findViewById(R.id.button_donate);
 
-        bindOfferCard(view.findViewById(R.id.offer_card_start), "50", "Pacote Inicial");
-        bindOfferCard(view.findViewById(R.id.offer_card_plus), "100", "Pacote Plus");
-        bindOfferCard(view.findViewById(R.id.offer_card_gold), "250", "Pacote Gold");
-        bindOfferCard(view.findViewById(R.id.offer_card_elite), "500", "Pacote Elite");
+        bindOfferCard(view.findViewById(R.id.offer_card_start), "50", "Paket Awal");
+        bindOfferCard(view.findViewById(R.id.offer_card_plus), "100", "Paket Plus");
+        bindOfferCard(view.findViewById(R.id.offer_card_gold), "250", "Paket Gold");
+        bindOfferCard(view.findViewById(R.id.offer_card_elite), "500", "Paket Elite");
 
         if (donateButton != null) {
             donateButton.setOnTouchListener(new ButtonAnimator(requireContext(), donateButton));
             donateButton.setOnClickListener(v -> continueToShop());
         }
 
-        selectOffer(0, "50", "Pacote Inicial");
+        selectOffer(0, "50", "Paket Awal");
         return view;
     }
 
@@ -63,7 +63,7 @@ public class DonateFragment extends Fragment {
             amountField.setText(amount);
         }
         if (selectedOfferSummary != null) {
-            selectedOfferSummary.setText(label + " selecionado - valor base " + amount);
+            selectedOfferSummary.setText(label + " dipilih - nilai dasar " + amount);
         }
 
         for (int i = 0; i < offerCards.size(); i++) {

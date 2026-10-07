@@ -312,7 +312,7 @@ public final class ServerConfigManager {
             if (TextUtils.isEmpty(host) || !isValidPort(port)) {
                 return null;
             }
-            return new ServerOption("Servidor atual", host, port, false);
+            return new ServerOption("Server saat ini", host, port, false);
         } catch (IOException e) {
             Log.e(TAG, "Failed to read selected server", e);
             return null;
@@ -390,7 +390,7 @@ public final class ServerConfigManager {
         if (!sanitize(host).isEmpty() && isValidPort(port)) {
             return host + ":" + port;
         }
-        return "Servidor";
+        return "Server";
     }
 
     private static ParsedServerAddress parseServerAddress(String rawAddress) {
@@ -452,11 +452,11 @@ public final class ServerConfigManager {
         }
 
         public static ServerOption empty() {
-            return new ServerOption("Nenhum servidor", "", 0, false);
+            return new ServerOption("Tidak ada server", "", 0, false);
         }
 
         public String getAddress() {
-            return isValid() ? host + ":" + port : "Adicione um servidor";
+            return isValid() ? host + ":" + port : "Tambahkan server";
         }
 
         public boolean matches(String currentHost, int currentPort) {

@@ -103,7 +103,7 @@ public class UpdateActivity extends SampActivity {
                     Log.d("x1y2z", "statusname = " + valueOf);
                     long j = msg.getData().getLong("total");
                     long j2 = msg.getData().getLong("current");
-                    ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("filename"));
+                    ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("nama berkas"));
                     ((TextView) findViewById(R.id.fileCount)).setText(j2/1048576 + "MB/" + j/1048576+"MB");
                     ProgressBar progressBar = findViewById(R.id.download_progress);
                     progressBar.setIndeterminate(false);
@@ -116,7 +116,7 @@ public class UpdateActivity extends SampActivity {
                     Log.d("x1y2z", "statusname = " + valueOf);
                     long j = msg.getData().getLong("total");
                     long j2 = msg.getData().getLong("current");
-                    ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("filename"));
+                    ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("nama berkas"));
                     ProgressBar progressBar = (ProgressBar) UpdateActivity.this.findViewById(R.id.download_progress);
                     progressBar.setMax((int) (j/1048576));
                     progressBar.setProgress((int) (j2/1048576));
@@ -125,8 +125,8 @@ public class UpdateActivity extends SampActivity {
                     Log.d("x1y2z", "statusname = " + valueOf);
                     long j = msg.getData().getLong("total");
                     long j2 = msg.getData().getLong("current");
-                    ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("filename"));
-                    ((TextView) findViewById(R.id.fileCount)).setText(msg.getData().getLong("currentfile") + "/" + msg.getData().getLong("totalfiles"));
+                    ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("nama berkas"));
+                    ((TextView) findViewById(R.id.fileCount)).setText(msg.getData().getLong("berkas saat ini") + "/" + msg.getData().getLong("totalfiles"));
                     ProgressBar progressBar = (ProgressBar) UpdateActivity.this.findViewById(R.id.download_progress);
                     progressBar.setIndeterminate(false);
                     progressBar.setMax((int) (j/1048576));

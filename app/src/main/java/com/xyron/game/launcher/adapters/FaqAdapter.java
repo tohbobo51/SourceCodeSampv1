@@ -32,18 +32,16 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
     public FaqAdapter(Activity activity)
     {
         mActivity = activity;
-
-        mItemsMain.add("O servidor nÃ£o respondeu. Tente novamente");
-        mItemsMain.add("VocÃª estÃ¡ banido deste servidor");
-        mItemsMain.add("O servidor enviou as linhas em azul");
-        mItemsMain.add("Janela de login, sem meu registro");
-        mItemsMain.add("NÃ£o concordo com a decisÃ£o do administrador");
-
-        mItemsInfo.add("Tente reiniciar o inicializador e faÃ§a login novamente. E se nÃ£o ajudar, escreva para nÃ³s na seÃ§Ã£o tÃ©cnica");
-        mItemsInfo.add("Entre novamente no jogo, se nÃ£o ajudar, desligue o WI-FI, tente fazer login na Internet mÃ³vel. Se ambos os mÃ©todos nÃ£o ajudarem, escreva-nos no discord");
-        mItemsInfo.add("Isso significa que seu apelido nÃ£o atende aos requisitos do SAMP. O apelido deve ter de 6 a 21 caracteres e ter '_'.");
-        mItemsInfo.add("Isso significa que seu apelido jÃ¡ estÃ¡ em uso. Altere no inicializador e tente novamente");
-        mItemsInfo.add("Escreva-nos uma reclamaÃ§Ã£o no discord e iremos considerÃ¡-la dentro de 48 horas!");
+        mItemsMain.add("Server tidak merespons. Coba lagi");
+        mItemsMain.add("Anda diblokir dari server ini");
+        mItemsMain.add("Server mengirim baris berwarna biru");
+        mItemsMain.add("Saya belum terdaftar di halaman login");
+        mItemsMain.add("Saya tidak setuju dengan keputusan administrator");
+        mItemsInfo.add("Coba mulai ulang launcher, lalu masuk kembali. Jika masalah berlanjut, hubungi kami melalui bagian dukungan teknis.");
+        mItemsInfo.add("Masuk kembali ke permainan; jika tidak membantu, matikan Wi-Fi dan coba masuk menggunakan internet seluler. Jika kedua cara tidak berhasil, hubungi kami di Discord.");
+        mItemsInfo.add("Nama panggilan Anda tidak memenuhi persyaratan SA-MP. Nama panggilan harus terdiri dari 6 hingga 21 karakter dan menyertakan karakter _.");
+        mItemsInfo.add("Nama panggilan tersebut sudah digunakan. Ubah di launcher, lalu coba lagi.");
+        mItemsInfo.add("Kirimkan keluhan kepada kami di Discord. Kami akan meninjaunya dalam 48 jam.");
 
         builder = new AlertDialog.Builder(mActivity);
     }

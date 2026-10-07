@@ -169,7 +169,7 @@ public class HostFilesFragment extends Fragment {
         nameView.setText(entry.displayName);
         metaView.setText(buildMeta(entry));
         pathView.setText(entry.relativePath);
-        openAction.setText(entry.directory ? "Abrir pasta" : (entry.editableText ? "Editar" : "Detalhes"));
+        openAction.setText(entry.directory ? "Buka folder" : (entry.editableText ? "Editar" : "Detalhes"));
 
         bindAction(surface, () -> openEntry(entry));
         bindAction(openAction, () -> openEntry(entry));
@@ -179,10 +179,10 @@ public class HostFilesFragment extends Fragment {
 
     private String buildMeta(HostFileManager.BrowserEntry entry) {
         if (entry.directory) {
-            return entry.category + " | " + entry.childCount + " item(ns) nesta pasta";
+            return entry.category + " | " + entry.childCount + " item(ns) di folder ini";
         }
 
-        String editMode = entry.editableText ? "Editavel no launcher" : "Binario / leitura";
+        String editMode = entry.editableText ? "Dapat diedit di launcher" : "Biner / baca";
         return entry.category + " | " + HostFileManager.formatSize(entry.sizeBytes) + " | " + editMode;
     }
 
@@ -191,12 +191,12 @@ public class HostFilesFragment extends Fragment {
             return "ITEM";
         }
         if (entry.directory) {
-            return "PASTA";
+            return "FOLDER";
         }
         String name = entry.displayName == null ? "" : entry.displayName;
         int dot = name.lastIndexOf('.');
         if (dot < 0 || dot >= name.length() - 1) {
-            return "ARQUIVO";
+            return "FILE";
         }
         String extension = name.substring(dot + 1).toUpperCase(Locale.US);
         if (extension.length() > 8) {
@@ -222,7 +222,7 @@ public class HostFilesFragment extends Fragment {
                     .setMessage("Kategori: " + entry.category
                             + "\nTamanho: " + HostFileManager.formatSize(entry.sizeBytes)
                             + "\nCaminho: " + entry.relativePath
-                            + "\n\nEsse arquivo nao e editavel como texto dentro do launcher.")
+                            + "\n\nBerkas ini tidak dapat diedit sebagai teks di dalam launcher.")
                     .setPositiveButton("Tutup", null)
                     .show();
             return;
@@ -264,19 +264,19 @@ public class HostFilesFragment extends Fragment {
 
         boolean prepared = LocalHostManager.prepareSharedWorkspace(requireContext());
         if (!prepared) {
-            postToast("Nao foi possivel preparar a pasta do host antes da importacao.");
+            postToast("Tidak dapat menyiapkan folder host sebelum impor.");
             return;
         }
 
         String displayName = resolveDisplayName(fileUri);
         if (TextUtils.isEmpty(displayName)) {
-            displayName = "arquivo-importado";
+            displayName = "file-impor";
         }
 
         try {
             File targetFile = HostFileManager.resolveChildPath(currentRelativePath, displayName);
             if (targetFile == null) {
-                postToast("Nao foi possivel importar para esta pasta.");
+                postToast("Tidak dapat mengimpor ke folder ini.");
                 return;
             }
 
@@ -284,17 +284,17 @@ public class HostFilesFragment extends Fragment {
             LocalHostManager.removePlaceholderFiles(targetFile.getParentFile());
 
             StringBuilder message = new StringBuilder();
-            message.append("Arquivo importado em ").append(HostFileManager.getDisplayPath(currentRelativePath));
+            message.append("File diimpor ke ").append(HostFileManager.getDisplayPath(currentRelativePath));
 
             if (isGamemodeImport(targetFile)) {
                 boolean updated = LocalHostManager.activateGamemode(targetFile.getName());
                 if (updated) {
-                    message.append("\nGM principal atualizada.");
+                    message.append("\nGM utama diperbarui.");
                 }
             }
 
             if (HostShellEngine.isHostRunning()) {
-                message.append("\nReinicie o host para aplicar.");
+                message.append("\nMulai ulang host agar perubahan diterapkan.");
             }
 
             String finalMessage = message.toString();
@@ -305,7 +305,7 @@ public class HostFilesFragment extends Fragment {
                 });
             }
         } catch (Exception e) {
-            postToast("Falha ao importar o arquivo.");
+            postToast("Gagal mengimpor berkas.");
         }
     }
 
@@ -333,10 +333,10 @@ public class HostFilesFragment extends Fragment {
         TextView cancelButton = dialogView.findViewById(R.id.dialog_host_create_cancel);
         TextView saveButton = dialogView.findViewById(R.id.dialog_host_create_save);
 
-        badgeView.setText(folder ? "Nova pasta" : "Novo arquivo");
-        titleView.setText(folder ? "Criar pasta nesta pasta atual" : "Criar arquivo nesta pasta atual");
+        badgeView.setText(folder ? "Folder baru" : "Berkas baru");
+        titleView.setText(folder ? "Buat folder di folder saat ini" : "Buat berkas di folder saat ini");
         pathView.setText(HostFileManager.getDisplayPath(currentRelativePath));
-        inputView.setHint(folder ? "Nome da pasta" : "Nome do arquivo");
+        inputView.setHint(folder ? "Nama folder" : "Nama berkas");
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(dialogView)
@@ -400,7 +400,7 @@ public class HostFilesFragment extends Fragment {
                 return;
             }
 
-            Toast.makeText(requireContext(), buildApplyMessage("Arquivo salvo."), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), buildApplyMessage("Berkas tersimpan."), Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             refreshFiles();
         });
@@ -425,8 +425,8 @@ public class HostFilesFragment extends Fragment {
         TextView cancelButton = dialogView.findViewById(R.id.dialog_host_rename_cancel);
         TextView saveButton = dialogView.findViewById(R.id.dialog_host_rename_save);
 
-        badgeView.setText(entry.directory ? "Renomear pasta" : "Renomear arquivo");
-        titleView.setText(entry.directory ? "Trocar nome da pasta" : "Trocar nome do arquivo");
+        badgeView.setText(entry.directory ? "Ganti nama folder" : "Ganti nama berkas");
+        titleView.setText(entry.directory ? "Ubah nama folder" : "Ubah nama berkas");
         pathView.setText(entry.relativePath);
         input.setText(entry.displayName);
         input.setSelection(entry.displayName.length());
@@ -460,7 +460,7 @@ public class HostFilesFragment extends Fragment {
             return;
         }
 
-        String label = entry.directory ? "pasta" : "arquivo";
+        String label = entry.directory ? "folder" : "file";
         new AlertDialog.Builder(requireContext())
                 .setTitle("Hapus " + label)
                 .setMessage("Hapus " + entry.displayName + "?\n\n" + entry.relativePath)
@@ -480,18 +480,18 @@ public class HostFilesFragment extends Fragment {
 
     private void copyUriToFile(Uri fileUri, File targetFile) throws Exception {
         if (targetFile == null || getContext() == null) {
-            throw new IllegalArgumentException("Destino de importacao invalido.");
+            throw new IllegalArgumentException("Tujuan impor tidak valid.");
         }
 
         File parent = targetFile.getParentFile();
         if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            throw new IllegalArgumentException("Nao foi possivel criar a pasta de destino.");
+            throw new IllegalArgumentException("Tidak dapat membuat folder tujuan.");
         }
 
         try (InputStream inputStream = requireContext().getContentResolver().openInputStream(fileUri);
              FileOutputStream outputStream = new FileOutputStream(targetFile, false)) {
             if (inputStream == null) {
-                throw new IllegalArgumentException("Nao foi possivel abrir o arquivo selecionado.");
+                throw new IllegalArgumentException("Tidak dapat membuka berkas yang dipilih.");
             }
 
             byte[] buffer = new byte[8192];
@@ -537,7 +537,7 @@ public class HostFilesFragment extends Fragment {
 
     private String buildApplyMessage(String baseMessage) {
         if (HostShellEngine.isHostRunning()) {
-            return baseMessage + " Reinicie o host para aplicar tudo.";
+            return baseMessage + " Mulai ulang host untuk menerapkan semuanya.";
         }
         return baseMessage;
     }

@@ -146,8 +146,8 @@ public class HomeFragment extends Fragment {
         selectedServerName.setText("Siap bermain");
         selectedServerAddress.setText(selectedServer.getAddress());
         selectedServerHint.setText(selectedServer.favorite
-                ? "Servidor favoritado e pronto para abrir no jogo."
-                : "Servidor pronto para abrir no jogo. Use Trocar servidor para mudar.");
+                ? "Server favorit dan siap dibuka di permainan."
+                : "Server siap dibuka di permainan. Gunakan Ganti server untuk mengganti.");
         updateReadiness(hasGameData, true, true);
     }
 
@@ -167,7 +167,7 @@ public class HomeFragment extends Fragment {
         if (!hasServers) {
             nextStepAction = NEXT_STEP_ADD_SERVER;
             readinessTitle.setText("Server tidak ditemukan");
-            readinessBody.setText("Tambahkan IP:PORTA");
+            readinessBody.setText("Tambahkan IP:PORT");
             nextStepButton.setText("Tambahkan server");
             return;
         }
@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment {
         nextStepAction = NEXT_STEP_PLAY;
         if (isLauncherRole()) {
             readinessTitle.setText("Server siap");
-            readinessBody.setText("Buka lewat APK Game");
+            readinessBody.setText("Buka lewat APK game");
             nextStepButton.setText("Buka Game");
         } else {
             readinessTitle.setText("Semua sudah siap");

@@ -364,7 +364,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             destroyRuntimeOverlays();
 
             String address = (host == null || host.trim().isEmpty())
-                    ? "servidor desconhecido"
+                    ? "server tidak dikenal"
                     : host + ":" + port;
             Toast.makeText(
                     this,
@@ -518,7 +518,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
                 try {
                     return getPlayerPlacementSnapshot();
                 } catch (UnsatisfiedLinkError error) {
-                    Log.e(TAG, "Nao foi possivel capturar a posicao atual do player.", error);
+                    Log.e(TAG, "Tidak dapat menangkap posisi pemain saat ini.", error);
                     return null;
                 }
             }
@@ -537,7 +537,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
                             pickup.z
                     );
                 } catch (UnsatisfiedLinkError error) {
-                    Log.e(TAG, "Nao foi possivel criar o preview local do pickup.", error);
+                    Log.e(TAG, "Tidak dapat membuat pratinjau lokal pickup.", error);
                     return false;
                 }
             }
@@ -737,23 +737,30 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
 
     private String extractLocalHostRuntimeMessage(HostShellEngine.CommandResult result) {
         if (result == null || result.output == null || result.output.trim().isEmpty()) {
-            return "Nao foi possivel ligar o host local antes do jogo.";
+            return "Tidak dapat menyalakan host lokal sebelum permainan dimulai.";
         }
         String[] lines = result.output.trim().split("\\r?\\n");
         for (String rawLine : lines) {
             String line = rawLine == null ? "" : rawLine.trim();
-            if (line.isEmpty() || "Fluxo rapido do host".equalsIgnoreCase(line)) {
+            if (line.isEmpty() || "Fluxo rapido do host".equalsIgnoreCase(line)
+                    || "Proses penyiapan host".equalsIgnoreCase(line)) {
                 continue;
             }
             String normalized = line.toLowerCase(Locale.US);
             if (normalized.contains("falha")
                     || normalized.contains("erro")
                     || normalized.contains("processo saiu")
+                    || normalized.contains("proses keluar")
+                    || normalized.contains("keluar segera")
+                    || normalized.contains("gagal")
+                    || normalized.contains("tidak berhasil")
+                    || normalized.contains("tidak dapat")
+                    || normalized.contains("tidak bisa")
                     || normalized.contains("nao foi possivel")) {
                 return line;
             }
         }
-        return "Host local preparado para o jogo.";
+        return "Host lokal siap untuk permainan.";
     }
      public void hideSystemUI() {
         View decorView = getWindow().getDecorView();
@@ -2166,7 +2173,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             setAllowNextNativePauseMenu(true);
             pauseEvent();
         } catch (UnsatisfiedLinkError error) {
-            Log.e(TAG, "Nao foi possivel abrir o menu nativo.", error);
+            Log.e(TAG, "Tidak dapat membuka menu bawaan.", error);
         }
     }
 
@@ -2176,7 +2183,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             forceEndNativeUserPause();
             resumeEvent();
         } catch (UnsatisfiedLinkError error) {
-            Log.e(TAG, "Nao foi possivel retomar o gameplay nativo.", error);
+            Log.e(TAG, "Tidak dapat melanjutkan gameplay bawaan.", error);
         }
         hideSystemUI();
     }
@@ -2230,7 +2237,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             sendSyntheticNativeTouch(Math.round(x), Math.round(y));
             return;
         } catch (UnsatisfiedLinkError error) {
-            Log.e(TAG, "Falha ao enviar toque nativo sintetico.", error);
+            Log.e(TAG, "Gagal mengirim sentuhan native sintetis.", error);
         }
         Log.i(TAG, "performNativeMenuTap x=" + x + " y=" + y + " size=" + width + "x" + height);
         Thread injectorThread = new Thread(() -> {
@@ -2259,7 +2266,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
                 instrumentation.sendPointerSync(downEvent);
                 instrumentation.sendPointerSync(upEvent);
             } catch (RuntimeException error) {
-                Log.e(TAG, "Falha ao injetar toque nativo.", error);
+                Log.e(TAG, "Gagal menyuntikkan sentuhan native.", error);
             } finally {
                 downEvent.recycle();
                 upEvent.recycle();
@@ -2731,7 +2738,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
         intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, false);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Fale um comando do servidor");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Masukkan perintah server");
 
         if (intent.resolveActivity(getPackageManager()) == null) {
             JSONObject payload = new JSONObject();

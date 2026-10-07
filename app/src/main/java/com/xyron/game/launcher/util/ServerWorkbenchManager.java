@@ -57,16 +57,16 @@ public final class ServerWorkbenchManager {
 
     public static ActionResult saveSettings(Context context, ServerSettings settings) {
         if (!prepare(context)) {
-            return ActionResult.error("Nao foi possivel preparar a base do host.");
+            return ActionResult.error("Tidak dapat menyiapkan basis host.");
         }
         if (settings == null) {
-            return ActionResult.error("Configuracao invalida.");
+            return ActionResult.error("Konfigurasi tidak valid.");
         }
 
         File serverCfg = LocalHostManager.getSharedServerCfgFile();
         File openMpConfig = LocalHostManager.getSharedOmpConfigFile();
         if (serverCfg == null || openMpConfig == null) {
-            return ActionResult.error("Arquivos principais do host nao foram encontrados.");
+            return ActionResult.error("Berkas utama host tidak ditemukan.");
         }
 
         String normalizedMainScript = normalizeScriptName(settings.mainScript, "blank");
@@ -114,7 +114,7 @@ public final class ServerWorkbenchManager {
         }
 
         if (!writeLines(serverCfg, lines)) {
-            return ActionResult.error("Nao foi possivel salvar o server.cfg.");
+            return ActionResult.error("Tidak dapat menyimpan server.cfg.");
         }
 
         try {
@@ -160,26 +160,26 @@ public final class ServerWorkbenchManager {
             rcon.put("password", "changeme-local");
 
             if (!writeText(openMpConfig, root.toString(2) + "\n")) {
-                return ActionResult.error("Nao foi possivel salvar o config.json.");
+                return ActionResult.error("Tidak dapat menyimpan config.json.");
             }
         } catch (Exception e) {
-            return ActionResult.error("Falha ao montar o config.json.");
+            return ActionResult.error("Gagal membangun config.json.");
         }
 
-        return ActionResult.success("Configuracoes salvas no server.cfg e no config.json.");
+        return ActionResult.success("Pengaturan disimpan di server.cfg dan config.json.");
     }
 
     public static ActionResult createResource(Context context, ResourceType type, String requestedName) {
         if (!prepare(context)) {
-            return ActionResult.error("Nao foi possivel preparar a base do host.");
+            return ActionResult.error("Tidak dapat menyiapkan basis host.");
         }
         if (type == null) {
-            return ActionResult.error("Tipo de recurso invalido.");
+            return ActionResult.error("Jenis sumber daya tidak valid.");
         }
 
         String baseName = sanitizeBaseName(requestedName);
         if (TextUtils.isEmpty(baseName)) {
-            return ActionResult.error("Digite um nome valido.");
+            return ActionResult.error("Masukkan nama yang valid.");
         }
 
         String relativeDir = type.relativeDirectory;
@@ -191,7 +191,7 @@ public final class ServerWorkbenchManager {
 
         String relativePath = createResult.relativePath;
         if (!HostFileManager.writeEditableText(relativePath, buildTemplate(type, baseName))) {
-            return ActionResult.error("O arquivo foi criado, mas nao foi possivel escrever o template.");
+            return ActionResult.error("Berkas dibuat, tetapi tidak dapat menulis template.");
         }
 
         return ActionResult.success(type.successLabel + ": /" + relativePath);
@@ -200,12 +200,12 @@ public final class ServerWorkbenchManager {
     public static BackupSummary getBackupSummary() {
         File backupDir = getBackupsDirectory();
         if (backupDir == null || !backupDir.exists() || !backupDir.isDirectory()) {
-            return new BackupSummary("Nenhum backup criado ainda.", "");
+            return new BackupSummary("Belum ada backup yang dibuat.", "");
         }
 
         File[] files = backupDir.listFiles();
         if (files == null || files.length == 0) {
-            return new BackupSummary("Nenhum backup criado ainda.", "");
+            return new BackupSummary("Belum ada backup yang dibuat.", "");
         }
 
         List<File> zipFiles = new ArrayList<>();
@@ -215,7 +215,7 @@ public final class ServerWorkbenchManager {
             }
         }
         if (zipFiles.isEmpty()) {
-            return new BackupSummary("Nenhum backup criado ainda.", "");
+            return new BackupSummary("Belum ada backup yang dibuat.", "");
         }
 
         Collections.sort(zipFiles, new Comparator<File>() {
@@ -226,7 +226,7 @@ public final class ServerWorkbenchManager {
         });
 
         File latest = zipFiles.get(0);
-        String summary = zipFiles.size() + " backup(s) salvo(s)\n"
+        String summary = zipFiles.size() + " backup(s) disimpan\n"
                 + "Ultimo: " + latest.getName() + "\n"
                 + "Tamanho: " + HostFileManager.formatSize(latest.length());
         return new BackupSummary(summary, latest.getAbsolutePath());
@@ -234,17 +234,17 @@ public final class ServerWorkbenchManager {
 
     public static ActionResult createBackup(Context context, String requestedLabel) {
         if (!prepare(context)) {
-            return ActionResult.error("Nao foi possivel preparar a base do host.");
+            return ActionResult.error("Tidak dapat menyiapkan basis host.");
         }
 
         File rootDir = LocalHostManager.getSharedRootDirectory();
         if (rootDir == null || !rootDir.exists()) {
-            return ActionResult.error("A pasta compartilhada do host ainda nao existe.");
+            return ActionResult.error("Folder bersama host belum ada.");
         }
 
         File backupDir = getBackupsDirectory();
         if (backupDir == null || (!backupDir.exists() && !backupDir.mkdirs())) {
-            return ActionResult.error("Nao foi possivel criar a pasta de backups.");
+            return ActionResult.error("Tidak dapat membuat folder cadangan.");
         }
 
         String timestamp = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(new Date());
@@ -257,21 +257,21 @@ public final class ServerWorkbenchManager {
         try (ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(outFile, false))) {
             zipDirectory(rootDir, rootDir, zip, backupDir);
             zip.flush();
-            return ActionResult.success("Backup criado em " + outFile.getName());
+            return ActionResult.success("Cadangan dibuat di " + outFile.getName());
         } catch (Exception e) {
-            return ActionResult.error("Nao foi possivel gerar o backup .zip.");
+            return ActionResult.error("Tidak dapat membuat cadangan .zip.");
         }
     }
 
     public static LogSummary getLatestLogSummary() {
         File logsDir = LocalHostManager.getSharedLogsDirectory();
         if (logsDir == null || !logsDir.exists() || !logsDir.isDirectory()) {
-            return new LogSummary("Nenhum log foi gerado ainda.", "");
+            return new LogSummary("Belum ada log yang dihasilkan.", "");
         }
 
         File[] files = logsDir.listFiles();
         if (files == null || files.length == 0) {
-            return new LogSummary("Nenhum log foi gerado ainda.", "");
+            return new LogSummary("Belum ada log yang dihasilkan.", "");
         }
 
         File latest = null;
@@ -285,12 +285,12 @@ public final class ServerWorkbenchManager {
         }
 
         if (latest == null) {
-            return new LogSummary("Nenhum log foi gerado ainda.", "");
+            return new LogSummary("Belum ada log yang dihasilkan.", "");
         }
 
         List<String> lines = readLines(latest);
         if (lines.isEmpty()) {
-            return new LogSummary("Ultimo log: " + latest.getName() + "\nSem linhas para mostrar ainda.", latest.getAbsolutePath());
+            return new LogSummary("Ultimo log: " + latest.getName() + "\nBelum ada baris untuk ditampilkan.", latest.getAbsolutePath());
         }
 
         int start = Math.max(0, lines.size() - LOG_SNIPPET_LINES);
@@ -549,13 +549,13 @@ public final class ServerWorkbenchManager {
                         + "    return 1;\n"
                         + "}\n";
             case SCRIPTFILE:
-                return "# Arquivo auxiliar do host\n"
+                return "# Berkas tambahan host\n"
                         + "nome=" + baseName + "\n"
                         + "valor=1\n";
             case CONFIG:
             default:
-                return "# Configuracao criada pelo launcher\n"
-                        + "# Ajuste os valores do seu servidor aqui\n"
+                return "# Konfigurasi dibuat oleh launcher\n"
+                        + "# Sesuaikan nilai server Anda di sini\n"
                         + "nome=" + friendlyLabel(baseName) + "\n";
         }
     }

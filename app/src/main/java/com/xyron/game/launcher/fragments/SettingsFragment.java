@@ -209,7 +209,7 @@ public class SettingsFragment extends Fragment {
         }
 
         String nickname = readIniValue("client", "name", "");
-        nicknameValue.setText(nickname.isEmpty() ? "Nenhum nome definido" : nickname);
+        nicknameValue.setText(nickname.isEmpty() ? "Tidak ada nama yang ditentukan" : nickname);
     }
 
     private void saveNickname(String nickname) {

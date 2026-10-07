@@ -159,7 +159,7 @@ public class ServersFragment extends Fragment {
         metaView.setText(buildMeta(liveInfo));
         addressView.setText(option.getAddress());
 
-        selectAction.setText(isSelected ? "Ativo" : "Selecionar");
+        selectAction.setText(isSelected ? "Aktif" : "Pilih");
         selectAction.setAlpha(isSelected ? 0.92f : 1.0f);
         selectAction.setOnTouchListener(new ButtonAnimator(context, selectAction));
         selectAction.setOnClickListener(v -> {
@@ -273,7 +273,7 @@ public class ServersFragment extends Fragment {
     private String buildSummary(boolean isSelected, ServerLiveInfo info) {
         if (info == null) {
             return isSelected
-                    ? "Ativo no jogo | consultando servidor..."
+                    ? "Aktif di dalam game | menghubungi server..."
                     : "Consultando status, ping e jogadores...";
         }
 
@@ -301,11 +301,11 @@ public class ServersFragment extends Fragment {
         }
 
         if (!info.online) {
-            return "O nome, o modo e a linguagem aparecem quando o servidor responder.";
+            return "Nama, mode, dan bahasa muncul ketika server merespons.";
         }
 
         if (info.serverName.isEmpty() && info.gameMode.isEmpty() && info.language.isEmpty()) {
-            return "Servidor respondeu ao ping, mas nao enviou detalhes de nome, modo ou linguagem.";
+            return "Server merespons ping, tetapi tidak mengirimkan detail nama, mode, atau bahasa.";
         }
 
         String modeType = classifyMode(info.gameMode, info.serverName);
@@ -322,7 +322,7 @@ public class ServersFragment extends Fragment {
         if (haystack.contains("roleplay") || haystack.contains("role play") || haystack.contains(" rp")) {
             return "RP";
         }
-        return "Nao RP";
+        return "Bukan RP";
     }
 
     private void applyItemStyle(View itemView, boolean isSelected, ServerLiveInfo info) {

@@ -130,14 +130,14 @@ public class PickupCreatorOverlay {
     private void refreshStatus() {
         List<PickupStudioManager.PickupDefinition> pickups = PickupStudioManager.loadPickups(activity);
         String status = pickups.isEmpty()
-                ? "Nenhum pickup salvo ainda. Use a captura de posicao e monte o primeiro item."
-                : pickups.size() + " pickup(s) salvo(s). O export .inc e atualizado pelo launcher.";
+                ? "Belum ada pickup yang disimpan. Gunakan penangkapan posisi dan buat item pertama."
+                : pickups.size() + " pickup(s) disimpan. export .inc diperbarui oleh launcher.";
         statusView.setText(status);
         exportPathView.setText(PickupStudioManager.buildExportTargetLabel(activity));
         librarySummaryView.setText(
                 pickups.isEmpty()
-                        ? "Biblioteca vazia"
-                        : pickups.size() + " item(ns) pronto(s) para exportar"
+                        ? "Pustaka kosong"
+                        : pickups.size() + " item siap diekspor"
         );
     }
 
@@ -205,7 +205,7 @@ public class PickupCreatorOverlay {
         inputZ.setText(formatFloat(pickup.z));
         inputAmount.setText(String.valueOf(pickup.amount));
         updateSaveButtonLabel();
-        showToast("Pickup carregado no editor.");
+        showToast("Pickup dimuat di editor.");
     }
 
     private void resetForm(boolean capturePosition) {
@@ -226,24 +226,24 @@ public class PickupCreatorOverlay {
     }
 
     private void updateSaveButtonLabel() {
-        buttonSave.setText(TextUtils.isEmpty(editingPickupId) ? "Salvar pickup" : "Atualizar pickup");
+        buttonSave.setText(TextUtils.isEmpty(editingPickupId) ? "Simpan pickup" : "Perbarui pickup");
     }
 
     private void captureCurrentPosition() {
         if (listener == null) {
-            showToast("Captura indisponivel agora.");
+            showToast("Pickup tidak tersedia saat ini.");
             return;
         }
         float[] snapshot = listener.captureCurrentPlacement();
         if (snapshot == null || snapshot.length < 4) {
-            showToast("Nao foi possivel ler a posicao atual do player.");
+            showToast("Tidak dapat membaca posisi pemain saat ini.");
             return;
         }
         inputX.setText(formatFloat(snapshot[0]));
         inputY.setText(formatFloat(snapshot[1]));
         inputZ.setText(formatFloat(snapshot[2]));
         inputInterior.setText(String.valueOf(Math.max(0, Math.round(snapshot[3]))));
-        showToast("Posicao atual capturada.");
+        showToast("Posisi saat ini berhasil diambil.");
     }
 
     private void previewCurrentPickup() {
@@ -256,13 +256,13 @@ public class PickupCreatorOverlay {
 
     private void previewPickup(PickupStudioManager.PickupDefinition pickup) {
         if (listener == null) {
-            showToast("Preview indisponivel.");
+            showToast("Pratinjau tidak tersedia.");
             return;
         }
         boolean previewed = listener.previewPickup(pickup.sanitized());
         showToast(previewed
-                ? "Pickup mostrado no jogo."
-                : "Nao foi possivel criar o preview agora.");
+                ? "Pickup ditampilkan di dalam game."
+                : "Tidak dapat membuat pratinjau sekarang.");
     }
 
     private void saveCurrentPickup() {
@@ -301,7 +301,7 @@ public class PickupCreatorOverlay {
         }
         String snippet = PickupStudioManager.buildSnippet(pickup);
         copyToClipboard("pickup_snippet", snippet);
-        showToast("Snippet do pickup copiado para a area de transferencia.");
+        showToast("Cuplikan pickup disalin ke papan klip.");
     }
 
     private void exportAllPickups() {
@@ -313,7 +313,7 @@ public class PickupCreatorOverlay {
     private PickupStudioManager.PickupDefinition buildPickupFromInputs(boolean requireLabel) {
         String label = valueOf(inputLabel);
         if (requireLabel && TextUtils.isEmpty(label)) {
-            showToast("Digite um nome para o pickup.");
+            showToast("Masukkan nama untuk pickup.");
             return null;
         }
 
@@ -348,13 +348,13 @@ public class PickupCreatorOverlay {
     private Integer parseInteger(EditText field, String label) {
         String value = valueOf(field);
         if (TextUtils.isEmpty(value)) {
-            showToast("Preencha " + label + ".");
+            showToast("Isi " + label + ".");
             return null;
         }
         try {
             return Integer.parseInt(value);
         } catch (Exception ignored) {
-            showToast("Valor invalido em " + label + ".");
+            showToast("Nilai tidak valid di " + label + ".");
             return null;
         }
     }
@@ -362,13 +362,13 @@ public class PickupCreatorOverlay {
     private Float parseFloat(EditText field, String label) {
         String value = valueOf(field);
         if (TextUtils.isEmpty(value)) {
-            showToast("Preencha " + label + ".");
+            showToast("Isi " + label + ".");
             return null;
         }
         try {
             return Float.parseFloat(value.replace(',', '.'));
         } catch (Exception ignored) {
-            showToast("Valor invalido em " + label + ".");
+            showToast("Nilai tidak valid di " + label + ".");
             return null;
         }
     }

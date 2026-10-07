@@ -196,7 +196,7 @@ public class EditorFragment extends Fragment {
         nameView.setText(entry.displayName);
         metaView.setText(buildMeta(entry));
         pathView.setText(entry.relativePath);
-        openAction.setText(entry.directory ? "Entrar" : "Abrir");
+        openAction.setText(entry.directory ? "Masuk" : "Buka");
         compileAction.setVisibility(entry.directory || !PawnCompilerManager.isCompilableFile(entry.relativePath)
                 ? View.GONE
                 : View.VISIBLE);
@@ -347,8 +347,8 @@ public class EditorFragment extends Fragment {
             fileSelected = false;
         }
 
-        currentFileName.setText(fileSelected ? file.getName() : "Nenhum arquivo aberto");
-        currentFilePath.setText(fileSelected ? selectedFilePath : "Abra um .pwn ou .inc para editar e compilar.");
+        currentFileName.setText(fileSelected ? file.getName() : "Tidak ada berkas terbuka");
+        currentFilePath.setText(fileSelected ? selectedFilePath : "Buka file .pwn atau .inc untuk mengedit dan mengompilasi.");
         editorInput.setEnabled(fileSelected);
         editorInput.setAlpha(fileSelected ? 1f : 0.72f);
         if (!fileSelected && TextUtils.isEmpty(editorInput.getText())) {
@@ -360,7 +360,7 @@ public class EditorFragment extends Fragment {
         buttonSave.setAlpha(fileSelected && !compileInFlight ? 1f : 0.45f);
         buttonCompile.setEnabled(canCompile);
         buttonCompile.setAlpha(canCompile ? 1f : 0.45f);
-        buttonCompile.setText(compileInFlight ? "Compilando..." : "Compilar .pwn");
+        buttonCompile.setText(compileInFlight ? "Mengompilasi..." : "Compilar .pwn");
     }
 
     private void launchImportPicker() {
@@ -377,17 +377,17 @@ public class EditorFragment extends Fragment {
 
         String displayName = resolveDisplayName(fileUri);
         if (TextUtils.isEmpty(displayName)) {
-            displayName = "arquivo-importado";
+            displayName = "file-impor";
         }
 
         try {
             File targetFile = HostFileManager.resolveChildPath(currentRelativePath, displayName);
             if (targetFile == null) {
-                postToast("Nao foi possivel importar para esta pasta.");
+                postToast("Tidak dapat mengimpor ke folder ini.");
                 return;
             }
             copyUriToFile(fileUri, targetFile);
-            postToast("Arquivo importado em " + HostFileManager.getDisplayPath(currentRelativePath));
+            postToast("File diimpor ke " + HostFileManager.getDisplayPath(currentRelativePath));
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     refreshFileList();
@@ -398,7 +398,7 @@ public class EditorFragment extends Fragment {
                 });
             }
         } catch (Exception e) {
-            postToast("Falha ao importar o arquivo para o editor.");
+            postToast("Gagal mengimpor file ke editor.");
         }
     }
 
@@ -415,10 +415,10 @@ public class EditorFragment extends Fragment {
         TextView cancelButton = dialogView.findViewById(R.id.dialog_host_create_cancel);
         TextView saveButton = dialogView.findViewById(R.id.dialog_host_create_save);
 
-        badgeView.setText(includeFile ? "Novo include" : "Novo script");
-        titleView.setText(includeFile ? "Criar include nesta pasta" : "Criar script Pawn nesta pasta");
+        badgeView.setText(includeFile ? "Include baru" : "Skrip baru");
+        titleView.setText(includeFile ? "Buat include di folder ini" : "Buat skrip Pawn di folder ini.");
         pathView.setText(HostFileManager.getDisplayPath(currentRelativePath));
-        inputView.setHint(includeFile ? "nome_do_include.inc" : "nome_do_script.pwn");
+        inputView.setHint(includeFile ? "nama_include.inc" : "nome_do_script.pwn");
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(dialogView)
@@ -467,8 +467,8 @@ public class EditorFragment extends Fragment {
         TextView cancelButton = dialogView.findViewById(R.id.dialog_host_rename_cancel);
         TextView saveButton = dialogView.findViewById(R.id.dialog_host_rename_save);
 
-        badgeView.setText(entry.directory ? "Renomear pasta" : "Renomear arquivo");
-        titleView.setText(entry.directory ? "Trocar nome da pasta" : "Trocar nome do arquivo");
+        badgeView.setText(entry.directory ? "Ganti nama folder" : "Ganti nama berkas");
+        titleView.setText(entry.directory ? "Ubah nama folder" : "Ubah nama berkas");
         pathView.setText(entry.relativePath);
         input.setText(entry.displayName);
         input.setSelection(entry.displayName.length());
@@ -504,7 +504,7 @@ public class EditorFragment extends Fragment {
     }
 
     private void confirmDelete(HostFileManager.BrowserEntry entry) {
-        String label = entry.directory ? "pasta" : "arquivo";
+        String label = entry.directory ? "folder" : "file";
         new AlertDialog.Builder(requireContext())
                 .setTitle("Hapus " + label)
                 .setMessage("Hapus " + entry.displayName + "?\n\n" + entry.relativePath)
@@ -553,11 +553,11 @@ public class EditorFragment extends Fragment {
 
     private String buildTypeBadge(HostFileManager.BrowserEntry entry) {
         if (entry.directory) {
-            return "PASTA";
+            return "FOLDER";
         }
         String extension = extensionOf(entry.displayName);
         if (TextUtils.isEmpty(extension)) {
-            return "ARQUIVO";
+            return "FILE";
         }
         return extension.toUpperCase(Locale.US);
     }
@@ -615,17 +615,17 @@ public class EditorFragment extends Fragment {
 
     private void copyUriToFile(Uri fileUri, File targetFile) throws Exception {
         if (targetFile == null) {
-            throw new IllegalArgumentException("Destino invalido.");
+            throw new IllegalArgumentException("Tujuan tidak valid.");
         }
         File parent = targetFile.getParentFile();
         if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            throw new IllegalArgumentException("Nao foi possivel criar a pasta de destino.");
+            throw new IllegalArgumentException("Tidak dapat membuat folder tujuan.");
         }
 
         try (InputStream inputStream = requireContext().getContentResolver().openInputStream(fileUri);
              FileOutputStream outputStream = new FileOutputStream(targetFile, false)) {
             if (inputStream == null) {
-                throw new IllegalArgumentException("Falha ao abrir o arquivo selecionado.");
+                throw new IllegalArgumentException("Gagal membuka file yang dipilih.");
             }
 
             byte[] buffer = new byte[8192];

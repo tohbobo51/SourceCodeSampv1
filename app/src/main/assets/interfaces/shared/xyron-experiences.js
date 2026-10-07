@@ -47,9 +47,9 @@
                 { x: 0.79, y: 0.18 }
             ],
             markers: options.markers || [
-                { x: 0.2, y: 0.64, label: "Loja", color: "#4f8cff" },
+                { x: 0.2, y: 0.64, label: "Toko", color: "#4f8cff" },
                 { x: 0.56, y: 0.42, label: "Nu", color: "#b26fff" },
-                { x: 0.79, y: 0.18, label: "Evento", color: "#4ade80" }
+                { x: 0.79, y: 0.18, label: "Acara", color: "#4ade80" }
             ]
         };
         var rafId = 0;

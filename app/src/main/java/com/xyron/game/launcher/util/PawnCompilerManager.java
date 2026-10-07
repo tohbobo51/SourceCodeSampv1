@@ -75,10 +75,10 @@ public final class PawnCompilerManager {
 
     public static String buildCompilerSummary(Context context) {
         StringBuilder summary = new StringBuilder();
-        summary.append("Compiler: ").append(hasCompiler(context) ? "pronto" : "ausente");
-        summary.append("\nProjetos: /").append(getProjectsRelativePath());
-        summary.append("\nIncludes: /").append(getIncludeRelativePath());
-        summary.append("\nGM do host: /").append(getServerGamemodesRelativePath());
+        summary.append("Kompilator: ").append(hasCompiler(context) ? "siap" : "tidak tersedia");
+        summary.append("\nProyek: /").append(getProjectsRelativePath());
+        summary.append("\nDirektori include: /").append(getIncludeRelativePath());
+        summary.append("\nGamemode host: /").append(getServerGamemodesRelativePath());
         if (context != null) {
             File compiler = getCompilerBinary(context);
             if (compiler != null) {
@@ -100,32 +100,32 @@ public final class PawnCompilerManager {
 
     public static CompileResult compile(Context context, String relativePath) {
         if (context == null) {
-            return CompileResult.error("Contexto do editor indisponivel.");
+            return CompileResult.error("Konteks editor tidak tersedia.");
         }
         if (!prepareWorkspace(context)) {
-            return CompileResult.error("Nao foi possivel preparar a workspace do editor.");
+            return CompileResult.error("Tidak dapat menyiapkan workspace editor.");
         }
         if (!hasCompiler(context)) {
-            return CompileResult.error("O compilador Pawn nao foi empacotado nesta build.");
+            return CompileResult.error("Kompiler Pawn tidak dibundel dalam build ini.");
         }
 
         File sourceFile = HostFileManager.resolveManagedPath(relativePath);
         if (sourceFile == null || !sourceFile.exists() || !sourceFile.isFile()) {
-            return CompileResult.error("Arquivo fonte nao encontrado.");
+            return CompileResult.error("Berkas sumber tidak ditemukan.");
         }
         if (!isCompilableFile(relativePath)) {
-            return CompileResult.error("Selecione um arquivo .pwn para compilar.");
+            return CompileResult.error("Pilih berkas .pwn untuk dikompilasi.");
         }
 
         File parentDir = sourceFile.getParentFile();
         if (parentDir == null || !parentDir.exists()) {
-            return CompileResult.error("A pasta do script nao esta disponivel.");
+            return CompileResult.error("Folder skrip tidak tersedia.");
         }
 
         File outputFile = new File(parentDir, stripExtension(sourceFile.getName()) + ".amx");
         File compilerBinary = getCompilerBinary(context);
         if (compilerBinary == null) {
-            return CompileResult.error("Nao foi possivel localizar o binario do compilador.");
+            return CompileResult.error("Tidak dapat menemukan binari kompiler.");
         }
 
         ArrayList<String> command = new ArrayList<>();
@@ -137,8 +137,8 @@ public final class PawnCompilerManager {
         command.add("-o" + outputFile.getAbsolutePath());
 
         StringBuilder output = new StringBuilder();
-        output.append("Compilando ").append(sourceFile.getName()).append("\n");
-        output.append("Saida: ").append(outputFile.getAbsolutePath()).append("\n");
+        output.append("Mengompilasi ").append(sourceFile.getName()).append("\n");
+        output.append("Keluaran: ").append(outputFile.getAbsolutePath()).append("\n");
 
         Process process = null;
         try {
@@ -160,18 +160,18 @@ public final class PawnCompilerManager {
             }
 
             if (exitCode != 0 || !outputFile.exists()) {
-                output.append("\n\nFalha: o compilador retornou codigo ").append(exitCode).append(".");
+                output.append("\n\nGagal: kompiler mengembalikan kode ").append(exitCode).append(".");
                 return CompileResult.error(output.toString().trim());
             }
 
             boolean activated = maybeActivateGamemode(outputFile);
-            output.append("\n\nSucesso: ").append(outputFile.getName()).append(" gerado.");
+            output.append("\n\nBerhasil: ").append(outputFile.getName()).append(" gerado.");
             if (activated) {
-                output.append("\nGamemode principal atualizada para este .amx.");
+                output.append("\nGamemode utama diperbarui untuk .amx ini.");
             }
             return CompileResult.success(output.toString().trim(), outputFile.getAbsolutePath(), activated);
         } catch (Exception e) {
-            output.append("\n\nFalha ao executar o compilador: ").append(e.getMessage());
+            output.append("\n\nGagal menjalankan kompiler: ").append(e.getMessage());
             return CompileResult.error(output.toString().trim());
         } finally {
             if (process != null) {

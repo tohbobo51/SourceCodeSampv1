@@ -60,26 +60,26 @@ public class WorkbenchFragment extends Fragment {
         bindAction(root.findViewById(R.id.button_workbench_save_settings), this::saveSettings);
         bindAction(root.findViewById(R.id.button_workbench_new_gamemode), () -> promptCreateResource(
                 ServerWorkbenchManager.ResourceType.GAMEMODE,
-                "Nova gamemode",
-                "Cria um .pwn inicial em /server/gamemodes para voce continuar no editor.",
-                "ex: brasil_roleplay"
+                "Gamemode baru",
+                "Membuat file .pwn awal di /server/gamemodes agar Anda dapat melanjutkan di editor.",
+                "misal: brasil_roleplay"
         ));
         bindAction(root.findViewById(R.id.button_workbench_new_include), () -> promptCreateResource(
                 ServerWorkbenchManager.ResourceType.INCLUDE,
-                "Novo include",
-                "Cria um .inc com guarda basica em /editor/include.",
-                "ex: player_utils"
+                "Include baru",
+                "Membuat file .inc dengan include guard dasar di /editor/include.",
+                "misal: player_utils"
         ));
         bindAction(root.findViewById(R.id.button_workbench_new_scriptfile), () -> promptCreateResource(
                 ServerWorkbenchManager.ResourceType.SCRIPTFILE,
-                "Novo scriptfile",
-                "Cria um arquivo auxiliar em /server/scriptfiles.",
+                "Scriptfile baru",
+                "Membuat file tambahan di /server/scriptfiles.",
                 "ex: contas"
         ));
         bindAction(root.findViewById(R.id.button_workbench_new_config), () -> promptCreateResource(
                 ServerWorkbenchManager.ResourceType.CONFIG,
-                "Novo config",
-                "Cria um .cfg base dentro da pasta /server.",
+                "Config baru",
+                "Membuat .cfg dasar di dalam folder /server.",
                 "ex: eventos"
         ));
         bindAction(root.findViewById(R.id.button_workbench_open_editor), () -> openTab(MainActivity.TAB_EDITOR));
@@ -113,8 +113,8 @@ public class WorkbenchFragment extends Fragment {
         boolean prepared = ServerWorkbenchManager.prepare(requireContext());
         if (workbenchStatusSummary != null) {
             workbenchStatusSummary.setText(prepared
-                    ? "Workbench pronto. O host compartilhado, o editor e os arquivos principais ja foram encontrados."
-                    : "A base do host ainda nao foi preparada por completo.");
+                    ? "Workbench siap. Host bersama, editor, dan file utama telah ditemukan."
+                    : "Basis host belum disiapkan sepenuhnya.");
         }
         loadSettingsIntoForm();
         refreshBackupAndLogs();
@@ -193,7 +193,7 @@ public class WorkbenchFragment extends Fragment {
         showPromptDialog(
                 "Backup",
                 "Criar backup .zip",
-                "Digite um rotulo curto opcional. O launcher vai gerar um .zip da pasta compartilhada do host.",
+                "Masukkan label singkat opsional. Launcher akan membuat .zip dari folder bersama host.",
                 "ex: versao_teste",
                 "Gerar",
                 true,
@@ -228,7 +228,7 @@ public class WorkbenchFragment extends Fragment {
             if (refreshAfter) {
                 refreshAll();
                 if (workbenchResourceNote != null && result.success) {
-                    workbenchResourceNote.setText(result.message + "\nContinue no Editor ou em Arquivos para ajustar o conteudo.");
+                    workbenchResourceNote.setText(result.message + "\nLanjutkan di Editor atau di File untuk menyesuaikan konten.");
                 }
             }
         });

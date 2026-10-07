@@ -122,7 +122,7 @@ public class MainActivity extends SampActivity {
                 ServerConfigManager.getAvailableServers(getApplicationContext());
         if (availableServers.isEmpty()) {
             return LaunchPreparation.blocked(
-                    "Adicione um servidor em Configuracoes antes de abrir o jogo.",
+                    "Tambahkan server di Pengaturan sebelum membuka permainan.",
                     TAB_SETTINGS
             );
         }
@@ -132,7 +132,7 @@ public class MainActivity extends SampActivity {
                 ServerConfigManager.getSelectedServer(getApplicationContext());
         if (selectedServer == null || !selectedServer.isValid()) {
             return LaunchPreparation.blocked(
-                    "Selecione um servidor valido antes de jogar.",
+                    "Pilih server yang valid sebelum bermain.",
                     TAB_SERVERS
             );
         }
@@ -172,7 +172,7 @@ public class MainActivity extends SampActivity {
         return LaunchPreparation.blocked(
                 localHostSelected && localHostFailureMessage != null
                         ? localHostFailureMessage
-                        : "O servidor selecionado nao respondeu agora. Edite ou escolha outro no launcher.",
+                        : "Server yang dipilih tidak merespons saat ini. Sunting atau pilih server lain di launcher.",
                 -1
         );
     }
@@ -303,7 +303,7 @@ public class MainActivity extends SampActivity {
 
     private String extractHostFailureMessage(HostShellEngine.CommandResult result) {
         if (result == null || result.output == null || result.output.trim().isEmpty()) {
-            return "O host local nao respondeu agora. Abra a aba Host para revisar a base e tentar de novo.";
+            return "Host lokal tidak merespons sekarang. Buka tab Host untuk meninjau basis dan coba lagi.";
         }
 
         String message = result.output.trim();

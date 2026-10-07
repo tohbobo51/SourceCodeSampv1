@@ -169,11 +169,11 @@ public final class HostShellEngine {
     public static CommandResult execute(Context context, String rawCommand) {
         String command = rawCommand == null ? "" : rawCommand.trim();
         if (context == null) {
-            return CommandResult.error("Contexto do launcher indisponivel.");
+            return CommandResult.error("Konteks launcher tidak tersedia.");
         }
 
         if (command.isEmpty()) {
-            return CommandResult.error("Digite um comando. Exemplo: host help");
+            return CommandResult.error("Masukkan perintah. Contoh: host help");
         }
 
         String normalized = command.toLowerCase(Locale.US);
@@ -183,7 +183,7 @@ public final class HostShellEngine {
                 return CommandResult.success(buildHelpText(), false, false);
             case "clear":
             case "host clear":
-                return CommandResult.success("Console limpo.", true, false);
+                return CommandResult.success("Konsol dibersihkan.", true, false);
             case "host boot":
                 return bootHost(context);
             case "host install":
@@ -208,7 +208,7 @@ public final class HostShellEngine {
                 return logs(context);
             default:
                 return CommandResult.error(
-                        "Comando nao reconhecido: " + command + "\nUse host help para ver os comandos."
+                        "Perintah tidak dikenali: " + command + "\nGunakan host help untuk melihat perintah."
                 );
         }
     }
@@ -298,7 +298,7 @@ public final class HostShellEngine {
         if (state == null || !STATE_ERROR.equals(state.status) || TextUtils.isEmpty(state.note)) {
             return false;
         }
-        return state.note.toLowerCase(Locale.US).contains("nenhum runtime arm")
+        return state.note.toLowerCase(Locale.US).contains("tidak ada runtime arm")
                 && resolveRuntimeBinary(context) != null;
     }
 
@@ -310,14 +310,14 @@ public final class HostShellEngine {
         File runtime = resolveRuntimeBinary(context);
         if (runtime != null) {
             if (isPackagedRuntime(context, runtime)) {
-                return "Runtime empacotado encontrado em " + runtime.getAbsolutePath();
+                return "Runtime terpaket ditemukan di " + runtime.getAbsolutePath();
             }
-            return "Runtime encontrado em " + runtime.getAbsolutePath();
+            return "Runtime ditemukan di " + runtime.getAbsolutePath();
         }
         File workspaceRoot = new File(LocalHostManager.getSharedWorkspacePath());
-        return "Nenhum runtime ARM encontrado no pacote nem em "
+        return "Tidak ada runtime ARM ditemukan di paket maupun di "
                 + new File(workspaceRoot, "server").getAbsolutePath()
-                + " ou "
+                + " atau "
                 + new File(workspaceRoot, "bin").getAbsolutePath();
     }
 
@@ -331,25 +331,25 @@ public final class HostShellEngine {
         try {
             embeddedWorkspace = preparePackagedRuntimeWorkspace(context);
             if (embeddedWorkspace != null) {
-                embeddedMessage = "sim (" + embeddedWorkspace.linkedComponents + " componentes)";
+                embeddedMessage = "ya (" + embeddedWorkspace.linkedComponents + " komponen)";
             } else {
-                embeddedMessage = "nao";
+                embeddedMessage = "tidak";
             }
         } catch (IOException e) {
-            embeddedMessage = "falha (" + e.getMessage() + ")";
+            embeddedMessage = "gagal (" + e.getMessage() + ")";
         }
 
         StringBuilder output = new StringBuilder();
-        output.append("Pacote local preparado: ").append(prepared ? "sim" : "nao").append("\n");
-        output.append("Loopback ativo: ").append(selected ? "sim" : "nao").append("\n");
-        output.append("Workspace: ").append(LocalHostManager.getSharedWorkspacePath()).append("\n");
-        output.append("Runtime embutido copiado: ").append(copied).append(" arquivo(s)\n");
-        output.append("Runtime interno pronto: ").append(embeddedMessage).append("\n");
+        output.append("Paket lokal disiapkan: ").append(prepared ? "ya" : "tidak").append("\n");
+        output.append("Loopback aktif: ").append(selected ? "ya" : "tidak").append("\n");
+        output.append("Ruang kerja: ").append(LocalHostManager.getSharedWorkspacePath()).append("\n");
+        output.append("Runtime bawaan disalin: ").append(copied).append(" berkas\n");
+        output.append("Runtime internal siap: ").append(embeddedMessage).append("\n");
         if (embeddedWorkspace != null) {
-            output.append("Runtime interno: ").append(embeddedWorkspace.serverDir.getAbsolutePath()).append("\n");
+            output.append("Runtime internal: ").append(embeddedWorkspace.serverDir.getAbsolutePath()).append("\n");
         }
-        output.append("Aceitos no host:\n");
-        output.append("- runtime empacotado na APK em nativeLibraryDir\n");
+        output.append("Diterima di host:\n");
+        output.append("- runtime yang dikemas ke APK di nativeLibraryDir\n");
         output.append("- server/samp-server + server/components/*.so\n");
         output.append("- bin/samp03svr-arm\n");
         output.append("- bin/samp-server, bin/samp03svr");
@@ -360,11 +360,11 @@ public final class HostShellEngine {
     private static CommandResult useLoopback(Context context) {
         boolean selected = LocalHostManager.selectLoopbackServer(context);
         if (!selected) {
-            return CommandResult.error("Nao foi possivel ativar o loopback " + LocalHostManager.getLoopbackAddress());
+            return CommandResult.error("Tidak dapat mengaktifkan loopback " + LocalHostManager.getLoopbackAddress());
         }
 
         return CommandResult.success(
-                "Loopback salvo como servidor ativo: " + LocalHostManager.getLoopbackAddress(),
+                "Loopback disimpan sebagai host aktif: " + LocalHostManager.getLoopbackAddress(),
                 false,
                 true
         );
@@ -374,23 +374,23 @@ public final class HostShellEngine {
         LocalHostManager.HostState state = LocalHostManager.getState(context);
         File runtime = resolveRuntimeBinary(context);
         StringBuilder output = new StringBuilder();
-        output.append("Host preparado: ").append(state.workspacePrepared ? "sim" : "nao").append("\n");
-        output.append("Servidor local salvo: ").append(state.loopbackSaved ? "sim" : "nao").append("\n");
-        output.append("Servidor local ativo: ").append(state.loopbackSelected ? "sim" : "nao").append("\n");
-        output.append("Processo em execucao: ").append(isHostRunning() ? "sim" : "nao").append("\n");
+        output.append("Host disiapkan: ").append(state.workspacePrepared ? "ya" : "tidak").append("\n");
+        output.append("Host lokal disimpan: ").append(state.loopbackSaved ? "ya" : "tidak").append("\n");
+        output.append("Host lokal aktif: ").append(state.loopbackSelected ? "ya" : "tidak").append("\n");
+        output.append("Proses sedang berjalan: ").append(isHostRunning() ? "ya" : "tidak").append("\n");
         output.append("Loopback: ").append(state.loopbackAddress).append("\n");
-        output.append("Workspace: ").append(LocalHostManager.getSharedWorkspacePath()).append("\n");
+        output.append("Ruang kerja: ").append(LocalHostManager.getSharedWorkspacePath()).append("\n");
         output.append("Log: ").append(getLogFile(context).getAbsolutePath()).append("\n");
-        output.append("Runtime: ").append(runtime == null ? "nao encontrado" : runtime.getAbsolutePath());
+        output.append("Runtime: ").append(runtime == null ? "tidak ditemukan" : runtime.getAbsolutePath());
 
         if (runtime != null && isPackagedRuntime(context, runtime)) {
             File embeddedRuntimeDir = new File(new File(context.getFilesDir(), EMBEDDED_RUNTIME_ROOT_NAME), EMBEDDED_SERVER_DIR_NAME);
-            output.append("\nRuntime interno: ").append(embeddedRuntimeDir.getAbsolutePath());
+            output.append("\nRuntime internal: ").append(embeddedRuntimeDir.getAbsolutePath());
         }
 
         if (isHostRunning()) {
             long uptimeSeconds = Math.max(1L, (System.currentTimeMillis() - hostStartedAtMs) / 1000L);
-            output.append("\nUptime: ").append(uptimeSeconds).append("s");
+            output.append("\nWaktu aktif: ").append(uptimeSeconds).append("s");
         }
 
         return CommandResult.success(output.toString(), false, true);
@@ -398,7 +398,7 @@ public final class HostShellEngine {
 
     private static CommandResult startHost(Context context) {
         if (isHostRunning(context)) {
-            return CommandResult.success("O host local ja esta rodando nesta sessao.", false, true);
+            return CommandResult.success("Host lokal sudah berjalan dalam sesi ini.", false, true);
         }
 
         boolean prepared = LocalHostManager.prepareSharedWorkspace(context);
@@ -407,9 +407,9 @@ public final class HostShellEngine {
 
         if (!prepared || !selected) {
             return CommandResult.error(
-                    "Nao foi possivel preparar a base do host antes do start.\n"
-                            + "Workspace preparado: " + (prepared ? "sim" : "nao") + "\n"
-                            + "Loopback salvo: " + (selected ? "sim" : "nao") + "\n"
+                    "Tidak dapat menyiapkan basis host sebelum start.\n"
+                            + "Ruang kerja dipersiapkan: " + (prepared ? "ya" : "tidak") + "\n"
+                            + "Loopback disimpan: " + (selected ? "ya" : "tidak") + "\n"
                             + "Workspace: " + LocalHostManager.getSharedWorkspacePath()
             );
         }
@@ -422,12 +422,12 @@ public final class HostShellEngine {
         File runtime = resolveRuntimeBinary(context);
         if (runtime == null) {
             return CommandResult.error(
-                    "Nenhum runtime ARM foi encontrado no pacote desta build.\n"
-                            + "Coloque um bundle compativel em "
+                    "Tidak ada runtime ARM ditemukan di paket build ini.\n"
+                            + "Letakkan bundle kompatibel di "
                             + new File(LocalHostManager.getSharedWorkspacePath(), "server").getAbsolutePath()
-                            + "\nou um binario solto em "
+                            + "\natau berkas biner terpisah di "
                             + new File(LocalHostManager.getSharedWorkspacePath(), "bin").getAbsolutePath()
-                            + "\nDepois rode host start de novo."
+                            + "\nSetelah itu jalankan host start lagi."
             );
         }
 
@@ -436,11 +436,11 @@ public final class HostShellEngine {
             try {
                 RuntimeWorkspace workspace = preparePackagedRuntimeWorkspace(context);
                 if (workspace == null) {
-                    return CommandResult.error("O runtime empacotado existe, mas a pasta interna nao foi preparada.");
+                    return CommandResult.error("runtime yang dikemas ada, tetapi folder internal belum disiapkan.");
                 }
                 serverDir = workspace.serverDir;
             } catch (IOException e) {
-                return CommandResult.error("Falha ao preparar o runtime interno.\nErro: " + e.getMessage());
+                return CommandResult.error("Gagal menyiapkan runtime internal.\nKesalahan: " + e.getMessage());
             }
         }
 
@@ -462,29 +462,29 @@ public final class HostShellEngine {
                 hostProcess = process;
                 hostStartedAtMs = System.currentTimeMillis();
             }
-            writeRuntimeState(context, STATE_STARTING, pid, hostStartedAtMs, "Host local iniciando na porta 7777...");
+            writeRuntimeState(context, STATE_STARTING, pid, hostStartedAtMs, "Host lokal sedang dimulai di port 7777...");
             startLogPump(process, logFile);
 
             HostStartupCheck startupCheck = waitForStartupReadiness(context, process);
 
             boolean stillRunning = process.isAlive();
             StringBuilder output = new StringBuilder();
-            output.append("Comando de start enviado.\n");
+            output.append("Perintah start dikirim.\n");
             output.append("Runtime: ").append(runtime.getAbsolutePath()).append("\n");
-            output.append("Diretorio: ").append(serverDir.getAbsolutePath()).append("\n");
+            output.append("Direktori: ").append(serverDir.getAbsolutePath()).append("\n");
             output.append("Log: ").append(logFile.getAbsolutePath()).append("\n");
             if (!TextUtils.isEmpty(bootstrapResult.message)) {
                 output.append(bootstrapResult.message).append("\n");
             }
-            output.append("Processo vivo: ").append(stillRunning ? "sim" : "nao");
+            output.append("Proses berjalan: ").append(stillRunning ? "ya" : "tidak");
             if (startupCheck.online) {
-                writeRuntimeState(context, STATE_ONLINE, pid, hostStartedAtMs, "Servidor local online na porta 7777.");
-                output.append("\nServidor pronto em ").append(startupCheck.elapsedMs).append(" ms.");
+                writeRuntimeState(context, STATE_ONLINE, pid, hostStartedAtMs, "Server lokal online di port 7777.");
+                output.append("\nServer siap di ").append(startupCheck.elapsedMs).append(" ms.");
             } else if (!stillRunning) {
-                writeRuntimeState(context, STATE_ERROR, 0L, 0L, "O processo do host saiu logo depois do start.");
-                output.append("\nO processo saiu rapido. Rode host logs para ver a saida.");
+                writeRuntimeState(context, STATE_ERROR, 0L, 0L, "Proses host keluar segera setelah dimulai.");
+                output.append("\nProses keluar cepat. Jalankan log host untuk melihat keluaran.");
             } else {
-                output.append("\nO host ainda esta aquecendo. Aguarde alguns segundos e atualize a tela.");
+                output.append("\nHost sedang disiapkan. Tunggu beberapa detik, lalu segarkan layar.");
             }
 
             return startupCheck.online
@@ -493,10 +493,10 @@ public final class HostShellEngine {
                     ? CommandResult.success(output.toString(), false, true)
                     : CommandResult.error(output.toString());
         } catch (Exception e) {
-            appendLogLine(logFile, timestamp() + " Falha ao iniciar runtime: " + e.getMessage());
-            writeRuntimeState(context, STATE_ERROR, 0L, 0L, "Falha ao iniciar o runtime do host.");
+            appendLogLine(logFile, timestamp() + " Gagal memulai runtime: " + e.getMessage());
+            writeRuntimeState(context, STATE_ERROR, 0L, 0L, "Gagal memulai runtime host.");
             return CommandResult.error(
-                    "Falha ao iniciar o runtime.\nVerifique host logs para detalhes.\nErro: " + e.getMessage()
+                    "Gagal memulai runtime.\nPeriksa log host untuk rincian.\nKesalahan: " + e.getMessage()
             );
         }
     }
@@ -541,9 +541,9 @@ public final class HostShellEngine {
                 hostStartedAtMs = 0L;
             }
             if (context != null) {
-                writeRuntimeState(context, STATE_STOPPED, 0L, 0L, "Host local desligado.");
+                writeRuntimeState(context, STATE_STOPPED, 0L, 0L, "Host lokal dimatikan.");
             }
-            return CommandResult.error("Nenhum processo de host local esta rodando agora.");
+            return CommandResult.error("Tidak ada proses host lokal yang sedang berjalan sekarang.");
         }
 
         synchronized (PROCESS_LOCK) {
@@ -551,25 +551,25 @@ public final class HostShellEngine {
             hostStartedAtMs = 0L;
         }
         if (context != null) {
-            writeRuntimeState(context, STATE_STOPPED, 0L, 0L, "Host local desligado.");
+            writeRuntimeState(context, STATE_STOPPED, 0L, 0L, "Host lokal dimatikan.");
         }
 
-        return CommandResult.success("Host local finalizado.", false, true);
+        return CommandResult.success("Host lokal dihentikan.", false, true);
     }
 
     private static CommandResult logs(Context context) {
         File logFile = getLogFile(context);
         if (!logFile.exists()) {
-            return CommandResult.error("Nenhum log do host foi gerado ainda.");
+            return CommandResult.error("Belum ada log host yang dihasilkan.");
         }
 
         List<String> lines = readTail(logFile, 24);
         if (lines.isEmpty()) {
-            return CommandResult.error("O log do host esta vazio.");
+            return CommandResult.error("Log host kosong.");
         }
 
         StringBuilder output = new StringBuilder();
-        output.append("Ultimas linhas de ").append(logFile.getAbsolutePath()).append(":\n");
+        output.append("Baris terakhir dari ").append(logFile.getAbsolutePath()).append(":\n");
         for (String line : lines) {
             output.append(line).append("\n");
         }
@@ -578,50 +578,50 @@ public final class HostShellEngine {
 
     private static String buildHelpText() {
         return "Host Shell\n"
-                + "host boot    -> prepara a base, ativa o loopback e sobe o host\n"
-                + "host install  -> prepara a base local, loopback e runtime interno\n"
-                + "host use-local -> marca 127.0.0.1:7777 como servidor ativo\n"
-                + "host status   -> mostra estado do host e do runtime\n"
-                + "host join     -> mostra como entrar via local, Wi-Fi e internet\n"
-                + "host pinggy   -> mostra o atalho e o script do tunel UDP\n"
-                + "host files    -> mostra os arquivos editaveis do servidor\n"
-                + "host start    -> sobe o runtime ARM empacotado ou externo\n"
-                + "host stop     -> encerra o processo local\n"
-                + "host logs     -> mostra as ultimas linhas do log\n"
-                + "host clear    -> limpa o console\n"
+                + "host boot    -> menyiapkan basis, mengaktifkan loopback, dan memulai host\n"
+                + "host install  -> menyiapkan basis lokal, loopback, dan runtime internal\n"
+                + "host use-local -> menandai 127.0.0.1:7777 sebagai server aktif\n"
+                + "host status   -> menampilkan status host dan runtime\n"
+                + "host join     -> menampilkan cara masuk melalui lokal, Wi-Fi, dan internet\n"
+                + "host pinggy   -> menampilkan pintasan dan skrip terowongan UDP\n"
+                + "Berkas host    -> menampilkan berkas yang dapat diedit di server\n"
+                + "host start    -> menjalankan runtime ARM bawaan atau eksternal\n"
+                + "host stop     -> menghentikan proses lokal\n"
+                + "host logs     -> menampilkan baris terbaru dari log\n"
+                + "host clear    -> membersihkan konsol\n"
                 + "\n"
-                + "Layouts aceitos:\n"
-                + "- runtime SA-MP ARM empacotado na APK\n"
+                + "Struktur yang didukung:\n"
+                + "- runtime SA-MP ARM yang disertakan dalam APK\n"
                 + "- assets/host-runtime/server/samp-server\n"
                 + "- assets/host-runtime/server/components/*.so\n"
                 + "- assets/host-runtime/bin/samp03svr-arm\n"
-                + "- jniLibs/<abi>/runtime do host SA-MP";
+                + "- jniLibs/<abi>/runtime host SA-MP";
     }
 
     private static String buildPinggyHelp() {
-        return "Tunel UDP via Pinggy\n"
-                + "Botao do launcher: Host > Abrir tunel remoto\n"
-                + "Motor interno: assets/tunnel/xyron-pinggy-udp-arm64\n"
+        return "Terowongan UDP via Pinggy\n"
+                + "Tombol launcher: Host > Buka terowongan jarak jauh\n"
+                + "Mesin internal: assets/tunnel/xyron-pinggy-udp-arm64\n"
                 + "Log: " + PinggyTunnelManager.getLogFile(HostRuntimeContextHolder.peek()).getAbsolutePath() + "\n"
                 + "\n"
-                + "Em aparelhos ARM64, o APK:\n"
-                + "- liga o host local se necessario\n"
-                + "- resolve o servidor Pinggy pelo Android\n"
-                + "- abre Pinggy UDP para localhost:" + LocalHostManager.LOCAL_PORT + "\n"
-                + "- mostra o endereco publico no painel Host\n"
+                + "Di perangkat ARM64, APK:\n"
+                + "- menyalakan host lokal jika perlu\n"
+                + "- menyelesaikan nama host server Pinggy di Android\n"
+                + "- membuka Pinggy UDP ke localhost:" + LocalHostManager.LOCAL_PORT + "\n"
+                + "- menampilkan alamat publik di panel Host\n"
                 + "\n"
                 + "Fallback Termux: " + LocalHostManager.getSharedPinggyScriptPath() + "\n"
-                + "O script:\n"
-                + "- verifica Node.js e npm\n"
-                + "- instala pinggy se faltar\n"
-                + "- abre: pinggy --type udp -l " + LocalHostManager.LOCAL_PORT + "\n"
+                + "Skrip:\n"
+                + "- memeriksa Node.js dan npm\n"
+                + "- menginstal pinggy jika belum ada\n"
+                + "- membuka: pinggy --type udp -l " + LocalHostManager.LOCAL_PORT + "\n"
                 + "\n"
-                + "A porta publica muda a cada nova sessao na faixa gratis.";
+                + "Port publik berubah setiap sesi baru pada paket gratis.";
     }
 
     public static CommandResult bootHost(Context context) {
         if (context == null) {
-            return CommandResult.error("Contexto do launcher indisponivel.");
+            return CommandResult.error("Konteks launcher tidak tersedia.");
         }
 
         CommandResult installResult = installHost(context);
@@ -632,7 +632,7 @@ public final class HostShellEngine {
 
         CommandResult startResult = startHost(context);
         StringBuilder output = new StringBuilder();
-        output.append("Fluxo rapido do host\n\n");
+        output.append("Proses penyiapan host\n\n");
         output.append(installResult.output);
         output.append("\n\n");
         output.append(startResult.output);
@@ -732,7 +732,7 @@ public final class HostShellEngine {
         syncImportedComponents(new File(sharedServerDir, COMPONENTS_DIR_NAME), componentsDir);
 
         if (linkedComponents == 0) {
-            throw new IOException("Nenhum componente empacotado foi encontrado em " + nativeDir.getAbsolutePath());
+            throw new IOException("Tidak ada komponen terpaket ditemukan di " + nativeDir.getAbsolutePath());
         }
 
         return new RuntimeWorkspace(serverDir, linkedComponents);
@@ -867,36 +867,44 @@ public final class HostShellEngine {
             return;
         }
         if (file.exists()) {
-            throw new IOException("Nao foi possivel remover " + file.getAbsolutePath());
+            throw new IOException("Tidak dapat menghapus " + file.getAbsolutePath());
         }
     }
 
     private static String firstUsefulLine(String output) {
         if (TextUtils.isEmpty(output)) {
-            return "Falha ao ligar o host local.";
+            return "Gagal menjalankan host lokal.";
         }
         String[] lines = output.split("\\r?\\n");
         for (String line : lines) {
             String value = line == null ? "" : line.trim();
             if (value.isEmpty()
                     || value.equalsIgnoreCase("Fluxo rapido do host")
+                    || value.equalsIgnoreCase("Proses penyiapan host")
                     || value.equalsIgnoreCase("Aceitos no host:")) {
                 continue;
             }
             if (value.toLowerCase(Locale.US).contains("falha")
                     || value.toLowerCase(Locale.US).contains("erro")
                     || value.toLowerCase(Locale.US).contains("processo saiu")
+                    || value.toLowerCase(Locale.US).contains("proses keluar")
+                    || value.toLowerCase(Locale.US).contains("keluar segera")
+                    || value.toLowerCase(Locale.US).contains("gagal")
+                    || value.toLowerCase(Locale.US).contains("tidak berhasil")
+                    || value.toLowerCase(Locale.US).contains("tidak dapat")
+                    || value.toLowerCase(Locale.US).contains("tidak bisa")
                     || value.toLowerCase(Locale.US).contains("nao foi possivel")) {
                 return value;
             }
         }
         for (String line : lines) {
             String value = line == null ? "" : line.trim();
-            if (!value.isEmpty() && !value.equalsIgnoreCase("Fluxo rapido do host")) {
+            if (!value.isEmpty() && !value.equalsIgnoreCase("Fluxo rapido do host")
+                    && !value.equalsIgnoreCase("Proses penyiapan host")) {
                 return value;
             }
         }
-        return "Falha ao ligar o host local.";
+        return "Gagal menjalankan host lokal.";
     }
 
     private static void copyFileIfPresent(File sourceFile, File targetFile) throws IOException {
@@ -921,10 +929,10 @@ public final class HostShellEngine {
 
     private static void ensureDir(File dir) throws IOException {
         if (dir == null) {
-            throw new IOException("Diretorio do runtime invalido.");
+            throw new IOException("Direktori runtime tidak valid.");
         }
         if (!dir.exists() && !dir.mkdirs()) {
-            throw new IOException("Nao foi possivel criar " + dir.getAbsolutePath());
+            throw new IOException("Tidak dapat membuat " + dir.getAbsolutePath());
         }
     }
 
@@ -1001,13 +1009,13 @@ public final class HostShellEngine {
                     if (context != null && line.contains("Legacy Network started on port")) {
                         sawOnlineLine = true;
                         writeRuntimeState(context, STATE_ONLINE, getProcessPid(process), hostStartedAtMs,
-                                "Servidor local online na porta 7777.");
+                                "Server lokal online di port 7777.");
                     }
                 }
             } catch (IOException e) {
-                appendLogLine(logFile, timestamp() + " Falha ao ler saida do runtime: " + e.getMessage());
+                appendLogLine(logFile, timestamp() + " Gagal membaca keluaran runtime: " + e.getMessage());
                 if (context != null && isHostRunning()) {
-                    writeRuntimeState(context, STATE_ERROR, 0L, 0L, "A leitura do runtime foi interrompida.");
+                    writeRuntimeState(context, STATE_ERROR, 0L, 0L, "Pembacaan runtime terhenti.");
                 }
             } finally {
                 boolean wasCurrentProcess = false;
@@ -1021,12 +1029,12 @@ public final class HostShellEngine {
                 if (context != null && wasCurrentProcess) {
                     boolean stillOnline = sawOnlineLine && probeLoopbackAfterPipeClose();
                     if (stillOnline) {
-                        appendLogLine(logFile, timestamp() + " Runtime principal fechou o pipe, mas o host segue respondendo no loopback.");
+                        appendLogLine(logFile, timestamp() + " Runtime utama menutup pipe, tetapi host masih merespons melalui loopback.");
                         writeRuntimeState(context, STATE_ONLINE, 0L, System.currentTimeMillis(),
-                                "Servidor local online na porta 7777.");
+                                "Server lokal online di port 7777.");
                     } else {
-                        appendLogLine(logFile, timestamp() + " Runtime do host finalizado ou sem resposta no loopback.");
-                        writeRuntimeState(context, STATE_STOPPED, 0L, 0L, "Host local desligado.");
+                        appendLogLine(logFile, timestamp() + " Runtime host telah berhenti atau tidak merespons melalui loopback.");
+                        writeRuntimeState(context, STATE_STOPPED, 0L, 0L, "Host lokal dimatikan.");
                     }
                 }
             }
@@ -1040,10 +1048,10 @@ public final class HostShellEngine {
             return "";
         }
         if (line.startsWith("Starting open.mp server")) {
-            return "Starting SA-MP compatible host runtime";
+            return "Memulai runtime host kompatibel SA-MP";
         }
         if (line.contains("Couldn't announce legacy network to open.mp list")) {
-            return "[SA-MP] Anuncio externo ignorado; o host local continua online na porta 7777.";
+            return "[SA-MP] Pengumuman eksternal diabaikan; host lokal tetap online di port 7777.";
         }
         return line;
     }
@@ -1095,7 +1103,7 @@ public final class HostShellEngine {
     private static BootstrapResult ensureBootstrapGamemode(Context context) {
         File gamemodesDir = LocalHostManager.getSharedGamemodesDirectory();
         if (context == null || gamemodesDir == null) {
-            return BootstrapResult.error("A pasta de gamemodes do host nao esta disponivel.");
+            return BootstrapResult.error("Folder gamemodes host tidak tersedia.");
         }
         if (!gamemodesDir.exists()) {
             gamemodesDir.mkdirs();
@@ -1128,7 +1136,7 @@ public final class HostShellEngine {
         }
 
         if (!writeBootstrapSource(bootstrapSource)) {
-            return BootstrapResult.error("Nao foi possivel criar o gamemode bootstrap do host.");
+            return BootstrapResult.error("Tidak dapat membuat gamemode bootstrap host.");
         }
 
         PawnCompilerManager.CompileResult compileResult = PawnCompilerManager.compile(
@@ -1138,12 +1146,12 @@ public final class HostShellEngine {
         if (compileResult == null || !compileResult.success) {
             String compileOutput = compileResult == null ? "" : compileResult.output;
             return BootstrapResult.error(
-                    "O host local nao conseguiu gerar o gamemode bootstrap.\n"
+                    "Host lokal gagal menghasilkan gamemode bootstrap.\n"
                             + (TextUtils.isEmpty(compileOutput) ? "" : compileOutput)
             );
         }
 
-        return BootstrapResult.success("Gamemode bootstrap gerado: " + BOOTSTRAP_GAMEMODE_NAME + ".amx");
+        return BootstrapResult.success("Gamemode bootstrap dibuat: " + BOOTSTRAP_GAMEMODE_NAME + ".amx");
     }
 
     private static boolean isGeneratedBootstrapSource(String content) {

@@ -81,13 +81,13 @@ public final class PickupStudioManager {
 
     public static synchronized SaveResult savePickup(Context context, PickupDefinition input) {
         if (context == null) {
-            return SaveResult.error("Contexto indisponivel.");
+            return SaveResult.error("Konteks tidak tersedia.");
         }
         if (input == null) {
-            return SaveResult.error("Pickup invalido.");
+            return SaveResult.error("Pickup tidak valid.");
         }
         if (!prepareWorkspace(context)) {
-            return SaveResult.error("Nao foi possivel preparar a workspace do host.");
+            return SaveResult.error("Tidak dapat menyiapkan workspace host.");
         }
 
         PickupDefinition sanitized = input.sanitized();
@@ -118,7 +118,7 @@ public final class PickupStudioManager {
         }
 
         if (!writePickupList(context, pickups)) {
-            return SaveResult.error("Nao foi possivel salvar este pickup.");
+            return SaveResult.error("Tidak dapat menyimpan pickup ini.");
         }
 
         ExportResult exportResult = exportAll(context);
@@ -132,10 +132,10 @@ public final class PickupStudioManager {
 
     public static synchronized DeleteResult deletePickup(Context context, String pickupId) {
         if (context == null) {
-            return DeleteResult.error("Contexto indisponivel.");
+            return DeleteResult.error("Konteks tidak tersedia.");
         }
         if (TextUtils.isEmpty(pickupId)) {
-            return DeleteResult.error("Pickup invalido.");
+            return DeleteResult.error("Pickup tidak valid.");
         }
 
         List<PickupDefinition> pickups = loadPickups(context);
@@ -149,10 +149,10 @@ public final class PickupStudioManager {
             }
         }
         if (!removed) {
-            return DeleteResult.error("Pickup nao encontrado.");
+            return DeleteResult.error("Pickup tidak ditemukan.");
         }
         if (!writePickupList(context, pickups)) {
-            return DeleteResult.error("Nao foi possivel remover este pickup.");
+            return DeleteResult.error("Tidak dapat menghapus pickup ini.");
         }
         ExportResult exportResult = exportAll(context);
         return new DeleteResult(true, "Pickup removido.", exportResult);
@@ -160,24 +160,24 @@ public final class PickupStudioManager {
 
     public static synchronized ExportResult exportAll(Context context) {
         if (context == null) {
-            return ExportResult.error("Contexto indisponivel.");
+            return ExportResult.error("Konteks tidak tersedia.");
         }
         if (!LocalHostManager.prepareSharedWorkspace(context)) {
-            return ExportResult.error("Nao foi possivel preparar o host para exportar.");
+            return ExportResult.error("Tidak dapat menyiapkan host untuk diekspor.");
         }
 
         List<PickupDefinition> pickups = loadPickups(context);
         File exportFile = getExportFile(context);
         if (exportFile == null) {
-            return ExportResult.error("Arquivo de exportacao indisponivel.");
+            return ExportResult.error("Berkas ekspor tidak tersedia.");
         }
         if (!writeText(exportFile, buildExportFileContent(pickups))) {
-            return ExportResult.error("Nao foi possivel gerar o arquivo de exportacao.");
+            return ExportResult.error("Tidak dapat membuat berkas ekspor.");
         }
         return new ExportResult(
                 true,
                 pickups.isEmpty()
-                        ? "Arquivo de exportacao atualizado sem pickups salvos."
+                        ? "Berkas ekspor diperbarui tanpa pickup yang tersimpan."
                         : pickups.size() + " pickup(s) exportado(s).",
                 exportFile.getAbsolutePath(),
                 pickups.size()
@@ -251,12 +251,12 @@ public final class PickupStudioManager {
     private static String buildExportFileContent(List<PickupDefinition> pickups) {
         StringBuilder builder = new StringBuilder();
         builder.append("// Xyron Pickup Studio\n");
-        builder.append("// Gerado automaticamente pelo launcher.\n");
-        builder.append("// Arquivo base: server/scriptfiles/").append(STUDIO_DIR_NAME).append("/").append(DATA_FILE_NAME).append("\n\n");
+        builder.append("// Dihasilkan secara otomatis oleh launcher.\n");
+        builder.append("// Berkas dasar: server/scriptfiles/").append(STUDIO_DIR_NAME).append("/").append(DATA_FILE_NAME).append("\n\n");
         builder.append("stock Xyron_LoadStudioPickups()\n");
         builder.append("{\n");
         if (pickups == null || pickups.isEmpty()) {
-            builder.append("    // Nenhum pickup salvo ainda.\n");
+            builder.append("    // Belum ada pickup yang disimpan.\n");
             builder.append("    return 1;\n");
             builder.append("}\n");
             return builder.toString();
@@ -277,7 +277,7 @@ public final class PickupStudioManager {
                 + "\n"
                 + "- xyron_pickups.json guarda os pickups criados dentro do jogo.\n"
                 + "- xyron_pickups_export.inc e regenerado automaticamente.\n"
-                + "- Edite a lista pelo comando /criarpickup dentro do APK.\n";
+                + "- Sunting daftar dengan perintah /criarpickup di dalam APK.\n";
     }
 
     private static String sanitizePawnIdentifier(String raw) {
@@ -462,7 +462,7 @@ public final class PickupStudioManager {
         }
 
         static ExportResult error(String message) {
-            return new ExportResult(false, TextUtils.isEmpty(message) ? "Falha ao exportar." : message, "", 0);
+            return new ExportResult(false, TextUtils.isEmpty(message) ? "Gagal mengekspor." : message, "", 0);
         }
     }
 }

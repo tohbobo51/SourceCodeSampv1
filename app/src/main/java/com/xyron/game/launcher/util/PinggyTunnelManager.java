@@ -56,46 +56,46 @@ public final class PinggyTunnelManager {
 
     public static LaunchStatus startTunnel(Context context) {
         if (context == null) {
-            return LaunchStatus.failure("Contexto do launcher indisponivel.");
+            return LaunchStatus.failure("Konteks launcher tidak tersedia.");
         }
 
         Context appContext = context.getApplicationContext();
         if (!isInternalTunnelSupported()) {
-            return LaunchStatus.failure("Este aparelho nao anunciou suporte ARM64 para o motor interno do tunel.");
+            return LaunchStatus.failure("Perangkat ini tidak mengumumkan dukungan ARM64 untuk mesin internal terowongan.");
         }
 
         TunnelState existingState = getState(appContext);
         if (isTunnelRunning(appContext)) {
             if (!TextUtils.isEmpty(existingState.publicUrl)) {
-                return LaunchStatus.success("Tunel remoto ja esta ligado: " + existingState.publicUrl, existingState.publicUrl);
+                return LaunchStatus.success("Terowongan jarak jauh sudah terhubung: " + existingState.publicUrl, existingState.publicUrl);
             }
-            return LaunchStatus.success("Tunel remoto ja esta iniciando. Aguarde o endereco publico aparecer.", "");
+            return LaunchStatus.success("Terowongan jarak jauh sedang dimulai. Tunggu alamat publik muncul.", "");
         }
 
         if (!LocalHostManager.prepareSharedWorkspace(appContext)) {
-            return LaunchStatus.failure("Nao foi possivel preparar a pasta do host antes do tunel.");
+            return LaunchStatus.failure("Tidak dapat menyiapkan folder host sebelum terowongan.");
         }
 
         File binary;
         try {
             binary = ensureTunnelBinary(appContext);
         } catch (IOException e) {
-            return LaunchStatus.failure("Nao consegui preparar o motor interno do tunel: " + e.getMessage());
+            return LaunchStatus.failure("Gagal menyiapkan mesin internal terowongan: " + e.getMessage());
         }
 
         String serverEndpoint = resolvePinggyEndpoint(appContext);
         if (TextUtils.isEmpty(serverEndpoint)) {
-            return LaunchStatus.failure("Nao consegui resolver o servidor do Pinggy nesta rede.");
+            return LaunchStatus.failure("Tidak dapat menyelesaikan alamat server Pinggy di jaringan ini.");
         }
 
         File runtimeDir = getRuntimeDir(appContext);
         if (!runtimeDir.exists() && !runtimeDir.mkdirs()) {
-            return LaunchStatus.failure("Nao foi possivel criar a pasta interna do tunel.");
+            return LaunchStatus.failure("Tidak dapat membuat folder internal terowongan.");
         }
 
         File logFile = getLogFile(appContext);
-        appendLogLine(logFile, timestamp() + " Iniciando tunel interno para "
-                + LocalHostManager.getLoopbackAddress() + " via " + serverEndpoint);
+        appendLogLine(logFile, timestamp() + " Memulai terowongan internal ke "
+                + LocalHostManager.getLoopbackAddress() + " melalui " + serverEndpoint);
 
         ArrayList<String> command = new ArrayList<>();
         command.add(binary.getAbsolutePath());
@@ -119,24 +119,24 @@ public final class PinggyTunnelManager {
                 tunnelStartedAtMs = System.currentTimeMillis();
             }
             writeState(appContext, STATUS_STARTING, pid, tunnelStartedAtMs, "",
-                    "Tunel remoto iniciando pelo APK...");
+                    "Terowongan jarak jauh sedang dimulai oleh APK...");
             startLogPump(appContext, process, logFile);
 
             TunnelStartup startup = waitForStartup(appContext, process);
             if (!TextUtils.isEmpty(startup.publicUrl)) {
-                return LaunchStatus.success("Tunel remoto ligado: " + startup.publicUrl, startup.publicUrl);
+                return LaunchStatus.success("Terowongan jarak jauh terhubung: " + startup.publicUrl, startup.publicUrl);
             }
             if (!TextUtils.isEmpty(startup.error)) {
                 return LaunchStatus.failure(startup.error);
             }
             if (process.isAlive()) {
-                return LaunchStatus.success("Tunel remoto iniciado. Aguarde o endereco publico aparecer.", "");
+                return LaunchStatus.success("Terowongan jarak jauh dimulai. Tunggu alamat publik muncul.", "");
             }
-            return LaunchStatus.failure("O motor interno do tunel fechou antes de gerar o endereco publico.");
+            return LaunchStatus.failure("Mesin internal terowongan berhenti sebelum menghasilkan alamat publik.");
         } catch (IOException e) {
-            writeState(appContext, STATUS_ERROR, 0L, 0L, "", "Falha ao abrir tunel: " + e.getMessage());
-            appendLogLine(logFile, timestamp() + " Falha ao iniciar processo: " + e.getMessage());
-            return LaunchStatus.failure("Falha ao abrir o tunel interno: " + e.getMessage());
+            writeState(appContext, STATUS_ERROR, 0L, 0L, "", "Gagal membuka terowongan: " + e.getMessage());
+            appendLogLine(logFile, timestamp() + " Gagal memulai proses: " + e.getMessage());
+            return LaunchStatus.failure("Gagal membuka terowongan internal: " + e.getMessage());
         }
     }
 
@@ -171,7 +171,7 @@ public final class PinggyTunnelManager {
         if (state.pid > 0L) {
             stopped = killPid(state.pid) || stopped;
         }
-        writeState(appContext, STATUS_STOPPED, 0L, 0L, "", "Tunel remoto desligado.");
+        writeState(appContext, STATUS_STOPPED, 0L, 0L, "", "Terowongan jarak jauh dimatikan.");
         return stopped;
     }
 
@@ -247,8 +247,8 @@ public final class PinggyTunnelManager {
 
         TunnelState state = new TunnelState(status, pid, startedAtMs, publicUrl, note);
         if ((state.isOnline() || state.isStarting()) && pid > 0L && !isPidAlive(pid)) {
-            writeState(context, STATUS_STOPPED, 0L, 0L, "", "Tunel remoto desligado.");
-            return new TunnelState(STATUS_STOPPED, 0L, 0L, "", "Tunel remoto desligado.");
+            writeState(context, STATUS_STOPPED, 0L, 0L, "", "Terowongan jarak jauh dimatikan.");
+            return new TunnelState(STATUS_STOPPED, 0L, 0L, "", "Terowongan jarak jauh dimatikan.");
         }
         return state;
     }
@@ -256,7 +256,7 @@ public final class PinggyTunnelManager {
     private static File ensureTunnelBinary(Context context) throws IOException {
         File runtimeDir = getRuntimeDir(context);
         if (!runtimeDir.exists() && !runtimeDir.mkdirs()) {
-            throw new IOException("pasta interna indisponivel");
+            throw new IOException("folder internal tidak tersedia");
         }
 
         File binary = new File(runtimeDir, BINARY_FILE_NAME);
@@ -338,7 +338,7 @@ public final class PinggyTunnelManager {
                 if (state.isError()) {
                     return TunnelStartup.error(state.note);
                 }
-                return TunnelStartup.error("O motor interno do tunel foi encerrado.");
+                return TunnelStartup.error("Mesin internal terowongan berhenti.");
             }
             try {
                 Thread.sleep(250L);
@@ -362,7 +362,7 @@ public final class PinggyTunnelManager {
                     parseTunnelLine(appContext, pid, line);
                 }
             } catch (IOException e) {
-                appendLogLine(logFile, timestamp() + " Falha ao ler tunel: " + e.getMessage());
+                appendLogLine(logFile, timestamp() + " Gagal membaca terowongan: " + e.getMessage());
             } finally {
                 boolean wasCurrentProcess = false;
                 synchronized (PROCESS_LOCK) {
@@ -376,7 +376,7 @@ public final class PinggyTunnelManager {
                     TunnelState state = getState(appContext);
                     if (!state.isError()) {
                         writeState(appContext, STATUS_STOPPED, 0L, 0L, "",
-                                "Tunel remoto desligado.");
+                                "Terowongan jarak jauh dimatikan.");
                     }
                 }
             }
@@ -391,15 +391,15 @@ public final class PinggyTunnelManager {
             String rawPublicUrl = line.substring("XYRON_TUNNEL_URL ".length()).trim();
             String publicAddress = resolveNumericPublicAddress(rawPublicUrl);
             writeState(context, STATUS_ONLINE, pid, getStartedAtMs(), publicAddress,
-                    "Tunel remoto online: " + publicAddress);
+                    "Terowongan jarak jauh online: " + publicAddress);
         } else if (line.startsWith("XYRON_TUNNEL_ERROR ")) {
             String message = line.substring("XYRON_TUNNEL_ERROR ".length()).trim();
-            writeState(context, STATUS_ERROR, 0L, 0L, "", "Falha no tunel remoto: " + message);
+            writeState(context, STATUS_ERROR, 0L, 0L, "", "Kesalahan pada terowongan jarak jauh: " + message);
         } else if ("XYRON_TUNNEL_READY".equals(line)) {
             TunnelState state = getState(context);
             if (TextUtils.isEmpty(state.publicUrl)) {
                 writeState(context, STATUS_STARTING, pid, getStartedAtMs(), "",
-                        "Tunel conectado, aguardando endereco publico...");
+                        "Terowongan tersambung, menunggu alamat publik...");
             }
         }
     }

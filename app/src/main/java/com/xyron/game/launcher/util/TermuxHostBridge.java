@@ -32,44 +32,44 @@ public final class TermuxHostBridge {
 
     public static LaunchStatus prepareAndStart(Context context) {
         if (context == null) {
-            return LaunchStatus.failure("Contexto invalido.");
+            return LaunchStatus.failure("Konteks tidak valid.");
         }
 
         if (!isTermuxInstalled(context)) {
-            return LaunchStatus.failure("O Termux nao esta instalado neste aparelho.");
+            return LaunchStatus.failure("Termux tidak terpasang di perangkat ini.");
         }
 
         boolean prepared = LocalHostManager.prepareSharedWorkspace(context);
         boolean selected = LocalHostManager.selectLoopbackServer(context);
         if (!prepared || !selected) {
-            return LaunchStatus.failure("Nao foi possivel preparar o pacote local para o Termux.");
+            return LaunchStatus.failure("Tidak dapat menyiapkan paket lokal untuk Termux.");
         }
 
         return startSharedScript(
                 context,
                 LocalHostManager.getSharedTermuxScriptPath(),
-                "Termux chamado para abrir o host local. Se ele recusar, confira a permissao RUN_COMMAND e o allow-external-apps."
+                "Termux dipanggil untuk membuka host lokal. Jika ia menolak, periksa izin RUN_COMMAND dan allow-external-apps."
         );
     }
 
     public static LaunchStatus prepareAndStartPinggyUdp(Context context) {
         if (context == null) {
-            return LaunchStatus.failure("Contexto invalido.");
+            return LaunchStatus.failure("Konteks tidak valid.");
         }
 
         if (!isTermuxInstalled(context)) {
-            return LaunchStatus.failure("O Termux nao esta instalado neste aparelho.");
+            return LaunchStatus.failure("Termux tidak terpasang di perangkat ini.");
         }
 
         boolean prepared = LocalHostManager.prepareSharedWorkspace(context);
         if (!prepared) {
-            return LaunchStatus.failure("Nao foi possivel preparar os arquivos de acesso remoto.");
+            return LaunchStatus.failure("Tidak dapat menyiapkan berkas akses jarak jauh.");
         }
 
         return startSharedScript(
                 context,
                 LocalHostManager.getSharedPinggyScriptPath(),
-                "Termux chamado para abrir o tunel UDP do Pinggy. O endereco publico vai aparecer na tela do Termux."
+                "Termux dipanggil untuk membuka terowongan UDP Pinggy. Alamat publik akan muncul di layar Termux."
         );
     }
 
@@ -100,11 +100,11 @@ public final class TermuxHostBridge {
             return LaunchStatus.success(successMessage);
         } catch (SecurityException securityException) {
             return LaunchStatus.failure(
-                    "Permissao do Termux bloqueada. Conceda ao launcher a permissao extra de rodar comandos no Termux."
+                    "Izin Termux diblokir. Berikan launcher izin tambahan untuk menjalankan perintah di Termux."
             );
         } catch (Exception exception) {
             return LaunchStatus.failure(
-                    "Falha ao chamar o Termux. Abra o Termux, rode termux-setup-storage e ative allow-external-apps=true."
+                    "Gagal memanggil Termux. Buka Termux, jalankan termux-setup-storage dan aktifkan allow-external-apps=true."
             );
         }
     }
