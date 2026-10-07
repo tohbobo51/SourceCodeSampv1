@@ -35,7 +35,7 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="COMANDO /CRIARPICKUP"
+                android:text="PERINTAH /CRIARPICKUP"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="8sp" />
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Crie, visualize e exporte pickups sem sair do jogo."
+            android:text="Buat, lihat, dan ekspor pickups tanpa keluar dari permainan."
             android:textColor="#AFC5E4"
             android:textSize="10sp" />
 
@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Status do estúdio"
+                        android:text="Status studio"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Configurar pickup"
+                        android:text="Atur pickup"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Salve uma base e use a captura para puxar a posicao atual do player."
+                        android:text="Simpan sebuah basis dan gunakan fitur tangkap untuk mengambil posisi pemain saat ini."
                         android:textColor="#A4BAD9"
                         android:textSize="9sp" />
 
@@ -153,7 +153,7 @@
                         android:layout_marginTop="14dp"
                         android:background="@drawable/pickup_studio_field_surface"
                         android:fontFamily="@font/montserrat_medium"
-                        android:hint="Nome do pickup"
+                        android:hint="Nama pickup"
                         android:imeOptions="actionNext"
                         android:paddingStart="14dp"
                         android:paddingEnd="14dp"
@@ -174,7 +174,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/pickup_studio_field_surface"
                             android:fontFamily="@font/montserrat_medium"
-                            android:hint="Modelo"
+                            android:hint="Model"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:paddingStart="14dp"
@@ -190,7 +190,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/pickup_studio_field_surface"
                             android:fontFamily="@font/montserrat_medium"
-                            android:hint="Tipo"
+                            android:hint="Tipe"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:paddingStart="14dp"
@@ -212,7 +212,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/pickup_studio_field_surface"
                             android:fontFamily="@font/montserrat_medium"
-                            android:hint="World"
+                            android:hint="Dunia"
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:paddingStart="14dp"
@@ -304,7 +304,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/pickup_studio_field_surface"
                             android:fontFamily="@font/montserrat_medium"
-                            android:hint="Valor"
+                            android:hint="Jumlah"
                             android:imeOptions="actionDone"
                             android:inputType="number"
                             android:paddingStart="14dp"
@@ -327,7 +327,7 @@
                             android:background="@drawable/pickup_studio_secondary_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Capturar posicao"
+                            android:text="Tangkap posisi"
                             android:textColor="@android:color/white"
                             android:textSize="9sp" />
 
@@ -340,7 +340,7 @@
                             android:background="@drawable/pickup_studio_secondary_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Mostrar no jogo"
+                            android:text="Tampilkan dalam permainan"
                             android:textColor="@android:color/white"
                             android:textSize="9sp" />
                     </LinearLayout>
@@ -359,7 +359,7 @@
                             android:background="@drawable/pickup_studio_secondary_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Novo"
+                            android:text="Baru"
                             android:textColor="@android:color/white"
                             android:textSize="10sp" />
 
@@ -372,7 +372,7 @@
                             android:background="@drawable/pickup_studio_primary_button"
                             android:fontFamily="@font/montserrat_black"
                             android:gravity="center"
-                            android:text="Salvar pickup"
+                            android:text="Simpan pickup"
                             android:textColor="@android:color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
@@ -402,7 +402,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Biblioteca de pickups"
+                                android:text="Perpustakaan pickup"
                                 android:textColor="@android:color/white"
                                 android:textSize="11sp" />
 
@@ -425,7 +425,7 @@
                             android:gravity="center"
                             android:paddingStart="16dp"
                             android:paddingEnd="16dp"
-                            android:text="Exportar lista"
+                            android:text="Ekspor daftar"
                             android:textColor="@android:color/white"
                             android:textSize="9sp" />
                     </LinearLayout>
@@ -439,7 +439,7 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center"
                         android:padding="16dp"
-                        android:text="Nenhum pickup salvo ainda."
+                        android:text="Belum ada pickup yang disimpan."
                         android:textColor="#A6BEDF"
                         android:textSize="9.5sp" />
 

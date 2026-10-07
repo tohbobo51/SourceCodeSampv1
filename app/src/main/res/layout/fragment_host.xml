@@ -61,7 +61,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                        android:text="CONTROL CENTER"
+                        android:text="PUSAT KONTROL"
                         android:textAllCaps="true"
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="7.5sp" />
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/montserrat_black"
-                    android:text="Host local"
+                    android:text="Host lokal"
                     android:textColor="@android:color/white"
                     android:textSize="21sp" />
 
@@ -83,7 +83,7 @@
                     android:maxWidth="720dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:lineSpacingExtra="3dp"
-                    android:text="Controle o servidor, veja os enderecos de entrada e acesse arquivos sem sair do launcher."
+                    android:text="Kontrol server, lihat alamat masuk, dan akses berkas tanpa meninggalkan peluncur."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="9.5sp" />
 
@@ -111,7 +111,7 @@
                             android:paddingTop="6dp"
                             android:paddingEnd="12dp"
                             android:paddingBottom="6dp"
-                            android:text="BASE"
+                            android:text="BASIS"
                             android:textAllCaps="true"
                             android:textColor="@android:color/white"
                             android:textSize="7.8sp" />
@@ -123,7 +123,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_black"
-                            android:text="Host local em preparacao"
+                            android:text="Host lokal dalam persiapan"
                             android:textColor="@android:color/white"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -156,7 +156,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Base local"
+                                android:text="Basis lokal"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -183,7 +183,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Loopback do launcher"
+                                android:text="Loopback pada launcher"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -213,7 +213,7 @@
                         android:background="@drawable/file_browser_primary_action"
                         android:fontFamily="@font/montserrat_bold"
                         android:gravity="center"
-                        android:text="Ligar host"
+                        android:text="Nyalakan host"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
 
@@ -226,7 +226,7 @@
                         android:background="@drawable/file_browser_secondary_action"
                         android:fontFamily="@font/montserrat_bold"
                         android:gravity="center"
-                        android:text="Desligar host"
+                        android:text="Matikan host"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -258,7 +258,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Entradas e rede"
+                        android:text="Masukan dan jaringan"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -267,7 +267,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Escolha uma opcao. O host e unico; so o acesso remoto abre tunel pela internet."
+                        android:text="Pilih sebuah opsi. Host bersifat tunggal; hanya akses jarak jauh yang membuka terowongan lewat internet."
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="8.6sp" />
 
@@ -290,7 +290,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Mesmo aparelho"
+                                android:text="Perangkat yang sama"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -318,7 +318,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Mesma rede"
+                                android:text="Jaringan yang sama"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -346,7 +346,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Acesso remoto"
+                                android:text="Akses jarak jauh"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -387,7 +387,7 @@
                             android:background="@drawable/file_browser_primary_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Mesmo aparelho"
+                            android:text="Perangkat yang sama"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -400,7 +400,7 @@
                             android:background="@drawable/file_browser_ghost_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Mesma rede"
+                            android:text="Jaringan yang sama"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -413,7 +413,7 @@
                             android:background="@drawable/file_browser_secondary_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Acesso remoto"
+                            android:text="Akses jarak jauh"
                             android:textColor="@android:color/white"
                             android:textSize="8.4sp" />
                     </LinearLayout>
@@ -431,7 +431,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Arquivos do servidor"
+                        android:text="Berkas server"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -441,7 +441,7 @@
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/montserrat_medium"
                         android:lineSpacingExtra="2dp"
-                        android:text="Abra a estrutura do host como gerenciador de arquivos, entre nas pastas, edite configs, envie gamemodes e organize tudo dentro do APK."
+                        android:text="Buka struktur host sebagai pengelola berkas, masuk ke folder, sunting konfigurasi, kirim gamemodes, dan atur semuanya di dalam APK."
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="8.8sp" />
 
@@ -453,7 +453,7 @@
                         android:background="@drawable/file_browser_primary_action"
                         android:fontFamily="@font/montserrat_bold"
                         android:gravity="center"
-                        android:text="Abrir gerenciador de arquivos do servidor"
+                        android:text="Buka pengelola berkas server"
                         android:textColor="@android:color/white"
                         android:textSize="9.4sp" />
                 </LinearLayout>

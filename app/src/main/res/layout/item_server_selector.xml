@@ -43,7 +43,7 @@
             android:paddingTop="5dp"
             android:paddingEnd="10dp"
             android:paddingBottom="5dp"
-            android:text="SALVO"
+            android:text="TERSIMPAN"
             android:textAllCaps="true"
             android:textColor="@color/launcher_text_secondary"
             android:textSize="7sp" />
@@ -98,7 +98,7 @@
             android:minWidth="96dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Selecionar"
+            android:text="Pilih"
             android:textColor="@android:color/white"
             android:textSize="9sp" />
 
@@ -113,7 +113,7 @@
             android:minWidth="90dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Remover"
+            android:text="Hapus"
             android:textColor="@android:color/white"
             android:textSize="9sp" />
     </LinearLayout>

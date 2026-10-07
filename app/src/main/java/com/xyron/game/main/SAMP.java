@@ -368,7 +368,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
                     : host + ":" + port;
             Toast.makeText(
                     this,
-                    "Nao foi possivel conectar em " + address + ". Voltando ao launcher.",
+                    "Tidak dapat terhubung ke " + address + ". Voltando ao launcher.",
                     Toast.LENGTH_LONG
             ).show();
 
@@ -1212,7 +1212,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
                 saveHudRenderSettings();
                 applyHudRenderSettingsRuntime();
                 hideHudSettingsPanel();
-                Toast.makeText(this, "Renderizacao aplicada.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Rendering diterapkan.", Toast.LENGTH_SHORT).show();
             });
         }
 
@@ -1362,7 +1362,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
     private void showHudSettingsPanel() {
         initializeHudSettingsPanel();
         if (hudSettingsPanel == null) {
-            Toast.makeText(this, "Painel de configuracao indisponivel.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Panel konfigurasi tidak tersedia.", Toast.LENGTH_SHORT).show();
             return;
         }
         hidePhoneOverlayInternal();
@@ -1953,7 +1953,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
         runOnUiThread(() -> {
             WebView overlay = ensureRuntimeOverlayConfigured("weaponWheel");
             if (framewebWeaponWheel == null || overlay == null) {
-                Toast.makeText(this, "Roleta de armas indisponivel.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Roda senjata tidak tersedia.", Toast.LENGTH_SHORT).show();
                 return;
             }
             hideHudSettingsPanel();
@@ -2723,7 +2723,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             } catch (JSONException ignored) {
             }
             dispatchRuntimeCallback(target, "window.XyronRuntimeReceiveVoice", payload);
-            Toast.makeText(this, "Permissao de microfone nao concedida.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Izin mikrofon tidak diberikan.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -2741,7 +2741,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             } catch (JSONException ignored) {
             }
             dispatchRuntimeCallback(target, "window.XyronRuntimeReceiveVoice", payload);
-            Toast.makeText(this, "Reconhecimento de voz indisponivel.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Pengenalan suara tidak tersedia.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -2887,7 +2887,7 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
         public void mensagem() {
             runOnUiThread(() -> Toast.makeText(
                     SAMP.this,
-                    "Bridge ativa no runtime.",
+                    "Bridge aktif saat runtime.",
                     Toast.LENGTH_SHORT
             ).show());
         }

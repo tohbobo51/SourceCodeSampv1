@@ -84,7 +84,7 @@ public class DonateFragment extends Fragment {
                 ? ""
                 : amountField.getText().toString().trim();
         if (amount.isEmpty()) {
-            Toast.makeText(getContext(), "Escolha um pacote ou informe um valor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Pilih paket atau masukkan nilai.", Toast.LENGTH_SHORT).show();
             return;
         }
 

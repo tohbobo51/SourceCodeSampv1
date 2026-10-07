@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="id-ID">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Xyron Inventory</title>
+    <title>Inventaris Xyron</title>
     <style>
         @font-face {
             font-family: "HelveticaMedium";
@@ -528,17 +528,17 @@
 <main class="stage">
     <section class="inventory">
         <header class="hero">
-            <h1 class="title">INVENTÁRIO</h1>
-            <span class="subtitle">MOCHILA</span>
+            <h1 class="title">INVENTARIS</h1>
+            <span class="subtitle">RANSEL</span>
         </header>
         <span class="hero-line" aria-hidden="true"></span>
 
         <header class="weight-card">
-            <span class="weight-label">PESO</span>
+            <span class="weight-label">BERAT</span>
             <strong class="weight-current" id="weightCurrent">7.05 /</strong>
             <strong class="weight-max" id="weightMax">120.00 KG</strong>
         </header>
-        <div class="runtime-strip" id="runtimeStrip">LIVE SYNC</div>
+        <div class="runtime-strip" id="runtimeStrip">SINKRONISASI LANGSUNG</div>
 
         <div class="middle-divider-left" aria-hidden="true"></div>
         <div class="middle-divider-right" aria-hidden="true"></div>
@@ -549,8 +549,8 @@
 
         <section class="controls">
             <label class="qty-card" for="qtyInput">
-                <span class="qty-label">Quantidade</span>
-                <input class="qty-input" id="qtyInput" type="text" inputmode="numeric" placeholder="QTD">
+                <span class="qty-label">Jumlah</span>
+                <input class="qty-input" id="qtyInput" type="text" inputmode="numeric" placeholder="JML">
             </label>
 
             <div class="actions">
@@ -559,14 +559,14 @@
                         <path d="M8.5 12.5 11 15l4.5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9Z" stroke="currentColor" stroke-width="2"/>
                     </svg>
-                    <span>Usar</span>
+                    <span>Gunakan</span>
                 </button>
 
                 <button class="action send" id="moveButton" type="button">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="m4 11 15-7-4 16-3.5-6.5L4 11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                     </svg>
-                    <span>Enviar</span>
+                    <span>Kirim</span>
                 </button>
 
                 <button class="action craft" id="craftButton" type="button">
@@ -574,21 +574,21 @@
                         <path d="m8 16 8-8M7 7l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M5 19h4l2-2-4-4-2 2v4ZM15 5h4v4l-2 2-4-4 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                     </svg>
-                    <span>Criação</span>
+                    <span>Buat</span>
                 </button>
 
                 <button class="action trash" id="trashButton" type="button">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M6 7h12M9 7V5h6v2m-8 0 1 12h8l1-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span>Lixo</span>
+                    <span>Buang</span>
                 </button>
 
                 <button class="action close" id="closeButton" type="button">
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
                     </svg>
-                    <span>Fechar</span>
+                    <span>Tutup</span>
                 </button>
             </div>
         </section>

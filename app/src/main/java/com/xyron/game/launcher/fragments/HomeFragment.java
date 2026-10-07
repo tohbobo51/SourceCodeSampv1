@@ -119,11 +119,11 @@ public class HomeFragment extends Fragment {
 
         if (!hasServers) {
             if (selectServerButton != null) {
-                selectServerButton.setText("Adicionar servidor");
+                selectServerButton.setText("Tambahkan server");
             }
-            selectedServerName.setText("Sem servidor ativo");
-            selectedServerAddress.setText("Toque em Adicionar servidor");
-            selectedServerHint.setText("Depois de salvar um IP, ele fica pronto para usar aqui.");
+            selectedServerName.setText("Tidak ada server aktif");
+            selectedServerAddress.setText("Ketuk 'Tambah server'");
+            selectedServerHint.setText("Setelah menyimpan IP, IP tersebut siap digunakan di sini.");
             updateReadiness(hasGameData, false, false);
             return;
         }
@@ -131,19 +131,19 @@ public class HomeFragment extends Fragment {
         ServerConfigManager.ServerOption selectedServer = ServerConfigManager.getSelectedServer(context);
         if (selectedServer == null || !selectedServer.isValid()) {
             if (selectServerButton != null) {
-                selectServerButton.setText("Escolher servidor");
+                selectServerButton.setText("Pilih server");
             }
-            selectedServerName.setText("Sem servidor ativo");
-            selectedServerAddress.setText("Escolha um IP salvo em Servidores");
-            selectedServerHint.setText("O servidor escolhido fica aplicado no jogo automaticamente.");
+            selectedServerName.setText("Tidak ada server aktif");
+            selectedServerAddress.setText("Pilih IP yang tersimpan di Server");
+            selectedServerHint.setText("Server yang dipilih akan otomatis diterapkan di permainan.");
             updateReadiness(hasGameData, true, false);
             return;
         }
 
         if (selectServerButton != null) {
-            selectServerButton.setText("Trocar servidor");
+            selectServerButton.setText("Ganti server");
         }
-        selectedServerName.setText("Pronto para jogar");
+        selectedServerName.setText("Siap bermain");
         selectedServerAddress.setText(selectedServer.getAddress());
         selectedServerHint.setText(selectedServer.favorite
                 ? "Servidor favoritado e pronto para abrir no jogo."
@@ -158,37 +158,37 @@ public class HomeFragment extends Fragment {
 
         if (!hasGameData) {
             nextStepAction = NEXT_STEP_UPDATE_DATA;
-            readinessTitle.setText("Dados pendentes");
-            readinessBody.setText("Baixe os arquivos do jogo");
-            nextStepButton.setText("Baixar dados");
+            readinessTitle.setText("Data tertunda");
+            readinessBody.setText("Unduh file permainan");
+            nextStepButton.setText("Unduh data");
             return;
         }
 
         if (!hasServers) {
             nextStepAction = NEXT_STEP_ADD_SERVER;
-            readinessTitle.setText("Falta servidor");
-            readinessBody.setText("Adicione um IP:PORTA");
-            nextStepButton.setText("Adicionar servidor");
+            readinessTitle.setText("Server tidak ditemukan");
+            readinessBody.setText("Tambahkan IP:PORTA");
+            nextStepButton.setText("Tambahkan server");
             return;
         }
 
         if (!hasSelectedServer) {
             nextStepAction = NEXT_STEP_CHOOSE_SERVER;
-            readinessTitle.setText("Escolha o servidor");
-            readinessBody.setText("Defina o IP ativo");
-            nextStepButton.setText("Escolher servidor");
+            readinessTitle.setText("Pilih server");
+            readinessBody.setText("Tetapkan IP aktif");
+            nextStepButton.setText("Pilih server");
             return;
         }
 
         nextStepAction = NEXT_STEP_PLAY;
         if (isLauncherRole()) {
-            readinessTitle.setText("Servidor pronto");
-            readinessBody.setText("Abre pelo APK Game");
-            nextStepButton.setText("Abrir Game");
+            readinessTitle.setText("Server siap");
+            readinessBody.setText("Buka lewat APK Game");
+            nextStepButton.setText("Buka Game");
         } else {
-            readinessTitle.setText("Tudo pronto");
-            readinessBody.setText("Pode entrar no jogo");
-            nextStepButton.setText("Jogar agora");
+            readinessTitle.setText("Semua sudah siap");
+            readinessBody.setText("Bisa masuk ke permainan");
+            nextStepButton.setText("Main sekarang");
         }
     }
 

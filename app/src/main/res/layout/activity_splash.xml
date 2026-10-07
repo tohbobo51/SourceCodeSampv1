@@ -64,7 +64,7 @@
             android:paddingTop="6dp"
             android:paddingEnd="12dp"
             android:paddingBottom="6dp"
-            android:text="Inicializando ambiente"
+            android:text="Menginisialisasi lingkungan"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="9sp" />
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:fontFamily="@font/montserrat_black"
-            android:text="Carregando..."
+            android:text="Memuat..."
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -85,7 +85,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
-            android:text="Validando arquivos, GPU e permissões antes de abrir o launcher."
+            android:text="Memvalidasi berkas, GPU, dan izin sebelum membuka launcher."
             android:textColor="#D7CDE1"
             android:textSize="11sp" />
 

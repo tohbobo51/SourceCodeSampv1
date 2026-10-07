@@ -172,7 +172,7 @@ public class PickupCreatorOverlay {
         nameView.setText(pickup.label);
         badgeView.setText("M" + pickup.modelId);
         metaView.setText(
-                "Tipo " + pickup.pickupType
+                "Tipe " + pickup.pickupType
                         + " | World " + pickup.worldId
                         + " | Interior " + pickup.interiorId
                         + " | Valor " + pickup.amount

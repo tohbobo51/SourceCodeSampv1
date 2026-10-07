@@ -66,7 +66,7 @@
                     android:paddingTop="4dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="4dp"
-                    android:text="PASTA"
+                    android:text="FOLDER"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white"
                     android:textSize="7.2sp" />
@@ -102,7 +102,7 @@
             android:minWidth="96dp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="Abrir"
+            android:text="Buka"
             android:textColor="@android:color/white"
             android:textSize="8.3sp" />
     </LinearLayout>
@@ -124,7 +124,7 @@
             android:minWidth="94dp"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:text="Renomear"
+            android:text="Ganti nama"
             android:textColor="@android:color/white"
             android:textSize="8sp" />
 
@@ -139,7 +139,7 @@
             android:minWidth="82dp"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:text="Excluir"
+            android:text="Hapus"
             android:textColor="@android:color/white"
             android:textSize="8sp" />
     </LinearLayout>

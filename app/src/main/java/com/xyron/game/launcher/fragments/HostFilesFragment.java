@@ -219,11 +219,11 @@ public class HostFilesFragment extends Fragment {
         if (!HostFileManager.isEditableText(entry)) {
             new AlertDialog.Builder(requireContext())
                     .setTitle(entry.displayName)
-                    .setMessage("Categoria: " + entry.category
+                    .setMessage("Kategori: " + entry.category
                             + "\nTamanho: " + HostFileManager.formatSize(entry.sizeBytes)
                             + "\nCaminho: " + entry.relativePath
                             + "\n\nEsse arquivo nao e editavel como texto dentro do launcher.")
-                    .setPositiveButton("Fechar", null)
+                    .setPositiveButton("Tutup", null)
                     .show();
             return;
         }
@@ -232,7 +232,7 @@ public class HostFilesFragment extends Fragment {
             String content = HostFileManager.readEditableText(entry.relativePath);
             showEditorDialog(entry, content);
         } catch (Exception e) {
-            Toast.makeText(requireContext(), "Nao foi possivel abrir o arquivo.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Tidak dapat membuka berkas.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -396,7 +396,7 @@ public class HostFilesFragment extends Fragment {
             String updated = editorView.getText() == null ? "" : editorView.getText().toString();
             boolean saved = HostFileManager.writeEditableText(entry.relativePath, updated);
             if (!saved) {
-                Toast.makeText(requireContext(), "Nao foi possivel salvar o arquivo.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Gagal menyimpan berkas.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -462,10 +462,10 @@ public class HostFilesFragment extends Fragment {
 
         String label = entry.directory ? "pasta" : "arquivo";
         new AlertDialog.Builder(requireContext())
-                .setTitle("Excluir " + label)
-                .setMessage("Excluir " + entry.displayName + "?\n\n" + entry.relativePath)
-                .setNegativeButton("Cancelar", null)
-                .setPositiveButton("Excluir", (dialog, which) -> {
+                .setTitle("Hapus " + label)
+                .setMessage("Hapus " + entry.displayName + "?\n\n" + entry.relativePath)
+                .setNegativeButton("Batal", null)
+                .setPositiveButton("Hapus", (dialog, which) -> {
                     HostFileManager.FileActionResult result = HostFileManager.deleteEntry(entry.relativePath);
                     if (!result.success) {
                         Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show();

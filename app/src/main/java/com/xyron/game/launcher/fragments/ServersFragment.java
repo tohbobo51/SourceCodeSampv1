@@ -165,26 +165,26 @@ public class ServersFragment extends Fragment {
         selectAction.setOnClickListener(v -> {
             boolean saved = ServerConfigManager.saveSelectedServer(context, option);
             if (!saved) {
-                Toast.makeText(context, "Nao foi possivel selecionar o servidor.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Tidak dapat memilih server.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             refreshContent();
-            Toast.makeText(context, "Servidor ativo: " + option.getAddress(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Server aktif: " + option.getAddress(), Toast.LENGTH_SHORT).show();
         });
 
         removeAction.setOnTouchListener(new ButtonAnimator(context, removeAction));
         removeAction.setOnClickListener(v -> {
             boolean removed = ServerConfigManager.removeServer(context, option);
             if (!removed) {
-                Toast.makeText(context, "Nao foi possivel remover o servidor.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Tidak dapat menghapus server.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             serverInfoCache.remove(option.getAddress());
             activeRequests.remove(option.getAddress());
             refreshContent();
-            Toast.makeText(context, "Servidor removido: " + option.getAddress(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Server dihapus: " + option.getAddress(), Toast.LENGTH_SHORT).show();
         });
 
         applyItemStyle(itemView, isSelected, liveInfo);

@@ -70,7 +70,7 @@
             android:background="@drawable/pickup_studio_secondary_button"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Carregar"
+            android:text="Muat"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
 
@@ -83,7 +83,7 @@
             android:background="@drawable/pickup_studio_secondary_button"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Mostrar"
+            android:text="Tampilkan"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
     </LinearLayout>
@@ -102,7 +102,7 @@
             android:background="@drawable/pickup_studio_primary_button"
             android:fontFamily="@font/montserrat_black"
             android:gravity="center"
-            android:text="Exportar"
+            android:text="Ekspor"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
 
@@ -115,7 +115,7 @@
             android:background="@drawable/pickup_studio_secondary_button"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Remover"
+            android:text="Hapus"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
     </LinearLayout>

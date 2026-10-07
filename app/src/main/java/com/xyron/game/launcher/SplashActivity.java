@@ -250,7 +250,7 @@ public class SplashActivity extends SampActivity {
         }
 
         if (!granted) {
-            Toast.makeText(this, "Permissoes nao concedidas.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Izin tidak diberikan.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -271,10 +271,10 @@ public class SplashActivity extends SampActivity {
         TextView primaryButton = dialogView.findViewById(R.id.update_prompt_primary);
         TextView secondaryButton = dialogView.findViewById(R.id.update_prompt_secondary);
 
-        titleView.setText("Download indisponivel");
-        bodyView.setText("Os arquivos do jogo ainda nao estao no aparelho e a fonte de download nao respondeu. Tente novamente ou configure o update_sources.json com sua URL do Hugging Face.");
-        primaryButton.setText("Tentar de novo");
-        secondaryButton.setText("Fechar");
+        titleView.setText("Unduhan tidak tersedia");
+        bodyView.setText("Berkas game belum ada di perangkat dan sumber unduhan tidak merespons. Coba lagi atau konfigurasikan update_sources.json dengan URL Hugging Face Anda.");
+        primaryButton.setText("Coba lagi");
+        secondaryButton.setText("Tutup");
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(dialogView)

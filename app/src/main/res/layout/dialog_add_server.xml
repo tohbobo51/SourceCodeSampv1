@@ -20,7 +20,7 @@
             android:paddingTop="5dp"
             android:paddingEnd="10dp"
             android:paddingBottom="5dp"
-            android:text="Servidor"
+            android:text="Server"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="8sp" />
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/montserrat_black"
-            android:text="Adicionar servidor"
+            android:text="Tambahkan server"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Digite no formato IP:PORTA. Exemplo: 127.0.0.1:7777"
+            android:text="Masukkan dalam format IP:PORT. Contoh: 127.0.0.1:7777"
             android:textColor="@color/launcher_text_secondary"
             android:textSize="9sp" />
 
@@ -50,7 +50,7 @@
             android:layout_marginTop="14dp"
             android:background="@drawable/launcher_field_surface_dark"
             android:fontFamily="@font/montserrat_bold"
-            android:hint="IP:PORTA"
+            android:hint="IP:PORT"
             android:imeOptions="actionDone|flagNoExtractUi"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Voce pode salvar ate 5 servidores."
+            android:text="Anda bisa menyimpan hingga 5 server."
             android:textColor="@color/launcher_text_muted"
             android:textSize="8sp" />
 
@@ -83,7 +83,7 @@
                 android:background="@drawable/home_action_text_button"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:text="Cancelar"
+                android:text="Batal"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
 
@@ -96,7 +96,7 @@
                 android:background="@drawable/home_server_select_button"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:text="Salvar"
+                android:text="Simpan"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
         </LinearLayout>

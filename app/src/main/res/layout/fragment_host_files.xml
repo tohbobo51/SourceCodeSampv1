@@ -46,7 +46,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                    android:text="Arquivos"
+                    android:text="Berkas"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -61,7 +61,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                    android:text="GERENCIADOR"
+                    android:text="PENGELOLA"
                         android:textAllCaps="true"
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="7.5sp" />
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/montserrat_black"
-                    android:text="Arquivos do servidor"
+                    android:text="Berkas server"
                     android:textColor="@android:color/white"
                     android:textSize="21sp" />
 
@@ -83,7 +83,7 @@
                     android:maxWidth="720dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:lineSpacingExtra="3dp"
-                    android:text="Navegue, crie, importe e organize a base do host em uma tela de explorador."
+                    android:text="Jelajahi, buat, impor, dan atur basis host di layar penjelajah."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="9.5sp" />
 
@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Endereco atual"
+                        android:text="Alamat saat ini"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
 
@@ -140,7 +140,7 @@
                             android:background="@drawable/file_browser_ghost_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Voltar"
+                            android:text="Kembali"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -153,7 +153,7 @@
                             android:background="@drawable/file_browser_ghost_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Raiz"
+                            android:text="Root"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -166,7 +166,7 @@
                             android:background="@drawable/file_browser_secondary_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Atualizar"
+                            android:text="Perbarui"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -179,7 +179,7 @@
                             android:background="@drawable/file_browser_primary_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Importar"
+                            android:text="Impor"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
                     </LinearLayout>
@@ -198,7 +198,7 @@
                             android:background="@drawable/file_browser_secondary_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Nova pasta"
+                            android:text="Folder baru"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -211,7 +211,7 @@
                             android:background="@drawable/file_browser_secondary_action"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Novo arquivo"
+                            android:text="File baru"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
                     </LinearLayout>
@@ -229,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Conteudo desta pasta"
+                        android:text="Isi folder ini"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -238,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Itens em formato de explorador: pastas primeiro, depois arquivos, com caminhos e acoes compactas."
+                        android:text="Item dalam tampilan penjelajah: folder terlebih dahulu, kemudian berkas, dengan jalur dan aksi yang ringkas."
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="8.6sp" />
 
@@ -250,7 +250,7 @@
                         android:background="@drawable/host_dashboard_subtle_note"
                         android:fontFamily="@font/montserrat_medium"
                         android:padding="16dp"
-                        android:text="Esta pasta ainda nao tem arquivos nem subpastas."
+                        android:text="Folder ini belum memiliki berkas atau subfolder."
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="10sp"
                         android:visibility="gone" />

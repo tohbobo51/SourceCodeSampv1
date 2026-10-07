@@ -566,7 +566,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_alternates_bold"
-                android:text="Configuracoes de renderizacao"
+                android:text="Pengaturan render"
                 android:textColor="#FFFFFFFF"
                 android:textSize="14sp" />
 
@@ -575,7 +575,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Perfil balanceado"
+                android:text="Profil seimbang"
                 android:textColor="#B8C6D1"
                 android:textSize="10sp" />
 
@@ -584,7 +584,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/montserrat_alternates_bold"
-                android:text="Qualidade"
+                android:text="Kualitas"
                 android:textColor="#F2D6A3"
                 android:textSize="10sp" />
 
@@ -618,7 +618,7 @@
                     android:background="@drawable/home_server_select_button"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:gravity="center"
-                    android:text="Medio"
+                    android:text="Sedang"
                     android:textColor="#FFFFFFFF"
                     android:textSize="10sp" />
 
@@ -631,7 +631,7 @@
                     android:background="@drawable/launcher_field_surface_dark"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:gravity="center"
-                    android:text="Alto"
+                    android:text="Tinggi"
                     android:textColor="#D4DEE4"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -648,7 +648,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/montserrat_alternates_bold"
-                    android:text="Distancia"
+                    android:text="Jarak"
                     android:textColor="#F2D6A3"
                     android:textSize="10sp" />
 
@@ -683,7 +683,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/montserrat_alternates_bold"
-                    android:text="Limite FPS"
+                    android:text="Batas FPS"
                     android:textColor="#F2D6A3"
                     android:textSize="10sp" />
 
@@ -722,7 +722,7 @@
                     android:background="@drawable/launcher_field_surface_dark"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:gravity="center"
-                    android:text="Sombras: ON"
+                    android:text="Bayangan: AKTIF"
                     android:textColor="#D4DEE4"
                     android:textSize="10sp" />
 
@@ -735,7 +735,7 @@
                     android:background="@drawable/launcher_field_surface_dark"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:gravity="center"
-                    android:text="Efeitos: ON"
+                    android:text="Efek: AKTIF"
                     android:textColor="#D4DEE4"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -756,7 +756,7 @@
                     android:background="@drawable/home_action_text_button"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:gravity="center"
-                    android:text="Fechar"
+                    android:text="Tutup"
                     android:textColor="#D4DEE4"
                     android:textSize="10sp" />
 
@@ -769,7 +769,7 @@
                     android:background="@drawable/home_server_select_button"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:gravity="center"
-                    android:text="Aplicar"
+                    android:text="Terapkan"
                     android:textColor="#FFFFFFFF"
                     android:textSize="10sp" />
             </LinearLayout>

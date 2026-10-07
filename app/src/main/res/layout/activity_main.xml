@@ -38,7 +38,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Inicio"
+                android:contentDescription="Beranda"
                 android:padding="10dp"
                 android:src="@drawable/ic_home_off" />
 
@@ -50,7 +50,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Inicio"
+                android:text="Beranda"
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>
@@ -67,7 +67,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Servidores"
+                android:contentDescription="Server"
                 android:padding="10dp"
                 android:src="@drawable/ic_servers_off" />
 
@@ -79,7 +79,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Serv."
+                android:text="Srv."
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>
@@ -125,7 +125,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Arquivos"
+                android:contentDescription="Berkas"
                 android:padding="10dp"
                 android:src="@drawable/ic_files_off" />
 
@@ -137,7 +137,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Arquivos"
+                android:text="Berkas"
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>
@@ -183,7 +183,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Ferramentas"
+                android:contentDescription="Alat"
                 android:padding="10dp"
                 android:src="@drawable/ic_tools_off" />
 
@@ -195,7 +195,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Tools"
+                android:text="Alat"
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>
@@ -212,7 +212,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Loja"
+                android:contentDescription="Toko"
                 android:padding="10dp"
                 android:src="@drawable/ic_shop_off" />
 
@@ -224,7 +224,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Loja"
+                android:text="Toko"
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>
@@ -241,7 +241,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Config"
+                android:contentDescription="Pengaturan"
                 android:padding="10dp"
                 android:src="@drawable/ic_settings_off" />
 
@@ -253,7 +253,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Config"
+                android:text="Pengaturan"
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>
@@ -270,7 +270,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="@drawable/launcher_nav_button_idle"
-                android:contentDescription="Creditos"
+                android:contentDescription="Kredit"
                 android:padding="10dp"
                 android:src="@drawable/ic_credits_off" />
 
@@ -282,7 +282,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="Creditos"
+                android:text="Kredit"
                 android:textColor="@color/launcher_text_muted"
                 android:textSize="7.2sp" />
         </LinearLayout>

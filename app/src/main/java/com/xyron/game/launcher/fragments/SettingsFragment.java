@@ -69,9 +69,9 @@ public class SettingsFragment extends Fragment {
 
         if (reinstallButton != null) {
             if (isLauncherRole()) {
-                reinstallButton.setText("Abrir download do Game");
+                reinstallButton.setText("Buka unduhan Game");
             } else if (isToolsRole()) {
-                reinstallButton.setText("Download fica no Game");
+                reinstallButton.setText("Unduhan tersimpan di Game");
             }
             reinstallButton.setOnTouchListener(new ButtonAnimator(getContext(), reinstallButton));
             reinstallButton.setOnClickListener(v -> handleDataAction());
@@ -214,16 +214,16 @@ public class SettingsFragment extends Fragment {
 
     private void saveNickname(String nickname) {
         if (nickname.isEmpty()) {
-            Toast.makeText(getContext(), "Digite um nome para salvar no jogo.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Masukkan nama untuk disimpan di Game.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!saveIniValue("client", "name", nickname)) {
-            Toast.makeText(getContext(), "Nao foi possivel salvar o nome.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Tidak dapat menyimpan nama.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Toast.makeText(getContext(), "Nome salvo no launcher e no arquivo do jogo.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Nama disimpan di launcher dan di berkas game.", Toast.LENGTH_SHORT).show();
         loadNickname();
     }
 
@@ -238,7 +238,7 @@ public class SettingsFragment extends Fragment {
         }
 
         if (isToolsRole()) {
-            Toast.makeText(getContext(), "Baixe ou reinstale a data pelo APK News RP.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Unduh atau pasang ulang data melalui APK News RP.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -257,7 +257,7 @@ public class SettingsFragment extends Fragment {
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(getContext(), "Instale o APK News RP para baixar a data.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Pasang APK News RP untuk mengunduh data.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -324,7 +324,7 @@ public class SettingsFragment extends Fragment {
         TextView limitText = dialogView.findViewById(R.id.dialog_server_limit);
 
         if (limitText != null) {
-            limitText.setText("Voce pode salvar ate "
+            limitText.setText("Anda dapat menyimpan hingga "
                     + ServerConfigManager.getMaxSavedServers()
                     + " servidores.");
         }
@@ -352,7 +352,7 @@ public class SettingsFragment extends Fragment {
                 if (!ServerConfigManager.isValidRawAddress(rawAddress)) {
                     Toast.makeText(
                             getContext(),
-                            "Use o formato IP:PORTA, por exemplo 127.0.0.1:7777.",
+                            "Gunakan format IP:PORT, misalnya 127.0.0.1:7777.",
                             Toast.LENGTH_LONG
                     ).show();
                     return;
@@ -363,7 +363,7 @@ public class SettingsFragment extends Fragment {
                 if (!option.isValid()) {
                     Toast.makeText(
                             getContext(),
-                            "Voce pode salvar no maximo "
+                            "Anda dapat menyimpan maksimal "
                                     + ServerConfigManager.getMaxSavedServers()
                                     + " servidores.",
                             Toast.LENGTH_SHORT
@@ -373,7 +373,7 @@ public class SettingsFragment extends Fragment {
 
                 Toast.makeText(
                         getContext(),
-                        "Servidor adicionado. Ele ja aparece na aba Servidores.",
+                        "Server ditambahkan. Server tersebut sudah muncul di tab Server.",
                         Toast.LENGTH_SHORT
                 ).show();
                 dialog.dismiss();
@@ -426,7 +426,7 @@ public class SettingsFragment extends Fragment {
                         ? input.getText().toString().trim()
                         : "";
                 if (nickname.isEmpty()) {
-                    Toast.makeText(getContext(), "Digite um nome para salvar no jogo.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Masukkan nama untuk disimpan di Game.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 saveNickname(nickname);

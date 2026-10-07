@@ -60,7 +60,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                        android:text="COMPILADOR PAWN"
+                        android:text="KOMPILER PAWN"
                         android:textAllCaps="true"
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="7.5sp" />
@@ -82,7 +82,7 @@
                     android:maxWidth="760dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:lineSpacingExtra="2dp"
-                    android:text="Abra scripts, salve alteracoes e compile .amx direto no Android."
+                    android:text="Buka skrip, simpan perubahan dan kompilasi .amx langsung di Android."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="9.5sp" />
 
@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Workspace do editor"
+                        android:text="Ruang kerja editor"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -139,7 +139,7 @@
                             android:background="@drawable/home_action_text_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Projetos"
+                            android:text="Proyek"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
 
@@ -152,7 +152,7 @@
                             android:background="@drawable/home_server_select_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Gamemodes"
+                            android:text="Mode permainan"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
 
@@ -178,7 +178,7 @@
                             android:background="@drawable/home_action_secondary"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Atualizar"
+                            android:text="Perbarui"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
                     </LinearLayout>
@@ -197,7 +197,7 @@
                             android:background="@drawable/home_action_secondary"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Voltar"
+                            android:text="Kembali"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
 
@@ -210,7 +210,7 @@
                             android:background="@drawable/home_action_secondary"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Ir p/ projetos"
+                            android:text="Buka projeto"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
 
@@ -223,7 +223,7 @@
                             android:background="@drawable/home_server_select_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Importar"
+                            android:text="Impor"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
 
@@ -236,7 +236,7 @@
                             android:background="@drawable/home_action_text_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Novo .pwn"
+                            android:text="Baru .pwn"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
 
@@ -249,7 +249,7 @@
                             android:background="@drawable/home_action_text_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Novo .inc"
+                            android:text="Baru .inc"
                             android:textColor="@android:color/white"
                             android:textSize="8.5sp" />
                     </LinearLayout>
@@ -267,7 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Arquivo atual"
+                        android:text="Berkas saat ini"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -302,7 +302,7 @@
                         android:background="@drawable/launcher_field_surface_dark"
                         android:fontFamily="monospace"
                         android:gravity="top|start"
-                        android:hint="Abra um .pwn ou .inc para editar aqui."
+                        android:hint="Buka .pwn atau .inc untuk diedit di sini."
                         android:inputType="textMultiLine|textCapSentences|textNoSuggestions"
                         android:overScrollMode="ifContentScrolls"
                         android:padding="14dp"
@@ -325,7 +325,7 @@
                             android:background="@drawable/home_action_text_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Salvar"
+                            android:text="Simpan"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -338,7 +338,7 @@
                             android:background="@drawable/home_server_select_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Compilar .pwn"
+                            android:text="Kompilasi .pwn"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
                     </LinearLayout>
@@ -356,7 +356,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Console do compilador"
+                        android:text="Konsol kompiler"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -372,7 +372,7 @@
                         android:paddingTop="12dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="12dp"
-                        android:text="O resultado da compilacao vai aparecer aqui."
+                        android:text="Hasil kompilasi akan muncul di sini."
                         android:textColor="#D8E2EC"
                         android:textSize="8.8sp" />
                 </LinearLayout>
@@ -385,7 +385,7 @@
                     android:background="@drawable/launcher_console_surface"
                     android:fontFamily="@font/montserrat_medium"
                     android:padding="16dp"
-                    android:text="Esta pasta ainda nao tem scripts ou includes visiveis."
+                    android:text="Folder ini belum memiliki skrip atau include yang terlihat."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="10sp"
                     android:visibility="gone" />

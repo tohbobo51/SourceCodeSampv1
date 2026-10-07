@@ -281,7 +281,7 @@ public class WorkbenchFragment extends Fragment {
         confirmButton.setOnClickListener(v -> {
             String value = input.getText() == null ? "" : input.getText().toString().trim();
             if (TextUtils.isEmpty(value) && !allowEmpty) {
-                Toast.makeText(getContext(), "Digite um valor para continuar.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Masukkan nilai untuk melanjutkan.", Toast.LENGTH_SHORT).show();
                 return;
             }
             dialog.dismiss();

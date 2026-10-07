@@ -45,7 +45,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                        android:text="Creditos"
+                        android:text="Kredit"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -60,7 +60,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                        android:text="MENSAGEM FINAL"
+                        android:text="PESAN AKHIR"
                         android:textAllCaps="true"
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="7.5sp" />
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/montserrat_black"
-                    android:text="Creditos e mensagem"
+                    android:text="Kredit dan pesan"
                     android:textColor="@android:color/white"
                     android:textSize="21sp" />
 
@@ -82,7 +82,7 @@
                     android:maxWidth="760dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:lineSpacingExtra="2dp"
-                    android:text="Uma area simples para registrar a origem do projeto e a mensagem final."
+                    android:text="Sebuah area sederhana untuk mencatat asal proyek dan pesan penutup."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="9.5sp" />
 
@@ -103,7 +103,7 @@
                         android:paddingTop="6dp"
                         android:paddingEnd="12dp"
                         android:paddingBottom="6dp"
-                        android:text="Destaque"
+                        android:text="Sorotan"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="7.6sp" />
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/montserrat_black"
-                        android:text="Nunca desista de nada. Mesmo que seja dificil conquistar, continue. Mesmo andando devagar, uma hora voce chega."
+                        android:text="Jangan pernah menyerah pada apa pun. Meskipun sulit untuk diraih, teruslah. Bahkan jika berjalan perlahan, suatu saat Anda akan sampai."
                         android:textColor="@android:color/white"
                         android:textSize="17sp" />
                 </LinearLayout>
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Credito curto"
+                        android:text="Kredit singkat"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -156,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Mensagem de compartilhamento"
+                        android:text="Pesan untuk dibagikan"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -168,7 +168,7 @@
                         android:fontFamily="@font/montserrat_medium"
                         android:lineSpacingExtra="3dp"
                         android:padding="14dp"
-                        android:text="Eu compartilhei esse projeto porque acredito que os recursos sao ilimitados e quero compartilhar para todos. Voce e permitido fazer o que quiser com esse APK. Nao precisa deixar nenhum credito. Eu nao me importo com quem voce e nem com o que vai fazer com ele. Apenas quero compartilhar, ajudar e alcancar quem necessita."
+                        android:text="Saya membagikan proyek ini karena saya percaya sumber daya tidak terbatas dan ingin membagikannya kepada semua orang. Anda diperbolehkan melakukan apa pun dengan APK ini. Tidak perlu menyertakan kredit apa pun. Saya tidak peduli siapa Anda atau apa yang akan Anda lakukan dengannya. Saya hanya ingin berbagi, membantu, dan menjangkau mereka yang membutuhkan."
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="9.2sp" />
                 </LinearLayout>

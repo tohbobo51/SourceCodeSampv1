@@ -1,46 +1,46 @@
 # News RP Android SA-MP
 
-Source do APK Android do News RP/SA-MP Mobile, com launcher, HUD, overlays WebView, ferramentas de host local, editor Pawn, downloader de Data Lite/Full e camada nativa C/C++.
+Kode sumber APK Android News RP/SA-MP Mobile, dengan launcher, HUD, overlay WebView, alat host lokal, editor Pawn, downloader Data Lite/Full, dan lapisan native C/C++.
 
-## O que tem neste projeto
+## Apa yang ada dalam proyek ini
 
-- Launcher Android em Java.
-- HUD e telas in-game em Java/XML.
-- Interfaces WebView em HTML/CSS/JS.
-- Codigo nativo SA-MP em C/C++ via NDK.
-- Downloader de Data Lite/Full via `update_sources.json`.
-- Editor/compilador Pawn e ferramentas de host local.
+- Launcher Android dalam Java.
+- HUD dan layar in-game dalam Java/XML.
+- Antarmuka WebView dalam HTML/CSS/JS.
+- Source C/C++ SA-MP dalam C/C++ melalui NDK.
+- Downloader Data Lite/Full melalui `update_sources.json`.
+- Editor/kompiler Pawn dan alat host lokal.
 
-## Estrutura principal
+## Struktur utama
 
 ```text
-app/src/main/java/com/xyron/game/launcher   Launcher, abas, download e configuracoes
-app/src/main/java/com/xyron/game/main       Activity do jogo, HUD, overlays e ponte Java/native
-app/src/main/res                            Layouts XML, icones, temas e imagens Android
-app/src/main/assets/interfaces              Celular, inventario, mapa e runtime WebView
-app/src/main/assets/update_sources.json     Fontes de download da Data Lite/Full
-app/src/main/jniLibs/armeabi-v7a            Bibliotecas nativas usadas no APK
-jni/jni                                     Source C/C++ da libSAMP
-jni/compile.cmd                             Script Windows para compilar a lib nativa
-prdownloader                                Modulo local do downloader
-server                                     Arquivos auxiliares do host/editor
+app/src/main/java/com/xyron/game/launcher   Launcher, tab, unduhan, dan pengaturan
+app/src/main/java/com/xyron/game/main       Aktivitas game, HUD, overlay, dan penghubung Java/native
+app/src/main/res                            Layout XML, ikon, tema, dan gambar Android
+app/src/main/assets/interfaces              Antarmuka ponsel, inventaris, peta, dan runtime WebView
+app/src/main/assets/update_sources.json     Sumber unduhan Data Lite/Full
+app/src/main/jniLibs/armeabi-v7a            Library native yang digunakan APK
+jni/jni                                     Source C/C++ untuk libSAMP
+jni/compile.cmd                             Skrip Windows untuk mengompilasi library native
+prdownloader                                Modul downloader lokal
+server                                      File pendukung untuk host/editor
 ```
 
-## Requisitos
+## Persyaratan
 
-- Windows com Android Studio instalado.
+- Windows dengan Android Studio terpasang.
 - Android SDK Platform 33.
-- Android Build Tools instalado pelo Android Studio.
-- NDK com `ndk-build.cmd` instalado. O script procura por NDK 27, 26, 25 ou 21.
-- Celular Android com depuracao USB/Wireless ADB ativada para instalar e testar.
+- Android Build Tools terpasang melalui Android Studio.
+- NDK dengan `ndk-build.cmd` terpasang. Skrip mencari NDK 27, 26, 25, atau 21.
+- Perangkat Android dengan debug USB/Wireless ADB aktif untuk memasang dan menguji.
 
-Se o Gradle nao achar Java no terminal, configure `JAVA_HOME` ou edite localmente `gradle.properties` e aponte `org.gradle.java.home` para o JBR do Android Studio.
+Jika Gradle tidak menemukan Java di terminal, atur `JAVA_HOME` atau edit secara lokal `gradle.properties` dan arahkan `org.gradle.java.home` ke JBR Android Studio.
 
-## Como compilar o APK
+## Cara mengompilasi APK
 
-1. Abra a pasta raiz no Android Studio ou PowerShell.
-2. Configure o SDK/NDK pelo Android Studio.
-3. Compile o APK debug:
+1. Buka folder root di Android Studio atau PowerShell.
+2. Konfigurasikan SDK/NDK melalui Android Studio.
+3. Kompilasi APK debug:
 
 ```powershell
 $env:ANDROID_HOME="$env:LOCALAPPDATA\Android\Sdk"
@@ -48,49 +48,49 @@ $env:ANDROID_SDK_ROOT="$env:LOCALAPPDATA\Android\Sdk"
 .\gradlew.bat :app:assembleDebug --no-daemon
 ```
 
-O APK sai em:
+APK dihasilkan di:
 
 ```text
 app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Para instalar via ADB:
+Untuk memasang via ADB:
 
 ```powershell
 adb devices
 adb install -r -d -g app/build/outputs/apk/debug/app-debug.apk
 ```
 
-## Como compilar a lib nativa
+## Cara mengompilasi lib native
 
-O source C/C++ fica em `jni/jni`.
+Source C/C++ berada di `jni/jni`.
 
 ```powershell
 cd jni
 .\compile.cmd
 ```
 
-Depois copie a lib gerada para o APK:
+Kemudian salin lib yang dihasilkan ke APK:
 
 ```powershell
 copy jni\libs\armeabi-v7a\libSAMP.so ..\app\src\main\jniLibs\armeabi-v7a\libSAMP.so
 ```
 
-## Data Lite e Data Full
+## Data Lite dan Data Full
 
-As fontes ficam em:
+Sumber berada di:
 
 ```text
 app/src/main/assets/update_sources.json
 ```
 
-O APK baixa os arquivos do jogo para:
+APK mengunduh file game ke:
 
 ```text
 /sdcard/Android/data/com.xyron.game/files
 ```
 
-Para evitar crash nativo no boot, a Data Lite precisa conter arquivos criticos como:
+Untuk menghindari crash native saat boot, Data Lite harus berisi file kritis seperti:
 
 - `texdb/txd/txd.*`
 - `texdb/samp/samp.*`
@@ -99,22 +99,22 @@ Para evitar crash nativo no boot, a Data Lite precisa conter arquivos criticos c
 - `texdb/gta_int.img`
 - `SAMP/main.scm`
 
-Se o jogo crashar em `libGTASA.so CCustomRoadsignMgr::Initialise`, normalmente a Data Lite esta incompleta. Rebaixe os dados pelo launcher ou confira se `texdb/txd` e `texdb/samp` existem.
+Jika game crash di `libGTASA.so CCustomRoadsignMgr::Initialise`, biasanya Data Lite tidak lengkap. Unduh ulang data melalui launcher atau periksa apakah `texdb/txd` dan `texdb/samp` ada.
 
-## Onde editar
+## Di mana mengedit
 
-- Nome/icone do app: `app/build.gradle`, `app/src/main/res/mipmap-*`, `app/src/main/res/drawable-nodpi`.
-- Tela inicial/launcher: `app/src/main/res/layout/fragment_home.xml`.
+- Nama/ikon app: `app/build.gradle`, `app/src/main/res/mipmap-*`, `app/src/main/res/drawable-nodpi`.
+- Layar awal/launcher: `app/src/main/res/layout/fragment_home.xml`.
 - Downloader: `app/src/main/java/com/xyron/game/launcher/UpdateService.java`.
-- Verificador da data: `app/src/main/java/com/xyron/game/launcher/util/GameDataVerifier.java`.
-- Inventario/mochila: `app/src/main/assets/interfaces/inventario/index.html`.
-- Imagens dos itens da mochila: `app/src/main/assets/interfaces/inventario/images`.
-- Celular: `app/src/main/assets/interfaces/celular/index.html`.
+- Pemeriksa data: `app/src/main/java/com/xyron/game/launcher/util/GameDataVerifier.java`.
+- Inventaris/ransel: `app/src/main/assets/interfaces/inventario/index.html`.
+- Gambar item ransel: `app/src/main/assets/interfaces/inventario/images`.
+- Ponsel: `app/src/main/assets/interfaces/celular/index.html`.
 - Hooks/native SA-MP: `jni/jni/game`, `jni/jni/net`, `jni/jni/main.cpp`.
 
-## Cuidados antes de publicar
+## Hal yang perlu diperhatikan sebelum mempublikasikan
 
-Nao coloque no ZIP publico:
+Jangan masukkan ke ZIP publik:
 
 - `app/build/`
 - `prdownloader/build/`
@@ -122,24 +122,24 @@ Nao coloque no ZIP publico:
 - `.idea/`
 - `.vscode/`
 - `local.properties`
-- APKs gerados
-- logs, screenshots e arquivos temporarios
-- chaves `.jks` ou `.keystore`
+- APK hasil build
+- log, tangkapan layar, dan file sementara
+- kunci `.jks` atau `.keystore`
 
-`app/google-services.json` esta com dados placeholder. Quem for usar Firebase deve trocar pelo proprio arquivo.
+`app/google-services.json` berisi data placeholder. Siapa pun yang akan menggunakan Firebase harus menggantinya dengan file mereka sendiri.
 
-`app/src/main/jniLibs` e `app/libs` podem conter bibliotecas prebuilt necessarias para montar um APK executavel. Elas nao substituem o source C/C++ em `jni/jni`. Se voce quiser publicar uma release estritamente source-only, remova esses binarios e explique no README como restaurar as dependencias locais.
+`app/src/main/jniLibs` dan `app/libs` dapat berisi library prebuilt yang diperlukan untuk membuat APK yang dapat dijalankan. Library ini tidak menggantikan source C/C++ di `jni/jni`. Jika ingin menerbitkan rilis yang sepenuhnya berisi source, hapus berkas biner ini dan jelaskan di README cara memulihkan dependensi lokal.
 
-## Debug de crash
+## Debugging crash
 
-Sempre analise com logcat:
+Selalu analisis dengan logcat:
 
 ```powershell
 adb logcat -c
 adb logcat -v time | Select-String "FATAL EXCEPTION|Fatal signal|SIGSEGV|SIGABRT|libGTASA|libSAMP|libsamp"
 ```
 
-Para crash nativo, procure:
+Untuk crash native, cari:
 
 - `Build fingerprint`
 - `pid`
@@ -147,16 +147,15 @@ Para crash nativo, procure:
 - `signal`
 - `fault addr`
 - `backtrace`
-- biblioteca e offset, por exemplo `libGTASA.so pc 005a576a`.
+- nama library dan offset, misalnya `libGTASA.so pc 005a576a`.
 
-Nao chute offset. Use o logcat/tombstone e compare com a lib correta.
+Jangan menebak offset. Gunakan logcat/tombstone dan bandingkan dengan lib yang benar.
 
-## Estado atual
+## Status saat ini
 
-- Nome do app: News RP.
-- Package Android: `com.xyron.game`.
-- ABI principal: `armeabi-v7a`.
-- Data padrao: Lite.
-- Inventario com imagens locais corrigidas em `assets/interfaces/inventario/images`.
-- Verificacao de Data Lite reforcada para nao iniciar o jogo com arquivos incompletos.
-
+- Nama app: News RP.
+- Paket Android: `com.xyron.game`.
+- ABI utama: `armeabi-v7a`.
+- Data default: Lite.
+- Inventaris dengan gambar lokal yang diperbaiki di `assets/interfaces/inventario/images`.
+- Pemeriksaan Data Lite diperkuat agar tidak memulai game dengan file yang tidak lengkap.

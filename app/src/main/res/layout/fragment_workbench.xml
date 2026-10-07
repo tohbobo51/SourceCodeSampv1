@@ -63,7 +63,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                    android:text="WORKBENCH"
+                    android:text="MEJA KERJA"
                         android:textAllCaps="true"
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="7.5sp" />
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/montserrat_black"
-                    android:text="Ferramentas do servidor"
+                    android:text="Alat server"
                     android:textColor="@android:color/white"
                     android:textSize="21sp" />
 
@@ -85,7 +85,7 @@
                     android:maxWidth="760dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:lineSpacingExtra="3dp"
-                    android:text="Edite configuracoes, crie arquivos, gere backup e acompanhe logs do host."
+                    android:text="Sunting konfigurasi, buat file, buat cadangan, dan pantau log host."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="9.5sp" />
 
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Configurador visual do servidor"
+                        android:text="Pengonfigurasi visual server"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Esses campos atualizam o server.cfg e o config.json juntos."
+                        android:text="Bidang-bidang ini memperbarui server.cfg dan config.json secara bersamaan."
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="8.7sp" />
 
@@ -144,7 +144,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Nome do servidor"
+                                android:text="Nama server"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -155,7 +155,7 @@
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/launcher_field_surface_dark"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:hint="News RP Local Host"
+                                android:hint="News RP Host Lokal"
                                 android:imeOptions="actionNext|flagNoExtractUi"
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
@@ -176,7 +176,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Website"
+                                android:text="Situs web"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -214,7 +214,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Language"
+                                android:text="Bahasa"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -246,7 +246,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Max players"
+                                android:text="Jumlah maksimal pemain"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -285,7 +285,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Script principal"
+                                android:text="Script utama"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -296,7 +296,7 @@
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/launcher_field_surface_dark"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:hint="blank"
+                                android:hint="kosong"
                                 android:imeOptions="actionNext|flagNoExtractUi"
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
@@ -317,7 +317,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Senha (opcional)"
+                                android:text="Kata sandi (opsional)"
                                 android:textColor="@android:color/white"
                                 android:textSize="9sp" />
 
@@ -328,7 +328,7 @@
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/launcher_field_surface_dark"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:hint="Deixe vazio para livre"
+                                android:hint="Biarkan kosong untuk akses terbuka"
                                 android:imeOptions="actionNext|flagNoExtractUi"
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
@@ -349,7 +349,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Map name (opcional)"
+                            android:text="Nama peta (opsional)"
                             android:textColor="@android:color/white"
                             android:textSize="9sp" />
 
@@ -393,7 +393,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Announce"
+                                android:text="Umumkan"
                                 android:textColor="@color/launcher_text_primary"
                                 android:textSize="9sp" />
 
@@ -449,7 +449,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="LAN mode"
+                                android:text="Mode LAN"
                                 android:textColor="@color/launcher_text_primary"
                                 android:textSize="9sp" />
 
@@ -471,7 +471,7 @@
                         android:minWidth="176dp"
                         android:paddingStart="18dp"
                         android:paddingEnd="18dp"
-                        android:text="Salvar configuracoes"
+                        android:text="Simpan pengaturan"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -494,7 +494,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Criacao rapida"
+                            android:text="Pembuatan cepat"
                             android:textColor="@android:color/white"
                             android:textSize="11sp" />
 
@@ -503,7 +503,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Crie arquivos base do servidor sem precisar sair para o gerenciador."
+                            android:text="Buat file dasar server tanpa perlu keluar ke pengelola."
                             android:textColor="@color/launcher_text_secondary"
                             android:textSize="8.7sp" />
 
@@ -521,7 +521,7 @@
                                 android:background="@drawable/home_server_select_button"
                                 android:fontFamily="@font/montserrat_bold"
                                 android:gravity="center"
-                                android:text="Nova GM"
+                                android:text="GM baru"
                                 android:textColor="@android:color/white"
                                 android:textSize="8.8sp" />
 
@@ -534,7 +534,7 @@
                                 android:background="@drawable/home_action_secondary"
                                 android:fontFamily="@font/montserrat_bold"
                                 android:gravity="center"
-                                android:text="Novo include"
+                                android:text="Include baru"
                                 android:textColor="@android:color/white"
                                 android:textSize="8.8sp" />
                         </LinearLayout>
@@ -553,7 +553,7 @@
                                 android:background="@drawable/home_action_text_button"
                                 android:fontFamily="@font/montserrat_bold"
                                 android:gravity="center"
-                                android:text="Novo scriptfile"
+                                android:text="Scriptfile baru"
                                 android:textColor="@android:color/white"
                                 android:textSize="8.8sp" />
 
@@ -566,7 +566,7 @@
                                 android:background="@drawable/home_action_text_button"
                                 android:fontFamily="@font/montserrat_bold"
                                 android:gravity="center"
-                                android:text="Novo cfg"
+                                android:text="CFG baru"
                                 android:textColor="@android:color/white"
                                 android:textSize="8.8sp" />
                         </LinearLayout>
@@ -579,7 +579,7 @@
                             android:background="@drawable/launcher_console_surface"
                             android:fontFamily="@font/montserrat_medium"
                             android:padding="12dp"
-                            android:text="A criacao rapida gera templates basicos para voce continuar no Editor ou em Arquivos."
+                            android:text="Pembuatan cepat menghasilkan template dasar agar Anda dapat melanjutkan di Editor atau di berkas."
                             android:textColor="@color/launcher_text_secondary"
                             android:textSize="8.8sp" />
                     </LinearLayout>
@@ -597,7 +597,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Atalhos dev"
+                            android:text="Jalan pintas dev"
                             android:textColor="@android:color/white"
                             android:textSize="11sp" />
 
@@ -606,7 +606,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Pule direto para o ponto do launcher onde voce vai continuar a mexer."
+                            android:text="Langsung lompat ke bagian launcher di mana Anda akan melanjutkan."
                             android:textColor="@color/launcher_text_secondary"
                             android:textSize="8.7sp" />
 
@@ -618,7 +618,7 @@
                             android:background="@drawable/home_server_select_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Abrir editor"
+                            android:text="Buka Editor"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -630,7 +630,7 @@
                             android:background="@drawable/home_action_secondary"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Abrir arquivos"
+                            android:text="Buka berkas"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -642,7 +642,7 @@
                             android:background="@drawable/home_action_text_button"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
-                            android:text="Abrir host"
+                            android:text="Buka host"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
                     </LinearLayout>
@@ -660,7 +660,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Backups e logs"
+                        android:text="Cadangan dan log"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -691,7 +691,7 @@
                             android:minWidth="156dp"
                             android:paddingStart="18dp"
                             android:paddingEnd="18dp"
-                            android:text="Criar backup .zip"
+                            android:text="Buat cadangan .zip"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
 
@@ -706,7 +706,7 @@
                             android:minWidth="120dp"
                             android:paddingStart="18dp"
                             android:paddingEnd="18dp"
-                            android:text="Atualizar"
+                            android:text="Perbarui"
                             android:textColor="@android:color/white"
                             android:textSize="8.8sp" />
                     </LinearLayout>

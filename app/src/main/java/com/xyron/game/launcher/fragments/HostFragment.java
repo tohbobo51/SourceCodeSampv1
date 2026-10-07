@@ -134,12 +134,12 @@ public class HostFragment extends Fragment {
         boolean hostRunning = HostShellEngine.isHostRunning(requireContext());
         boolean hostStarting = HostShellEngine.isHostStarting(requireContext());
         if (start && (hostRunning || hostStarting)) {
-            Toast.makeText(requireContext(), "O host ja esta ligado ou iniciando.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Host sudah aktif atau sedang memulai.", Toast.LENGTH_SHORT).show();
             refreshState();
             return;
         }
         if (!start && !hostRunning && !hostStarting) {
-            Toast.makeText(requireContext(), "O host ja esta desligado.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Host sudah dimatikan.", Toast.LENGTH_SHORT).show();
             refreshState();
             return;
         }
@@ -209,7 +209,7 @@ public class HostFragment extends Fragment {
             return;
         }
         if (hostActionInFlight || remoteTunnelActionInFlight) {
-            Toast.makeText(getContext(), "Aguarde a acao atual terminar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Tunggu aksi saat ini selesai.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -241,7 +241,7 @@ public class HostFragment extends Fragment {
                         } else {
                             Toast.makeText(
                                     requireContext(),
-                                    "Mesmo aparelho selecionado: " + LocalHostManager.getLoopbackAddress(),
+                                    "Perangkat yang sama dipilih: " + LocalHostManager.getLoopbackAddress(),
                                     Toast.LENGTH_LONG
                             ).show();
                         }
@@ -325,7 +325,7 @@ public class HostFragment extends Fragment {
 
         String lanIp = LocalHostManager.getBestLanAddress();
         if (TextUtils.isEmpty(lanIp)) {
-            Toast.makeText(getContext(), "Conecte o aparelho na Wi-Fi ou hotspot para gerar um IP LAN.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Hubungkan perangkat ke Wi-Fi atau hotspot untuk menghasilkan IP LAN.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -333,7 +333,7 @@ public class HostFragment extends Fragment {
         ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard != null) {
             clipboard.setPrimaryClip(ClipData.newPlainText("xyron-host-lan", address));
-            Toast.makeText(getContext(), "Endereco LAN copiado: " + address, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Alamat LAN disalin: " + address, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -344,7 +344,7 @@ public class HostFragment extends Fragment {
 
         selectedAccessMode = ACCESS_REMOTE;
         if (remoteTunnelActionInFlight) {
-            Toast.makeText(getContext(), "O tunel remoto ja esta abrindo.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Terowongan remote sedang dibuka.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -410,14 +410,14 @@ public class HostFragment extends Fragment {
 
         String publicUrl = PinggyTunnelManager.getPublicUrl(requireContext());
         if (TextUtils.isEmpty(publicUrl)) {
-            Toast.makeText(getContext(), "O endereco publico ainda nao apareceu.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Alamat publik belum muncul.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard != null) {
             clipboard.setPrimaryClip(ClipData.newPlainText("xyron-host-tunnel", publicUrl));
-            Toast.makeText(getContext(), "Tunel copiado: " + publicUrl, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Terowongan disalin: " + publicUrl, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -452,15 +452,15 @@ public class HostFragment extends Fragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setTitle("Acesso remoto")
+                .setTitle("Akses jarak jauh")
                 .setMessage(message.toString())
-                .setNegativeButton("Fechar", null)
-                .setNeutralButton("Copiar IP LAN", (dialog, which) -> copyLanAddress());
+                .setNegativeButton("Tutup", null)
+                .setNeutralButton("Salin IP LAN", (dialog, which) -> copyLanAddress());
 
         if (!TextUtils.isEmpty(tunnelState.publicUrl)) {
-            builder.setPositiveButton("Copiar tunel", (dialog, which) -> copyRemoteTunnelAddress());
+            builder.setPositiveButton("Salin terowongan", (dialog, which) -> copyRemoteTunnelAddress());
         } else if (termuxReady || internalTunnelSupported) {
-            builder.setPositiveButton("Abrir arquivos", (dialog, which) -> openFilesTab());
+            builder.setPositiveButton("Buka berkas", (dialog, which) -> openFilesTab());
         }
 
         builder.show();
@@ -504,17 +504,17 @@ public class HostFragment extends Fragment {
 
         if (statusTitle != null) {
             if (hostReady) {
-                statusTitle.setText("Servidor local online");
+                statusTitle.setText("Server lokal online");
             } else if (hostRunning || hostStarting) {
-                statusTitle.setText("Runtime local em execucao");
+                statusTitle.setText("Runtime lokal sedang berjalan");
             } else if (hostErrored) {
-                statusTitle.setText("Falha ao ligar host");
+                statusTitle.setText("Gagal menyalakan host");
             } else if (!state.workspacePrepared) {
-                statusTitle.setText("Host local em preparacao");
+                statusTitle.setText("Host lokal dalam persiapan");
             } else if (HostShellEngine.hasRuntimeCandidate(requireContext())) {
-                statusTitle.setText("Runtime local encontrado");
+                statusTitle.setText("Runtime lokal ditemukan");
             } else {
-                statusTitle.setText("Base local pronta");
+                statusTitle.setText("Basis lokal siap");
             }
         }
 
@@ -522,22 +522,22 @@ public class HostFragment extends Fragment {
             if (hostReady) {
                 statusBadge.setText("ONLINE");
             } else if (hostRunning || hostStarting) {
-                statusBadge.setText("INICIANDO");
+                statusBadge.setText("MEMULAI");
             } else if (hostErrored) {
-                statusBadge.setText("ERRO");
+                statusBadge.setText("GALAT");
             } else if (HostShellEngine.hasRuntimeCandidate(requireContext())) {
-                statusBadge.setText("PRONTO");
+                statusBadge.setText("SIAP");
             } else {
-                statusBadge.setText("BASE");
+                statusBadge.setText("BASIS");
             }
         }
 
         if (statusBody != null) {
             if (hostReady) {
-                statusBody.setText("O host subiu na porta 7777 e ja pode receber jogadores locais. Se quiser chamar gente de fora da rede, abra o tunel remoto.");
+                statusBody.setText("Host sudah berjalan di port 7777 dan sudah bisa menerima pemain lokal. Jika ingin mengundang orang dari luar jaringan, buka terowongan jarak jauh.");
             } else if (hostRunning || hostStarting) {
                 if (TextUtils.isEmpty(runtimeMessage)) {
-                    statusBody.setText("O runtime foi iniciado e esta fechando a subida do servidor local agora.");
+                    statusBody.setText("Runtime telah dimulai dan sedang menyelesaikan proses naiknya server lokal sekarang.");
                 } else {
                     statusBody.setText(runtimeMessage);
                 }
@@ -546,25 +546,25 @@ public class HostFragment extends Fragment {
                         ? "O host nao conseguiu iniciar. Toque em Ligar host para tentar preparar a base de novo."
                         : runtimeMessage);
             } else if (!state.workspacePrepared) {
-                statusBody.setText("Toque em Ligar host para preparar a base, ativar o loopback e subir o servidor local automaticamente.");
+                statusBody.setText("Ketuk Nyalakan host untuk menyiapkan basis, mengaktifkan loopback dan menaikkan server lokal secara otomatis.");
             } else if (HostShellEngine.hasRuntimeCandidate(requireContext())) {
-                statusBody.setText("A base ja foi criada e o runtime ARM esta no pacote. O launcher ja consegue subir tudo em um toque.");
+                statusBody.setText("Basis sudah dibuat dan runtime ARM ada di paket. Launcher sudah bisa menaikkan semuanya dengan satu ketukan.");
             } else {
-                statusBody.setText("A estrutura local ja existe, mas esta build ainda nao trouxe um runtime ARM compativel para executar o host.");
+                statusBody.setText("Struktur lokal sudah ada, tetapi build ini belum menyertakan runtime ARM yang kompatibel untuk menjalankan host.");
             }
         }
 
         if (hostActionNote != null) {
             if (hostActionInFlight) {
-                hostActionNote.setText("Aguarde a acao atual terminar antes de tocar de novo.");
+                hostActionNote.setText("Tunggu aksi saat ini selesai sebelum mengetuk lagi.");
             } else if (hostReady) {
-                hostActionNote.setText("Host online. O botao de ligar fica travado ate voce desligar o servidor.");
+                hostActionNote.setText("Host online. Tombol Nyalakan akan terkunci sampai Anda mematikan server.");
             } else if (hostRunning || hostStarting) {
-                hostActionNote.setText("O servidor ja recebeu o comando de start. Espere a tela virar para o estado online.");
+                hostActionNote.setText("Server sudah menerima perintah start. Tunggu layar berubah menjadi status online.");
             } else if (hostErrored) {
-                hostActionNote.setText("A ultima tentativa falhou. Toque em Ligar host para refazer os links internos e tentar de novo.");
+                hostActionNote.setText("Upaya terakhir gagal. Ketuk Nyalakan host untuk memperbaiki tautan internal dan coba lagi.");
             } else {
-                hostActionNote.setText("Fluxo rapido: ligue o host, copie o LAN para a mesma rede e use o tunel remoto para testar pela internet.");
+                hostActionNote.setText("Alur cepat: nyalakan host, salin LAN ke jaringan yang sama dan gunakan terowongan jarak jauh untuk menguji lewat internet.");
             }
         }
 
@@ -595,13 +595,13 @@ public class HostFragment extends Fragment {
             bootButton.setEnabled(canStart);
             bootButton.setAlpha(canStart ? 1f : 0.48f);
             if (hostActionInFlight && !hostBusyOrOnline) {
-                bootButton.setText("Ligando host...");
+                bootButton.setText("Menyalakan host...");
             } else if (hostReady) {
                 bootButton.setText("Host online");
             } else if (hostStarting || hostRunning) {
-                bootButton.setText("Ligando host...");
+                bootButton.setText("Menyalakan host...");
             } else {
-                bootButton.setText("Ligar host");
+                bootButton.setText("Nyalakan host");
             }
         }
 
@@ -609,9 +609,9 @@ public class HostFragment extends Fragment {
             stopButton.setEnabled(canStop);
             stopButton.setAlpha(canStop ? 1f : 0.48f);
             if (hostActionInFlight && hostBusyOrOnline) {
-                stopButton.setText("Desligando...");
+                stopButton.setText("Mematikan...");
             } else {
-                stopButton.setText("Desligar host");
+                stopButton.setText("Matikan host");
             }
         }
 
@@ -621,13 +621,13 @@ public class HostFragment extends Fragment {
             remoteTunnelButton.setEnabled(!remoteTunnelActionInFlight);
             remoteTunnelButton.setAlpha(remoteTunnelActionInFlight ? 0.56f : 1f);
             if (remoteTunnelActionInFlight) {
-                remoteTunnelButton.setText("Abrindo tunel...");
+                remoteTunnelButton.setText("Membuka terowongan...");
             } else if (tunnelRunning && !TextUtils.isEmpty(tunnelState.publicUrl)) {
-                remoteTunnelButton.setText("Copiar remoto");
+                remoteTunnelButton.setText("Salin jarak jauh");
             } else if (tunnelRunning || tunnelState.isStarting()) {
-                remoteTunnelButton.setText("Abrindo...");
+                remoteTunnelButton.setText("Membuka...");
             } else {
-                remoteTunnelButton.setText("Acesso remoto");
+                remoteTunnelButton.setText("Akses jarak jauh");
             }
         }
     }

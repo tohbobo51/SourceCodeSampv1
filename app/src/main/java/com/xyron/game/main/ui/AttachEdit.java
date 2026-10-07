@@ -75,48 +75,48 @@ public class AttachEdit {
         attach_leftright = activity.findViewById(R.id.attach_leftright);
         attach_leftright.setOnClickListener(view -> {
             active_button = POSITION_X;
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸Ðµ Ð¿Ð¾ Ð¾ÑÐ¸ X");
+            //attach_text_description.setText("Atur pergeseran pada sumbu X");
             SelectetItem(view);
         });
 
         attach_topbott = activity.findViewById(R.id.attach_topbott);
         attach_topbott.setOnClickListener(view -> {
             active_button = POSITION_Y;
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸Ðµ Ð¿Ð¾ Ð¾ÑÐ¸ Y");
+            //attach_text_description.setText("Atur pergeseran pada sumbu Y");
             SelectetItem(view);
         });
 
         attach_pushpull = activity.findViewById(R.id.attach_pushpull);
         attach_pushpull.setOnClickListener(view -> {
             active_button = POSITION_Z;
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸Ðµ Ð¿Ð¾ Ð¾ÑÐ¸ Z");
+            //attach_text_description.setText("Atur pergeseran pada sumbu Z");
             SelectetItem(view);
         });
 
         attach_scale = activity.findViewById(R.id.attach_scale);
         attach_scale.setOnClickListener(view -> {
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€");
+            //attach_text_description.setText("Atur ukuran");
             active_button = BUTTON_SCALE;
             SelectetItem(view);
         });
 
         attach_rotX = activity.findViewById(R.id.attach_rotX);
         attach_rotX.setOnClickListener(view -> {
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚ X");
+            //attach_text_description.setText("Atur rotasi pada sumbu X");
             active_button = BUTTON_ROT_X;
             SelectetItem(view);
         });
 
         attach_rotY = activity.findViewById(R.id.attach_rotY);
         attach_rotY.setOnClickListener(view -> {
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚ Y");
+            //attach_text_description.setText("Atur rotasi pada sumbu Y");
             active_button = BUTTON_ROT_Y;
             SelectetItem(view);
         });
 
         attach_rotZ = activity.findViewById(R.id.attach_rotZ);
         attach_rotZ.setOnClickListener(view -> {
-            //attach_text_description.setText("Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚ Z");
+            //attach_text_description.setText("Atur rotasi pada sumbu Z");
             active_button = BUTTON_ROT_Z;
             SelectetItem(view);
         });

@@ -226,7 +226,7 @@ public class MainActivity extends SampActivity {
     private void launchInstalledGameApk() {
         ServerConfigManager.ServerOption selectedServer = ServerConfigManager.getSelectedServer(this);
         if (selectedServer == null || !selectedServer.isValid()) {
-            Toast.makeText(this, "Adicione e selecione um servidor antes de abrir o game.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Tambahkan dan pilih server sebelum membuka game.", Toast.LENGTH_LONG).show();
             openTab(TAB_SETTINGS);
             return;
         }
@@ -244,7 +244,7 @@ public class MainActivity extends SampActivity {
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "Instale o APK News RP para entrar no servidor.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Pasang APK News RP untuk masuk ke server.", Toast.LENGTH_LONG).show();
         }
     }
 

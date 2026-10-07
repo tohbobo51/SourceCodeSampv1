@@ -34,7 +34,7 @@
                 android:paddingTop="6dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="6dp"
-                android:text="Loja"
+                android:text="Toko"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="9sp" />
@@ -45,7 +45,7 @@
                 android:layout_marginTop="16dp"
                 android:maxWidth="500dp"
                 android:fontFamily="@font/montserrat_black"
-                android:text="Loja e checkout"
+                android:text="Toko dan checkout"
                 android:textColor="@android:color/white"
                 android:textSize="21sp" />
 
@@ -55,7 +55,7 @@
                 android:layout_marginTop="8dp"
                 android:maxWidth="500dp"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Escolha um pacote, revise o valor e avance com uma interface direta."
+                android:text="Pilih paket, tinjau jumlahnya, dan lanjutkan dengan antarmuka yang sederhana."
                 android:textColor="@color/launcher_text_secondary"
                 android:textSize="9.5sp" />
 
@@ -77,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Pacotes prontos"
+                        android:text="Paket siap pakai"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
 
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserrat_black"
-                        android:text="50 ate 500"
+                        android:text="50 hingga 500"
                         android:textColor="@color/launcher_accent_gold_bright"
                         android:textSize="15sp" />
 
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Selecao rapida para compra"
+                        android:text="Pilihan cepat untuk pembelian"
                         android:textColor="@color/launcher_text_muted"
                         android:textSize="8.5sp" />
                 </LinearLayout>
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserrat_black"
-                        android:text="Valor editavel"
+                        android:text="Nilai dapat diedit"
                         android:textColor="@color/launcher_text_primary"
                         android:textSize="15sp" />
 
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Pode sair do pacote sugerido"
+                        android:text="Dapat memilih di luar paket yang disarankan"
                         android:textColor="@color/launcher_text_muted"
                         android:textSize="8.5sp" />
                 </LinearLayout>
@@ -161,7 +161,7 @@
                         android:paddingTop="4dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="4dp"
-                        android:text="Entrada"
+                        android:text="Masukan"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -171,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Pacote Inicial"
+                        android:text="Paket Awal"
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
 
@@ -180,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Para recarga rapida e teste do fluxo."
+                        android:text="Untuk pengisian cepat dan menguji alurnya."
                         android:textColor="#FFF4E3"
                         android:textSize="10sp" />
 
@@ -213,7 +213,7 @@
                         android:paddingTop="4dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="4dp"
-                        android:text="Padrao"
+                        android:text="Standar"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Pacote Plus"
+                        android:text="Paket Plus"
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
 
@@ -232,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Opcao equilibrada para recargas frequentes."
+                        android:text="Opsi seimbang untuk pengisian ulang yang sering."
                         android:textColor="#E1D3C0"
                         android:textSize="10sp" />
 
@@ -271,7 +271,7 @@
                         android:paddingTop="4dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="4dp"
-                        android:text="Destaque"
+                        android:text="Sorotan"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -281,7 +281,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Pacote Gold"
+                        android:text="Paket Gold"
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
 
@@ -290,7 +290,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Volume maior para quem ja sabe o que quer."
+                        android:text="Volume lebih besar bagi yang sudah tahu apa yang mereka inginkan."
                         android:textColor="#E1D3C0"
                         android:textSize="10sp" />
 
@@ -323,7 +323,7 @@
                         android:paddingTop="4dp"
                         android:paddingEnd="8dp"
                         android:paddingBottom="4dp"
-                        android:text="Avancado"
+                        android:text="Lanjutan"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -333,7 +333,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Pacote Elite"
+                        android:text="Paket Elite"
                         android:textColor="@android:color/white"
                         android:textSize="14sp" />
 
@@ -342,7 +342,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Para compras grandes em um clique."
+                        android:text="Untuk pembelian besar dengan satu klik."
                         android:textColor="#E1D3C0"
                         android:textSize="10sp" />
 
@@ -369,7 +369,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Resumo da compra"
+                    android:text="Ringkasan pembelian"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
 
@@ -379,7 +379,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Pacote Inicial selecionado - valor base 50"
+                    android:text="Paket Awal terpilih - nilai dasar 50"
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="11sp" />
 
@@ -388,7 +388,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Voce pode trocar de pacote ou editar o valor no checkout ao lado."
+                    android:text="Anda dapat mengganti paket atau mengedit nilai di checkout di sebelah."
                     android:textColor="@color/launcher_text_muted"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -430,7 +430,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="Escolha o valor final e siga para a compra."
+                android:text="Pilih nilai akhir dan lanjutkan ke pembelian."
                 android:textColor="@color/launcher_text_secondary"
                 android:textSize="10sp" />
 
@@ -446,7 +446,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Valor"
+                    android:text="Jumlah"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
 
@@ -473,7 +473,7 @@
                 android:background="@drawable/launcher_console_surface"
                 android:fontFamily="@font/montserrat_medium"
                 android:padding="14dp"
-                android:text="O valor pode ser ajustado manualmente se quiser sair do pacote pronto."
+                android:text="Jumlah dapat disesuaikan secara manual jika Anda ingin keluar dari paket yang sudah ada."
                 android:textColor="@color/launcher_text_secondary"
                 android:textSize="10sp" />
 
@@ -484,7 +484,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/launcher_cta_gold"
                 android:fontFamily="@font/montserrat_black"
-                android:text="Comprar"
+                android:text="Beli"
                 android:textAllCaps="false"
                 android:textColor="#2A1608"
                 android:textSize="12sp" />

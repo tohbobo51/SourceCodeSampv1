@@ -30,7 +30,7 @@
             android:ems="10"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center_vertical"
-            android:hint="Digite no chat"
+            android:hint="Ketik di chat"
             android:imeOptions="actionUnspecified|actionGo|actionSend|actionDone|flagNoFullscreen|flagNoExtractUi"
             android:inputType="text"
             android:paddingStart="14dp"
@@ -83,7 +83,7 @@
             android:background="@drawable/samp_keyboard_action"
             android:fontFamily="@font/montserrat_black"
             android:gravity="center"
-            android:text="Enviar"
+            android:text="Kirim"
             android:textAllCaps="false"
             android:textColor="#221106"
             android:textSize="11sp" />

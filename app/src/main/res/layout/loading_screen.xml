@@ -71,7 +71,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_black"
             android:gravity="center"
-            android:text="Carregando o ambiente do SA-MP"
+            android:text="Memuat lingkungan SA-MP"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -81,7 +81,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
-            android:text="Preparando interface, HUD e recursos antes de entrar no jogo."
+            android:text="Mempersiapkan antarmuka, HUD, dan sumber daya sebelum masuk ke permainan."
             android:textColor="#D8CCE4"
             android:textSize="11sp" />
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Aguarde alguns instantes"
+            android:text="Harap tunggu sebentar"
             android:textColor="#BFB3D1"
             android:textSize="10sp" />
     </LinearLayout>

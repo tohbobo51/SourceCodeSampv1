@@ -220,7 +220,7 @@ public class EditorFragment extends Fragment {
         }
 
         if (!HostFileManager.isEditableText(entry)) {
-            Toast.makeText(requireContext(), "Esse arquivo nao e editavel como texto no editor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Berkas ini tidak dapat diedit sebagai teks di editor.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -229,10 +229,10 @@ public class EditorFragment extends Fragment {
             selectedFilePath = entry.relativePath;
             editorInput.setText(content);
             editorInput.setSelection(editorInput.getText() == null ? 0 : editorInput.getText().length());
-            compileOutput.setText("Arquivo aberto: " + entry.displayName);
+            compileOutput.setText("Berkas dibuka: " + entry.displayName);
             refreshEditorState();
         } catch (Exception e) {
-            Toast.makeText(requireContext(), "Nao foi possivel abrir o arquivo.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Tidak dapat membuka berkas.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -272,18 +272,18 @@ public class EditorFragment extends Fragment {
 
     private void saveCurrentFile() {
         if (TextUtils.isEmpty(selectedFilePath)) {
-            Toast.makeText(requireContext(), "Abra um arquivo para salvar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Buka berkas untuk disimpan.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String content = editorInput.getText() == null ? "" : editorInput.getText().toString();
         boolean saved = HostFileManager.writeEditableText(selectedFilePath, content);
         if (!saved) {
-            Toast.makeText(requireContext(), "Nao foi possivel salvar o arquivo.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Gagal menyimpan berkas.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Toast.makeText(requireContext(), "Arquivo salvo.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Berkas berhasil disimpan.", Toast.LENGTH_SHORT).show();
         refreshEditorState();
         refreshFileList();
     }
@@ -294,15 +294,15 @@ public class EditorFragment extends Fragment {
 
     private void compileEntry(String relativePath) {
         if (compileInFlight) {
-            Toast.makeText(requireContext(), "Ja existe uma compilacao em andamento.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Sudah ada proses kompilasi yang sedang berjalan.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(relativePath)) {
-            Toast.makeText(requireContext(), "Abra um .pwn antes de compilar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Buka berkas .pwn sebelum mengompilasi.", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!PawnCompilerManager.isCompilableFile(relativePath)) {
-            Toast.makeText(requireContext(), "Selecione um arquivo .pwn para compilar.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Pilih berkas .pwn untuk dikompilasi.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -312,7 +312,7 @@ public class EditorFragment extends Fragment {
 
         compileInFlight = true;
         refreshEditorState();
-        compileOutput.setText("Compilando...");
+        compileOutput.setText("Mengompilasi...");
 
         new Thread(() -> {
             PawnCompilerManager.CompileResult result = PawnCompilerManager.compile(requireContext(), relativePath);
@@ -326,9 +326,9 @@ public class EditorFragment extends Fragment {
                 refreshEditorState();
                 refreshFileList();
                 if (result.success) {
-                    Toast.makeText(requireContext(), "Compilacao concluida.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Kompilasi selesai.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "A compilacao retornou erro.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Kompilasi mengembalikan kesalahan.", Toast.LENGTH_SHORT).show();
                 }
             });
         }, "xyron-pawn-compile").start();
@@ -352,7 +352,7 @@ public class EditorFragment extends Fragment {
         editorInput.setEnabled(fileSelected);
         editorInput.setAlpha(fileSelected ? 1f : 0.72f);
         if (!fileSelected && TextUtils.isEmpty(editorInput.getText())) {
-            editorInput.setHint("Abra um script, include ou config para editar aqui.");
+            editorInput.setHint("Buka script, include, atau config untuk diedit di sini.");
         }
 
         boolean canCompile = fileSelected && PawnCompilerManager.isCompilableFile(selectedFilePath) && !compileInFlight;
@@ -448,7 +448,7 @@ public class EditorFragment extends Fragment {
             }
             refreshAll();
             loadSelectedFile();
-            Toast.makeText(requireContext(), "Arquivo criado no editor.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Berkas dibuat di editor.", Toast.LENGTH_SHORT).show();
         });
 
         dialog.show();
@@ -497,7 +497,7 @@ public class EditorFragment extends Fragment {
             dialog.dismiss();
             refreshAll();
             loadSelectedFile();
-            Toast.makeText(requireContext(), "Item renomeado.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Item diganti nama.", Toast.LENGTH_SHORT).show();
         });
 
         dialog.show();
@@ -506,10 +506,10 @@ public class EditorFragment extends Fragment {
     private void confirmDelete(HostFileManager.BrowserEntry entry) {
         String label = entry.directory ? "pasta" : "arquivo";
         new AlertDialog.Builder(requireContext())
-                .setTitle("Excluir " + label)
-                .setMessage("Excluir " + entry.displayName + "?\n\n" + entry.relativePath)
-                .setNegativeButton("Cancelar", null)
-                .setPositiveButton("Excluir", (dialog, which) -> {
+                .setTitle("Hapus " + label)
+                .setMessage("Hapus " + entry.displayName + "?\n\n" + entry.relativePath)
+                .setNegativeButton("Batal", null)
+                .setPositiveButton("Hapus", (dialog, which) -> {
                     HostFileManager.FileActionResult result = HostFileManager.deleteEntry(entry.relativePath);
                     if (!result.success) {
                         Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show();
@@ -521,7 +521,7 @@ public class EditorFragment extends Fragment {
                         editorInput.setText("");
                     }
                     refreshAll();
-                    Toast.makeText(requireContext(), "Item removido.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Item dihapus.", Toast.LENGTH_SHORT).show();
                 })
                 .show();
     }

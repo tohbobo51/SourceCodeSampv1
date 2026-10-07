@@ -45,7 +45,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                        android:text="Config"
+                        android:text="Pengaturan"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="8sp" />
@@ -60,7 +60,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
-                        android:text="PAINEL DO LAUNCHER"
+                        android:text="PANEL LAUNCHER"
                         android:textAllCaps="true"
                         android:textColor="@color/launcher_text_secondary"
                         android:textSize="7.5sp" />
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/montserrat_black"
-                    android:text="Configuracoes"
+                    android:text="Pengaturan"
                     android:textColor="@android:color/white"
                     android:textSize="21sp" />
 
@@ -82,7 +82,7 @@
                     android:maxWidth="720dp"
                     android:fontFamily="@font/montserrat_medium"
                     android:lineSpacingExtra="2dp"
-                    android:text="Perfil, servidores, teclado e manutencao ficam juntos em um painel claro."
+                    android:text="Profil, server, keyboard, dan pemeliharaan terkumpul dalam satu panel yang jelas."
                     android:textColor="@color/launcher_text_secondary"
                     android:textSize="9.5sp" />
 
@@ -106,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Nome no jogo"
+                            android:text="Nama dalam game"
                             android:textColor="@android:color/white"
                             android:textSize="11sp" />
 
@@ -122,7 +122,7 @@
                             android:maxLines="1"
                             android:paddingStart="14dp"
                             android:paddingEnd="14dp"
-                            android:text="Nenhum nome definido"
+                            android:text="Belum ada nama yang ditetapkan."
                             android:textColor="@color/launcher_text_primary"
                             android:textSize="10.5sp" />
 
@@ -131,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Esse nick vai para o arquivo do jogo."
+                            android:text="Nick ini akan dimasukkan ke file permainan."
                             android:textColor="@color/launcher_text_muted"
                             android:textSize="8.5sp" />
 
@@ -146,7 +146,7 @@
                             android:minWidth="126dp"
                             android:paddingStart="18dp"
                             android:paddingEnd="18dp"
-                            android:text="Editar nome"
+                            android:text="Ubah nama"
                             android:textColor="@android:color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
@@ -166,7 +166,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Servidores"
+                            android:text="Server"
                             android:textColor="@android:color/white"
                             android:textSize="11sp" />
 
@@ -175,7 +175,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Adicione no formato IP:PORTA. Maximo de 5."
+                            android:text="Tambahkan dalam format IP:PORT. Maksimal 5."
                             android:textColor="@color/launcher_text_muted"
                             android:textSize="8.5sp" />
 
@@ -186,7 +186,7 @@
                             android:background="@drawable/launcher_console_surface"
                             android:fontFamily="@font/montserrat_medium"
                             android:padding="12dp"
-                            android:text="Depois de salvar, o IP ja aparece na aba Servidores para selecionar."
+                            android:text="Setelah disimpan, IP akan muncul di tab Server untuk dipilih."
                             android:textColor="@color/launcher_text_secondary"
                             android:textSize="9sp" />
 
@@ -201,7 +201,7 @@
                             android:minWidth="146dp"
                             android:paddingStart="18dp"
                             android:paddingEnd="18dp"
-                            android:text="Adicionar servidor"
+                            android:text="Tambahkan server"
                             android:textColor="@android:color/white"
                             android:textSize="10sp" />
                     </LinearLayout>
@@ -226,7 +226,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Teclado Android"
+                            android:text="Keyboard Android"
                             android:textColor="@android:color/white"
                             android:textSize="11sp" />
 
@@ -235,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Ative so se quiser usar o teclado do sistema dentro do jogo."
+                            android:text="Aktifkan hanya jika ingin menggunakan keyboard sistem dalam permainan."
                             android:textColor="@color/launcher_text_muted"
                             android:textSize="8.5sp" />
 
@@ -256,7 +256,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:text="Ativar no launcher"
+                                android:text="Aktifkan di launcher"
                                 android:textColor="@color/launcher_text_primary"
                                 android:textSize="9sp" />
 
@@ -283,7 +283,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Bate-papo"
+                            android:text="Obrolan"
                             android:textColor="@android:color/white"
                             android:textSize="11sp" />
 
@@ -292,7 +292,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Define quantas mensagens ficam visiveis na tela."
+                            android:text="Menetapkan berapa banyak pesan yang terlihat di layar."
                             android:textColor="@color/launcher_text_muted"
                             android:textSize="8.5sp" />
 
@@ -327,7 +327,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Liga ou desliga o microfone/voice chat salvo no settings.ini."
+                        android:text="Mengaktifkan atau menonaktifkan mikrofon/voice chat yang tersimpan di settings.ini."
                         android:textColor="@color/launcher_text_muted"
                         android:textSize="8.5sp" />
 
@@ -348,7 +348,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="Voice chat ativo"
+                            android:text="Voice chat aktif"
                             android:textColor="@color/launcher_text_primary"
                             android:textSize="9sp" />
 
@@ -373,7 +373,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Manutencao"
+                        android:text="Pemeliharaan"
                         android:textColor="@android:color/white"
                         android:textSize="11sp" />
 
@@ -383,7 +383,7 @@
                         android:layout_marginTop="6dp"
                         android:maxWidth="620dp"
                         android:fontFamily="@font/montserrat_medium"
-                        android:text="Reinicia o fluxo do launcher e baixa tudo de novo se precisar reabrir a base limpa."
+                        android:text="Memulai ulang alur launcher dan mengunduh semuanya lagi jika perlu membuka instalasi bersih."
                         android:textColor="@color/launcher_text_muted"
                         android:textSize="8.5sp" />
 
@@ -398,7 +398,7 @@
                         android:minWidth="148dp"
                         android:paddingStart="18dp"
                         android:paddingEnd="18dp"
-                        android:text="Reinstalar o jogo"
+                        android:text="Pasang ulang permainan"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
                 </LinearLayout>

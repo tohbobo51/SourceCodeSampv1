@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montsserat_semibold"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="broken"
+        android:text="rusak"
         android:layout_marginLeft="@dimen/_15sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_9sdp"

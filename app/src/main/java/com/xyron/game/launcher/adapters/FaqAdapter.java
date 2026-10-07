@@ -68,7 +68,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
                 public void onClick(View view) {
                     builder.setMessage(mItemsInfo.get(holder.getAdapterPosition()))
                             .setCancelable(false)
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.dismiss();
                                 }

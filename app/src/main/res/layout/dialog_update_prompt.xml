@@ -15,7 +15,7 @@
         android:paddingTop="6dp"
         android:paddingEnd="12dp"
         android:paddingBottom="6dp"
-        android:text="Atualizacao"
+        android:text="Pembaruan"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
         android:textSize="9sp" />
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_black"
-        android:text="Atualizacao de dados encontrada"
+        android:text="Pembaruan data ditemukan"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat_medium"
-        android:text="Baixe a versao nova agora para entrar com os arquivos corretos. Se voce ja atualizou manualmente, pode ignorar."
+        android:text="Unduh versi baru sekarang untuk masuk dengan berkas yang benar. Jika Anda sudah memperbarui secara manual, abaikan."
         android:textColor="#D3C7E3"
         android:textSize="12sp" />
 
@@ -57,7 +57,7 @@
             android:minWidth="120dp"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
-            android:text="Agora nao"
+            android:text="Tidak sekarang"
             android:textColor="@android:color/white"
             android:textSize="11sp" />
 
@@ -72,7 +72,7 @@
             android:minWidth="140dp"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
-            android:text="Atualizar"
+            android:text="Perbarui"
             android:textColor="@android:color/white"
             android:textSize="11sp" />
     </LinearLayout>

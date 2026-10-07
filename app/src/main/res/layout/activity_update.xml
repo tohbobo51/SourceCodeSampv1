@@ -43,7 +43,7 @@
             android:paddingTop="6dp"
             android:paddingEnd="12dp"
             android:paddingBottom="6dp"
-            android:text="Arquivos do jogo"
+            android:text="Berkas permainan"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="9sp" />
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/montserrat_black"
-            android:text="Escolha a data"
+            android:text="Pilih paket data"
             android:textColor="@android:color/white"
             android:textSize="22sp" />
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Selecione o pacote para baixar antes de entrar no jogo."
+            android:text="Pilih paket untuk diunduh sebelum masuk ke permainan."
             android:textColor="#D8CCE4"
             android:textSize="11sp" />
 
@@ -152,7 +152,7 @@
                     android:paddingTop="6dp"
                     android:paddingEnd="12dp"
                     android:paddingBottom="6dp"
-                    android:text="Atualizador"
+                    android:text="Pembaruan"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white"
                     android:textSize="9sp" />
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/montserrat_black"
-                    android:text="Atualizando o seu aplicativo..."
+                    android:text="Memperbarui aplikasi Anda..."
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
 
@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Nao feche nem minimize o app ate o download ser concluido."
+                    android:text="Jangan tutup atau minimalkan aplikasi sampai unduhan selesai."
                     android:textColor="#D8CCE4"
                     android:textSize="11sp" />
             </LinearLayout>

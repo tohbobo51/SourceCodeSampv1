@@ -82,7 +82,7 @@
             android:background="@drawable/home_server_select_button"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Abrir"
+            android:text="Buka"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
 
@@ -95,7 +95,7 @@
             android:background="@drawable/home_action_text_button"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Compilar"
+            android:text="Kompilasi"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
 
@@ -108,7 +108,7 @@
             android:background="@drawable/home_action_secondary"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Renomear"
+            android:text="Ganti nama"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
 
@@ -121,7 +121,7 @@
             android:background="@drawable/home_action_text_button"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="Excluir"
+            android:text="Hapus"
             android:textColor="@android:color/white"
             android:textSize="8.5sp" />
     </LinearLayout>

@@ -20,7 +20,7 @@
             android:paddingTop="5dp"
             android:paddingEnd="10dp"
             android:paddingBottom="5dp"
-            android:text="Arquivo"
+            android:text="File"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="8sp" />
@@ -71,7 +71,7 @@
                 android:background="@drawable/home_action_text_button"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:text="Cancelar"
+                android:text="Batal"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
 
@@ -84,7 +84,7 @@
                 android:background="@drawable/home_server_select_button"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:text="Salvar"
+                android:text="Simpan"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
         </LinearLayout>
