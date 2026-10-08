@@ -30,8 +30,9 @@ server                                      File pendukung untuk host/editor
 ## Persyaratan
 
 - Windows dengan Android Studio terpasang.
-- Android SDK Platform 33.
+- Android SDK Platform 35.
 - Android Build Tools terpasang melalui Android Studio.
+- Android Gradle Plugin 8.6.1 dan Gradle Wrapper 8.7.
 - Android NDK `26.2.11394342`.
 - Java 17.
 - Perangkat Android dengan debug USB/Wireless ADB aktif untuk memasang dan menguji.
@@ -184,3 +185,18 @@ Jangan menebak offset. Gunakan logcat/tombstone dan bandingkan dengan lib yang b
 - Data default: Lite.
 - Inventaris dengan gambar lokal yang diperbaiki di `assets/interfaces/inventario/images`.
 - Pemeriksaan Data Lite diperkuat agar tidak memulai game dengan file yang tidak lengkap.
+
+## Login Google native
+
+Tombol **Main** memakai Android Credential Manager untuk mengambil Google ID token dan nonce acak, mengirimkannya melalui HTTPS ke API, lalu meluncurkan game hanya setelah API memverifikasi identitas dan menerbitkan tiket satu kali. Gamemode menukarkan tiket lewat MySQL; ID token Google tidak dikirim ke server game dan tidak dicatat ke Logcat.
+
+Untuk membangun APK yang dapat login, atur variabel berikut di environment build:
+
+```powershell
+$env:GOOGLE_WEB_CLIENT_ID = "<Web application OAuth Client ID>"
+$env:AUTH_API_BASE_URL = "https://openmp-gm.vercel.app"
+```
+
+`GOOGLE_WEB_CLIENT_ID` harus sama dengan `GOOGLE_CLIENT_ID` di environment API Vercel; gunakan **Web application client ID** dari Google Cloud, bukan client ID Android. OAuth Android client juga harus mendaftarkan package `com.xyron.game` dan SHA-1 sertifikat release. Client ID bukan client secret; jangan pernah menanamkan client secret ke APK. Gradle menolak build release jika Web Client ID kosong.
+
+Server API dan gamemode memakai tabel `auth_login_tickets` (lihat dokumentasi dan skema pada repository `openmp-gm`). Tiket berlaku 90 detik dan hanya dapat diklaim sekali. Saat ini login hanya untuk akun yang sudah ada di `ucp_accounts` dan sudah memiliki karakter di `characters`; pendaftaran akun/karakter baru melalui launcher belum diaktifkan.

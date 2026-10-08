@@ -8,11 +8,20 @@ def releaseStorePath = System.getenv("SIGNING_STORE_FILE")
 def releaseStorePassword = System.getenv("SIGNING_STORE_PASSWORD")
 def releaseKeyAlias = System.getenv("SIGNING_KEY_ALIAS")
 def releaseKeyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+def googleWebClientId = System.getenv("GOOGLE_WEB_CLIENT_ID") ?: project.findProperty("googleWebClientId") ?: ""
+def authApiBaseUrl = System.getenv("AUTH_API_BASE_URL") ?: project.findProperty("authApiBaseUrl") ?: "https://openmp-gm.vercel.app"
 def hasReleaseSigning = [releaseStorePath, releaseStorePassword, releaseKeyAlias, releaseKeyPassword]
         .every { it != null && !it.trim().isEmpty() }
 
+gradle.taskGraph.whenReady {
+    def releaseRequested = gradle.taskGraph.allTasks.any { it.name.toLowerCase().contains("release") }
+    if (releaseRequested && googleWebClientId.trim().isEmpty()) {
+        throw new GradleException("Set GOOGLE_WEB_CLIENT_ID to the Google Web OAuth client ID before building a release APK.")
+    }
+}
+
 android {
-    compileSdkVersion 33
+    compileSdkVersion 35
     ndkVersion "26.2.11394342"
 
     defaultConfig {
@@ -28,6 +37,8 @@ android {
         buildConfigField "String", "XYRON_APK_ROLE", "\"all\""
         buildConfigField "String", "XYRON_GAME_PACKAGE", "\"com.xyron.game\""
         buildConfigField "String", "XYRON_TOOLS_PACKAGE", "\"com.xyron.game\""
+        buildConfigField "String", "GOOGLE_WEB_CLIENT_ID", groovy.json.JsonOutput.toJson(googleWebClientId)
+        buildConfigField "String", "AUTH_API_BASE_URL", groovy.json.JsonOutput.toJson(authApiBaseUrl)
 
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'
@@ -120,6 +131,9 @@ dependencies {
     // PRDownloader source is already vendored under app/src/main/java/com/downloader.
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    implementation 'androidx.credentials:credentials:1.3.0'
+    implementation 'androidx.credentials:credentials-play-services-auth:1.3.0'
+    implementation 'com.google.android.libraries.identity.googleid:googleid:1.1.1'
 
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.firebase:firebase-crashlytics-ndk:18.3.5'
