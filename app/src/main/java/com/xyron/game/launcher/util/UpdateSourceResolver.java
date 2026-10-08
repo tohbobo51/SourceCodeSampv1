@@ -16,11 +16,7 @@ import java.util.Set;
 
 public final class UpdateSourceResolver {
     private static final String CONFIG_ASSET_PATH = "update_sources.json";
-    private static final String DEFAULT_DATA_VARIANT_ID = "lite";
-    private static final String DEFAULT_CLIENT_CONFIG_URL =
-            "https://rp.goldcityrolrplay.space/dowloandoficial/client_config.json";
-    private static final String DEFAULT_FILES_BASE_URL =
-            "https://rp.goldcityrolrplay.space/dowloandoficial/files";
+    private static final String DEFAULT_DATA_VARIANT_ID = "full";
 
     private UpdateSourceResolver() {
     }
@@ -38,36 +34,24 @@ public final class UpdateSourceResolver {
         String dataArchiveUrl = "";
         String dataArchiveSha256 = "";
         long dataArchiveSize = 0L;
-        boolean hasCustomSource = false;
-        boolean selectedExplicitVariant = false;
         String normalizedVariantId = normalizeVariantId(dataVariantId);
 
         JSONObject config = loadJsonAsset(context.getAssets(), CONFIG_ASSET_PATH);
         if (config != null) {
             JSONObject selectedConfig = findDataVariantConfig(config, normalizedVariantId);
-            if (selectedConfig != null) {
-                selectedExplicitVariant = true;
-            } else {
+            if (selectedConfig == null) {
                 selectedConfig = config;
             }
 
             ParsedSourceConfig parsedConfig = parseSourceConfig(selectedConfig);
             clientConfigUrls.addAll(parsedConfig.clientConfigUrls);
             fallbackFileBaseUrls.addAll(parsedConfig.fallbackFileBaseUrls);
-            hasCustomSource = parsedConfig.hasCustomSource;
             huggingFaceTreeApiUrl = parsedConfig.huggingFaceTreeApiUrl;
             huggingFaceResolveBaseUrl = parsedConfig.huggingFaceResolveBaseUrl;
             huggingFaceFilesPathPrefix = parsedConfig.huggingFaceFilesPathPrefix;
             dataArchiveUrl = parsedConfig.dataArchiveUrl;
             dataArchiveSha256 = parsedConfig.dataArchiveSha256;
             dataArchiveSize = parsedConfig.dataArchiveSize;
-        }
-
-        boolean allowDefaultFallback = !selectedExplicitVariant
-                || DEFAULT_DATA_VARIANT_ID.equals(normalizedVariantId);
-        if (!hasCustomSource && allowDefaultFallback) {
-            clientConfigUrls.add(DEFAULT_CLIENT_CONFIG_URL);
-            fallbackFileBaseUrls.add(DEFAULT_FILES_BASE_URL);
         }
 
         return new UpdateSourceConfig(

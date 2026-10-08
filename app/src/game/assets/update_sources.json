@@ -1,35 +1,11 @@
 {
-  "client_config_urls": [],
-  "fallback_file_base_urls": [],
-  "huggingface": {
-    "repo_id": "",
-    "repo_type": "dataset",
-    "revision": "main",
-    "client_config_path": "client_config.json",
-    "files_path_prefix": ""
-  },
   "data_variants": [
     {
-      "id": "lite",
-      "label": "Data Lite",
-      "huggingface": {
-        "repo_id": "dfdffdfdfdfd/gta-data-files-universal",
-        "repo_type": "dataset",
-        "revision": "main",
-        "client_config_path": "client_config.json",
-        "files_path_prefix": "data-lite/files"
-      }
-    },
-    {
       "id": "full",
-      "label": "Data Full",
-      "huggingface": {
-        "repo_id": "dfdffdfdfdfd/gta-data-files-universal",
-        "repo_type": "dataset",
-        "revision": "main",
-        "client_config_path": "client_config.json",
-        "files_path_prefix": "data-full/files"
-      }
+      "label": "CRMP Data Full",
+      "archive_url": "https://github.com/tohbobo51/samp-game-data/releases/download/v1.0/CRMP.zip",
+      "archive_size": 1074673867,
+      "archive_sha256": "4854d4176df5a8da3da17bf4aaf58e374c395ab0e1cb68be0a83ab0f6889c7ec"
     }
   ]
 }

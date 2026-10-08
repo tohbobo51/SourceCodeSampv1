@@ -207,7 +207,7 @@ public class SplashActivity extends SampActivity {
 
         Message obtain = Message.obtain(null, 0);
         obtain.getData().putInt("gputype", mGpuType);
-        obtain.getData().putString("data_variant", DataVariantPreferences.DATA_VARIANT_LITE);
+        obtain.getData().putString("data_variant", DataVariantPreferences.DATA_VARIANT_FULL);
         obtain.replyTo = mMessenger;
         try {
             mService.send(obtain);
@@ -270,7 +270,7 @@ public class SplashActivity extends SampActivity {
         TextView secondaryButton = dialogView.findViewById(R.id.update_prompt_secondary);
 
         titleView.setText("Unduhan tidak tersedia");
-        bodyView.setText("Berkas game belum ada di perangkat dan sumber unduhan tidak merespons. Coba lagi atau konfigurasikan update_sources.json dengan URL Hugging Face Anda.");
+        bodyView.setText("Berkas game belum ada di perangkat dan unduhan CRMP.zip dari GitHub Releases tidak merespons. Periksa koneksi internet lalu coba lagi.");
         primaryButton.setText("Coba lagi");
         secondaryButton.setText("Tutup");
 

@@ -35,7 +35,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class UpdateActivity extends SampActivity {
-    private static final String DATA_VARIANT_LITE = DataVariantPreferences.DATA_VARIANT_LITE;
     private static final String DATA_VARIANT_FULL = DataVariantPreferences.DATA_VARIANT_FULL;
 
     public Messenger mMessenger = new Messenger(new IncomingHandler());
@@ -44,7 +43,7 @@ public class UpdateActivity extends SampActivity {
     boolean isBindingService = false;
     private UpdateMode mUpdateMode = UpdateMode.Undefined;
     public int mGpuType;
-    private String mSelectedDataVariantId = DATA_VARIANT_LITE;
+    private String mSelectedDataVariantId = DATA_VARIANT_FULL;
 
     private File mGameApk;
 
@@ -240,21 +239,9 @@ public class UpdateActivity extends SampActivity {
         View variantPanel = findViewById(R.id.data_variant_panel);
         View progressPanel = findViewById(R.id.update_progress_panel);
         if (mUpdateMode == UpdateMode.GameDataUpdate) {
-            bindDataVariantButton(R.id.data_variant_lite, DATA_VARIANT_LITE);
             bindDataVariantButton(R.id.data_variant_full, DATA_VARIANT_FULL);
-
-            String savedVariantId = DataVariantPreferences.getSelectedVariantId(this);
-            if (DATA_VARIANT_FULL.equals(savedVariantId)) {
-                DataVariantPreferences.saveSelectedVariantId(this, DATA_VARIANT_LITE);
-                savedVariantId = DATA_VARIANT_LITE;
-            }
-
-            if (savedVariantId.isEmpty()) {
-                savedVariantId = DATA_VARIANT_LITE;
-                DataVariantPreferences.saveSelectedVariantId(this, DATA_VARIANT_LITE);
-            }
-
-            startDataVariantUpdate(savedVariantId, false);
+            DataVariantPreferences.saveSelectedVariantId(this, DATA_VARIANT_FULL);
+            startDataVariantUpdate(DATA_VARIANT_FULL, false);
             return;
 
         } else {
@@ -276,7 +263,7 @@ public class UpdateActivity extends SampActivity {
     private void startDataVariantUpdate(String variantId, boolean saveSelection) {
         String normalizedVariantId = DataVariantPreferences.normalizeVariantId(variantId);
         if (!DataVariantPreferences.isSupportedVariantId(normalizedVariantId)) {
-            normalizedVariantId = DATA_VARIANT_LITE;
+            normalizedVariantId = DATA_VARIANT_FULL;
         }
 
         mSelectedDataVariantId = normalizedVariantId;
@@ -291,7 +278,7 @@ public class UpdateActivity extends SampActivity {
         findViewById(R.id.data_variant_panel).setVisibility(View.GONE);
         findViewById(R.id.update_progress_panel).setVisibility(View.VISIBLE);
         ((TextView)findViewById(R.id.installation_text)).setText("Mempersiapkan data " + getSelectedVariantLabel() + "...");
-        ((TextView)findViewById(R.id.fileName)).setText("Menghubungkan ke Hugging Face");
+        ((TextView)findViewById(R.id.fileName)).setText("Menghubungkan ke GitHub Releases");
         ((TextView)findViewById(R.id.fileCount)).setText("");
         ((TextView)findViewById(R.id.fileProgressPercent)).setText("");
         ((ProgressBar)findViewById(R.id.download_progress)).setIndeterminate(true);
@@ -300,7 +287,7 @@ public class UpdateActivity extends SampActivity {
     }
 
     private String getSelectedVariantLabel() {
-        return DATA_VARIANT_FULL.equals(mSelectedDataVariantId) ? "Full" : "Lite";
+        return "Full CRMP";
     }
 
     private void requestGameDataUpdateStart() {
