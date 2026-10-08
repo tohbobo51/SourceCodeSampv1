@@ -269,8 +269,8 @@ public class SplashActivity extends SampActivity {
         TextView primaryButton = dialogView.findViewById(R.id.update_prompt_primary);
         TextView secondaryButton = dialogView.findViewById(R.id.update_prompt_secondary);
 
-        titleView.setText("Unduhan tidak tersedia");
-        bodyView.setText("Berkas game belum ada di perangkat dan unduhan CRMP.zip dari GitHub Releases tidak merespons. Periksa koneksi internet lalu coba lagi.");
+        titleView.setText("Data game belum bisa dipasang");
+        bodyView.setText("CRMP.zip lokal mungkin tidak utuh, atau unduhan GitHub gagal. Gunakan CRMP.zip v1.0 di folder files/ atau files/download/. Ganti/hapus arsip yang salah, lalu coba lagi.");
         primaryButton.setText("Coba lagi");
         secondaryButton.setText("Tutup");
 
