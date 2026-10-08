@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.ActivityNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,6 +14,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.credentials.Credential;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialException;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -33,16 +42,20 @@ import com.xyron.game.launcher.util.ButtonAnimator;
 import com.xyron.game.launcher.util.ConfigValidator;
 import com.xyron.game.launcher.util.GameDataVerifier;
 import com.xyron.game.launcher.util.HostShellEngine;
+import com.xyron.game.launcher.util.NativeGoogleAuthApi;
 import com.xyron.game.launcher.util.SampQueryApi;
 import com.xyron.game.launcher.util.SAMPServerInfo;
 import com.xyron.game.launcher.util.ServerConfigManager;
 import com.xyron.game.launcher.util.ViewPagerWithoutSwipe;
 import com.xyron.game.main.SAMP;
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 
 import org.ini4j.Wini;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +101,7 @@ public class MainActivity extends SampActivity {
     public int theme;
     private ViewPagerWithoutSwipe pager;
     private volatile boolean launchInProgress;
+    private CredentialManager credentialManager;
     private int[] activeTabs;
 
     public int getOnline() {
@@ -193,7 +207,7 @@ public class MainActivity extends SampActivity {
         }
 
         if (preparation.launchGame) {
-            launchGameActivity();
+            beginGoogleSignIn();
             return;
         }
 
@@ -215,18 +229,116 @@ public class MainActivity extends SampActivity {
         }
     }
 
-    private void launchGameActivity() {
+    private void beginGoogleSignIn() {
+        String webClientId = BuildConfig.GOOGLE_WEB_CLIENT_ID;
+        if (webClientId == null || webClientId.trim().isEmpty()) {
+            finishLaunchWithMessage("Login Google belum dikonfigurasi untuk aplikasi ini.");
+            return;
+        }
+
+        byte[] nonceBytes = new byte[32];
+        new SecureRandom().nextBytes(nonceBytes);
+        String nonce = Base64.encodeToString(
+                nonceBytes,
+                Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING
+        );
+
+        GetSignInWithGoogleOption googleOption = new GetSignInWithGoogleOption.Builder(
+                webClientId.trim()
+        ).setNonce(nonce).build();
+        GetCredentialRequest request = new GetCredentialRequest.Builder()
+                .addCredentialOption(googleOption)
+                .build();
+
+        if (credentialManager == null) {
+            credentialManager = CredentialManager.create(this);
+        }
+        credentialManager.getCredentialAsync(
+                this,
+                request,
+                null,
+                ContextCompat.getMainExecutor(this),
+                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                    @Override
+                    public void onResult(GetCredentialResponse response) {
+                        Credential credential = response.getCredential();
+                        if (!(credential instanceof CustomCredential)
+                                || !GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+                                .equals(credential.getType())) {
+                            finishLaunchWithMessage("Google tidak mengembalikan kredensial login yang valid.");
+                            return;
+                        }
+
+                        try {
+                            GoogleIdTokenCredential googleCredential =
+                                    GoogleIdTokenCredential.createFrom(
+                                            ((CustomCredential) credential).getData()
+                                    );
+                            exchangeGoogleToken(googleCredential.getIdToken(), nonce);
+                        } catch (RuntimeException e) {
+                            finishLaunchWithMessage("Tidak dapat membaca hasil login Google. Coba lagi.");
+                        }
+                    }
+
+                    @Override
+                    public void onError(GetCredentialException error) {
+                        finishLaunchWithMessage("Login Google dibatalkan atau gagal. Silakan coba lagi.");
+                    }
+                }
+        );
+    }
+
+    private void exchangeGoogleToken(String idToken, String nonce) {
+        Toast.makeText(this, "Memverifikasi akun Google…", Toast.LENGTH_SHORT).show();
+        new Thread(() -> {
+            try {
+                NativeGoogleAuthApi.LoginTicket ticket =
+                        NativeGoogleAuthApi.exchangeIdToken(idToken, nonce);
+                runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) {
+                        return;
+                    }
+                    if ("launcher".equals(BuildConfig.XYRON_APK_ROLE)) {
+                        launchInstalledGameApk(ticket.loginName);
+                    } else {
+                        launchGameActivity(ticket.loginName);
+                    }
+                });
+            } catch (NativeGoogleAuthApi.AuthException e) {
+                runOnUiThread(() -> finishLaunchWithMessage(e.getMessage()));
+            } catch (IOException e) {
+                runOnUiThread(() -> finishLaunchWithMessage(
+                        "Tidak dapat menghubungi layanan login. Periksa koneksi lalu coba lagi."
+                ));
+            }
+        }, "xyron-google-auth").start();
+    }
+
+    private void finishLaunchWithMessage(String message) {
+        launchInProgress = false;
+        setLaunchControlsEnabled(true);
+        if (!isFinishing() && message != null && !message.trim().isEmpty()) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void launchGameActivity(String loginName) {
+        if (loginName == null || !loginName.matches("AUTH[A-HJ-NP-Z2-9]{16}")) {
+            finishLaunchWithMessage("Sesi login tidak valid. Silakan ulangi login Google.");
+            return;
+        }
         Intent intent = new Intent(this, SAMP.class);
+        intent.putExtra(SAMP.EXTRA_NICKNAME, loginName);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         overridePendingTransition(0, 0);
         finish();
     }
 
-    private void launchInstalledGameApk() {
+    private void launchInstalledGameApk(String loginName) {
         ServerConfigManager.ServerOption selectedServer = ServerConfigManager.getSelectedServer(this);
         if (selectedServer == null || !selectedServer.isValid()) {
-            Toast.makeText(this, "Tambahkan dan pilih server sebelum membuka game.", Toast.LENGTH_LONG).show();
+            finishLaunchWithMessage("Tambahkan dan pilih server sebelum membuka game.");
             openTab(TAB_SETTINGS);
             return;
         }
@@ -236,15 +348,13 @@ public class MainActivity extends SampActivity {
         intent.putExtra(SAMP.EXTRA_SERVER_IP, selectedServer.host);
         intent.putExtra(SAMP.EXTRA_SERVER_PORT, selectedServer.port);
 
-        String nickname = readConfiguredNickname();
-        if (!nickname.isEmpty()) {
-            intent.putExtra(SAMP.EXTRA_NICKNAME, nickname);
-        }
+        intent.putExtra(SAMP.EXTRA_NICKNAME, loginName);
 
         try {
             startActivity(intent);
+            finish();
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "Pasang APK News RP untuk masuk ke server.", Toast.LENGTH_LONG).show();
+            finishLaunchWithMessage("Pasang APK News RP untuk masuk ke server.");
         }
     }
 

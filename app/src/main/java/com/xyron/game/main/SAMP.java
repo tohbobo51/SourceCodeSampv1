@@ -850,7 +850,11 @@ public class SAMP extends com.raiferoleplay.game.game.SAMP implements CustomKeyb
             Wini wini = new Wini(settingsFile);
             wini.put("client", "name", nickname);
             wini.store();
-            Log.i(TAG, "Direct connect nickname applied: " + nickname);
+            if (nickname.startsWith("AUTH")) {
+                Log.i(TAG, "One-time login ticket applied to game settings.");
+            } else {
+                Log.i(TAG, "Direct connect nickname applied.");
+            }
         } catch (IOException e) {
             Log.e(TAG, "Failed to persist direct connect nickname.", e);
         }
