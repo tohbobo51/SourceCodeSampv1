@@ -23,6 +23,9 @@
     {
       "id": "full",
       "label": "Data Full",
+      "archive_url": "https://github.com/tohbobo51/data-samp/releases/download/data-assets-v1/DataGta.zip",
+      "archive_sha256": "990f9e382594301f1f56e89920792636dc09756884fdf832a02a41a92348b9e6",
+      "archive_size": 438650686,
       "huggingface": {
         "repo_id": "dfdffdfdfdfd/gta-data-files-universal",
         "repo_type": "dataset",

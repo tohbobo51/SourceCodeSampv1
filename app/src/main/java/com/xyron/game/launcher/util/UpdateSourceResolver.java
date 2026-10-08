@@ -35,6 +35,9 @@ public final class UpdateSourceResolver {
         String huggingFaceTreeApiUrl = "";
         String huggingFaceResolveBaseUrl = "";
         String huggingFaceFilesPathPrefix = "";
+        String dataArchiveUrl = "";
+        String dataArchiveSha256 = "";
+        long dataArchiveSize = 0L;
         boolean hasCustomSource = false;
         boolean selectedExplicitVariant = false;
         String normalizedVariantId = normalizeVariantId(dataVariantId);
@@ -55,6 +58,9 @@ public final class UpdateSourceResolver {
             huggingFaceTreeApiUrl = parsedConfig.huggingFaceTreeApiUrl;
             huggingFaceResolveBaseUrl = parsedConfig.huggingFaceResolveBaseUrl;
             huggingFaceFilesPathPrefix = parsedConfig.huggingFaceFilesPathPrefix;
+            dataArchiveUrl = parsedConfig.dataArchiveUrl;
+            dataArchiveSha256 = parsedConfig.dataArchiveSha256;
+            dataArchiveSize = parsedConfig.dataArchiveSize;
         }
 
         boolean allowDefaultFallback = !selectedExplicitVariant
@@ -69,7 +75,10 @@ public final class UpdateSourceResolver {
                 new ArrayList<>(fallbackFileBaseUrls),
                 huggingFaceTreeApiUrl,
                 huggingFaceResolveBaseUrl,
-                huggingFaceFilesPathPrefix
+                huggingFaceFilesPathPrefix,
+                dataArchiveUrl,
+                dataArchiveSha256,
+                dataArchiveSize
         );
     }
 
@@ -77,6 +86,13 @@ public final class UpdateSourceResolver {
         ParsedSourceConfig parsedConfig = new ParsedSourceConfig();
         if (config == null) {
             return parsedConfig;
+        }
+
+        String archiveUrl = sanitize(config.optString("archive_url"));
+        if (archiveUrl.startsWith("https://")) {
+            parsedConfig.dataArchiveUrl = archiveUrl;
+            parsedConfig.dataArchiveSha256 = sanitize(config.optString("archive_sha256"));
+            parsedConfig.dataArchiveSize = Math.max(0L, config.optLong("archive_size", 0L));
         }
 
         JSONObject huggingFace = config.optJSONObject("huggingface");
@@ -260,19 +276,28 @@ public final class UpdateSourceResolver {
         public final String huggingFaceTreeApiUrl;
         public final String huggingFaceResolveBaseUrl;
         public final String huggingFaceFilesPathPrefix;
+        public final String dataArchiveUrl;
+        public final String dataArchiveSha256;
+        public final long dataArchiveSize;
 
         public UpdateSourceConfig(
                 List<String> clientConfigUrls,
                 List<String> fallbackFileBaseUrls,
                 String huggingFaceTreeApiUrl,
                 String huggingFaceResolveBaseUrl,
-                String huggingFaceFilesPathPrefix
+                String huggingFaceFilesPathPrefix,
+                String dataArchiveUrl,
+                String dataArchiveSha256,
+                long dataArchiveSize
         ) {
             this.clientConfigUrls = clientConfigUrls;
             this.fallbackFileBaseUrls = fallbackFileBaseUrls;
             this.huggingFaceTreeApiUrl = huggingFaceTreeApiUrl;
             this.huggingFaceResolveBaseUrl = huggingFaceResolveBaseUrl;
             this.huggingFaceFilesPathPrefix = huggingFaceFilesPathPrefix;
+            this.dataArchiveUrl = dataArchiveUrl;
+            this.dataArchiveSha256 = dataArchiveSha256;
+            this.dataArchiveSize = dataArchiveSize;
         }
     }
 
@@ -282,6 +307,9 @@ public final class UpdateSourceResolver {
         String huggingFaceTreeApiUrl = "";
         String huggingFaceResolveBaseUrl = "";
         String huggingFaceFilesPathPrefix = "";
+        String dataArchiveUrl = "";
+        String dataArchiveSha256 = "";
+        long dataArchiveSize = 0L;
         boolean hasCustomSource = false;
     }
 }

@@ -24,6 +24,7 @@ import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.Progress;
 import com.xyron.game.launcher.data.FilesData;
+import com.xyron.game.launcher.util.DataGtaArchiveInstaller;
 import com.xyron.game.launcher.util.GameDataVerifier;
 import com.xyron.game.launcher.util.UpdateSourceResolver;
 import com.xyron.game.launcher.util.Util;
@@ -70,6 +71,9 @@ public class UpdateService extends Service {
     public String mHuggingFaceTreeApiUrl = "";
     public String mHuggingFaceResolveBaseUrl = "";
     public String mHuggingFaceFilesPathPrefix = "";
+    private String mDataArchiveUrl = "";
+    private String mDataArchiveSha256 = "";
+    private long mDataArchiveSize = 0L;
     public String mDataVariantId = DEFAULT_DATA_VARIANT_ID;
 
     public int mGpuType = 0;
@@ -151,6 +155,10 @@ public class UpdateService extends Service {
     {
         resetUpdateState();
         loadUpdateSources();
+        if ("full".equals(mDataVariantId) && !sanitize(mDataArchiveUrl).isEmpty()) {
+            startDataGtaArchiveDownload();
+            return;
+        }
         setUpdateStatus(UpdateActivity.UpdateStatus.CheckUpdate);
         requestClientConfig(0);
     }
@@ -162,6 +170,106 @@ public class UpdateService extends Service {
         mHuggingFaceTreeApiUrl = sourceConfig.huggingFaceTreeApiUrl;
         mHuggingFaceResolveBaseUrl = sourceConfig.huggingFaceResolveBaseUrl;
         mHuggingFaceFilesPathPrefix = sourceConfig.huggingFaceFilesPathPrefix;
+        mDataArchiveUrl = sourceConfig.dataArchiveUrl;
+        mDataArchiveSha256 = sourceConfig.dataArchiveSha256;
+        mDataArchiveSize = sourceConfig.dataArchiveSize;
+    }
+
+    private void startDataGtaArchiveDownload() {
+        File gameDirectory = getExternalFilesDir(null);
+        if (gameDirectory == null) {
+            handleSourceUnavailable();
+            return;
+        }
+
+        mUpdateVersion = getInstalledVersionCode();
+        mUpdateGameURL = "";
+        mUpdateGameDataSize = mDataArchiveSize;
+        File downloadDirectory = new File(gameDirectory, "download");
+        if (!downloadDirectory.isDirectory() && !downloadDirectory.mkdirs()) {
+            handleSourceUnavailable();
+            return;
+        }
+        File archive = new File(downloadDirectory, "DataGta.zip");
+        if (archive.exists() && !archive.delete()) {
+            handleSourceUnavailable();
+            return;
+        }
+
+        setUpdateStatus(UpdateActivity.UpdateStatus.DownloadGameData);
+        sendDataGtaProgress("Mengunduh DataGta.zip", 0L, mDataArchiveSize);
+        PRDownloader.download(mDataArchiveUrl, downloadDirectory.getAbsolutePath(), archive.getName())
+                .build()
+                .setOnProgressListener(new OnProgressListener() {
+                    @Override
+                    public void onProgress(Progress progress) {
+                        long total = progress.totalBytes > 0L ? progress.totalBytes : mDataArchiveSize;
+                        sendDataGtaProgress("Mengunduh DataGta.zip", progress.currentBytes, total);
+                    }
+                })
+                .start(new OnDownloadListener() {
+                    @Override
+                    public void onDownloadComplete() {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (mDataArchiveSize > 0L && archive.length() != mDataArchiveSize) {
+                                        throw new IOException("Ukuran DataGta.zip tidak cocok; unduh ulang arsip.");
+                                    }
+                                    DataGtaArchiveInstaller.InstallResult result = DataGtaArchiveInstaller.install(
+                                            archive,
+                                            gameDirectory,
+                                            mDataArchiveSha256,
+                                            mGpuType,
+                                            new DataGtaArchiveInstaller.ProgressListener() {
+                                                @Override
+                                                public void onProgress(String label, long currentBytes, long totalBytes) {
+                                                    sendDataGtaProgress(label, currentBytes, totalBytes);
+                                                }
+                                            }
+                                    );
+                                    Log.i("UpdateService", "DataGta installed: files=" + result.installedFiles
+                                            + ", skipped=" + result.skippedFiles
+                                            + ", backup=" + (result.backupDirectory == null ? "none" : result.backupDirectory));
+                                    if (!archive.delete()) {
+                                        Log.w("UpdateService", "Could not delete temporary DataGta.zip: " + archive);
+                                    }
+                                    setUpdateStatus(UpdateActivity.UpdateStatus.Undefined);
+                                } catch (Exception e) {
+                                    Log.e("UpdateService", "DataGta download/install failed", e);
+                                    archive.delete();
+                                    setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
+                                }
+                            }
+                        }, "DataGtaInstall").start();
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        Log.e("UpdateService", "DataGta download failed: " + error);
+                        archive.delete();
+                        setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
+                    }
+                });
+    }
+
+    private void sendDataGtaProgress(String label, long currentBytes, long totalBytes) {
+        if (mActivityMessenger == null) {
+            return;
+        }
+        Message message = Message.obtain(mInHandler, 4);
+        message.getData().putString("status", UpdateActivity.UpdateStatus.DownloadGameData.name());
+        message.getData().putBoolean("withProgress", true);
+        message.getData().putString("nama berkas", label);
+        message.getData().putString("filename", label);
+        message.getData().putLong("current", Math.max(0L, currentBytes));
+        message.getData().putLong("total", Math.max(1L, totalBytes));
+        try {
+            mActivityMessenger.send(message);
+        } catch (RemoteException e) {
+            Log.w("UpdateService", "Unable to send DataGta progress", e);
+        }
     }
 
     private void updateDataVariantFromMessage(Message msg) {
@@ -939,6 +1047,7 @@ public class UpdateService extends Service {
 
     private void resetUpdateState() {
         mDownloadingStatus = false;
+        mUpdateStatus = UpdateActivity.UpdateStatus.Undefined;
         mUpdateGameDataSize = 0;
         mUpdateGameDataSizeUpdated = 0;
         mUpdateGameURL = "";

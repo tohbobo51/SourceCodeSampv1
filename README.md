@@ -101,6 +101,22 @@ Untuk menghindari crash native saat boot, Data Lite harus berisi file kritis sep
 
 Jika game crash di `libGTASA.so CCustomRoadsignMgr::Initialise`, biasanya Data Lite tidak lengkap. Unduh ulang data melalui launcher atau periksa apakah `texdb/txd` dan `texdb/samp` ada.
 
+### Data Full Indonesia (DataGta.zip)
+
+- Pilih **Data Full** pada layar pembaruan. Launcher mengunduh `DataGta.zip` (~426 MiB), memeriksa ukuran dan SHA-256, lalu memasang aset langsung ke folder data game aplikasi: `/Android/data/com.xyron.game/files`.
+- Hanya folder aset game (`anim`, `audio`, `data`, `fonts`, `models`, `SAMP`, `TEXT`, `texdb`) dan file root yang didukung yang dipasang. Folder tool `LocalHost`/`XyronHost`, skrip, panduan, log, dan pengaturan pribadi tidak diekstrak.
+- File aset lama yang bertabrakan dipindahkan ke `.datagta-backup-*` sebelum diganti. Log dan pengaturan pengguna dipertahankan.
+- Sumber paket: [DataGta.zip pada GitHub Release](https://github.com/tohbobo51/data-samp/releases/download/data-assets-v1/DataGta.zip). Digest paket dicatat di `app/src/main/assets/update_sources.json`.
+
+Untuk memasang ZIP secara manual di Windows, Linux, atau Termux, jalankan skrip yang sama di `tools/install_datagta.py`:
+
+```bash
+python3 tools/install_datagta.py DataGta.zip "/path/ke/Android/data/com.xyron.game/files" --dry-run
+python3 tools/install_datagta.py DataGta.zip "/path/ke/Android/data/com.xyron.game/files"
+```
+
+Skrip memeriksa ukuran dan SHA-256 paket, CRC dan path arsip, meminta konfirmasi, mencadangkan file yang ditimpa, serta melewati log/pengaturan pengguna.
+
 ## Di mana mengedit
 
 - Nama/ikon app: `app/build.gradle`, `app/src/main/res/mipmap-*`, `app/src/main/res/drawable-nodpi`.

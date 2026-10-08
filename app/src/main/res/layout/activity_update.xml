@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Pilih paket untuk diunduh sebelum masuk ke permainan."
+            android:text="Paket Data Full (~426 MiB) diverifikasi, lalu aset game dipasang otomatis."
             android:textColor="#D8CCE4"
             android:textSize="11sp" />
 
@@ -96,10 +96,10 @@
                 android:background="@drawable/launcher_cta_gold"
                 android:fontFamily="@font/montserrat_black"
                 android:gravity="center"
-                android:text="Data Full"
+                android:text="Data Full (426 MiB)"
                 android:textAllCaps="true"
                 android:textColor="#24120A"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 
