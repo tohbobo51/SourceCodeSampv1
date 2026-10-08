@@ -79,6 +79,12 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <activity
+            android:name=".launcher.GoogleSignInActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:exported="false"/>
+
+        <activity
             android:name=".launcher.SplashActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
