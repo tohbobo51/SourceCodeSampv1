@@ -116,6 +116,7 @@ Jika game crash di `libGTASA.so CCustomRoadsignMgr::Initialise`, periksa apakah 
 - Launcher hanya menyediakan **Data Full CRMP**; opsi Data Lite dan sumber unduhan lamanya dihapus. Paket tunggal berukuran 1,074,673,867 byte (sekitar 1 GB).
 - Sumber resmi: [CRMP.zip — samp-game-data v1.0](https://github.com/tohbobo51/samp-game-data/releases/download/v1.0/CRMP.zip). URL, ukuran, dan SHA-256 paket tercatat di `app/src/game/assets/update_sources.json`.
 - Launcher memverifikasi ukuran dan SHA-256 sebelum instalasi. Arsip memakai prefix `files/`; installer melepas prefix tersebut, lalu hanya memasang root aset yang didukung (`anim`, `audio`, `data`, `fonts`, `models`, `SAMP`, `TEXT`, `texdb`). File log/pengaturan pengguna dilewati dan file aset yang ditimpa dicadangkan.
+- Mulai v0.0.10, jika sudah memiliki arsip resmi, salin `CRMP.zip` ke `Android/data/com.xyron.game/files/` atau subfolder `download/`. Launcher memeriksa dan memasangnya sebelum mencoba mengunduh. Arsip yang Anda salin tetap disimpan; hapus manual setelah data terpasang dan game berjalan jika ingin mengosongkan ruang.
 - Pastikan perangkat memiliki ruang kosong yang cukup untuk arsip sekitar 1 GB dan file hasil ekstraksi.
 
 Untuk memasang paket manual di Windows, Linux, atau Termux:

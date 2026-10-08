@@ -186,6 +186,24 @@ public class UpdateService extends Service {
         mUpdateGameURL = "";
         mUpdateGameDataSize = mDataArchiveSize;
         File downloadDirectory = new File(gameDirectory, "download");
+        File rootArchive = new File(gameDirectory, "CRMP.zip");
+        File downloadArchive = new File(downloadDirectory, "CRMP.zip");
+        File localArchive = null;
+        if (rootArchive.isFile() && rootArchive.length() == mDataArchiveSize) {
+            localArchive = rootArchive;
+        } else if (downloadArchive.isFile() && downloadArchive.length() == mDataArchiveSize) {
+            localArchive = downloadArchive;
+        } else if (rootArchive.isFile()) {
+            localArchive = rootArchive;
+        }
+
+        if (localArchive != null) {
+            setUpdateStatus(UpdateActivity.UpdateStatus.DownloadGameData);
+            sendDataGtaProgress("Memasang CRMP.zip lokal", 0L, mDataArchiveSize);
+            installDataArchive(localArchive, gameDirectory, false, false);
+            return;
+        }
+
         if (!downloadDirectory.isDirectory() && !downloadDirectory.mkdirs()) {
             handleSourceUnavailable();
             return;
@@ -195,7 +213,7 @@ public class UpdateService extends Service {
             handleSourceUnavailable();
             return;
         }
-        File archive = new File(downloadDirectory, "CRMP.zip");
+        File archive = downloadArchive;
         if (archive.exists() && !archive.delete()) {
             handleSourceUnavailable();
             return;
@@ -215,39 +233,7 @@ public class UpdateService extends Service {
                 .start(new OnDownloadListener() {
                     @Override
                     public void onDownloadComplete() {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    if (mDataArchiveSize > 0L && archive.length() != mDataArchiveSize) {
-                                        throw new IOException("Ukuran CRMP.zip tidak cocok; unduh ulang arsip.");
-                                    }
-                                    DataGtaArchiveInstaller.InstallResult result = DataGtaArchiveInstaller.install(
-                                            archive,
-                                            gameDirectory,
-                                            mDataArchiveSha256,
-                                            mGpuType,
-                                            new DataGtaArchiveInstaller.ProgressListener() {
-                                                @Override
-                                                public void onProgress(String label, long currentBytes, long totalBytes) {
-                                                    sendDataGtaProgress(label, currentBytes, totalBytes);
-                                                }
-                                            }
-                                    );
-                                    Log.i("UpdateService", "CRMP data installed: files=" + result.installedFiles
-                                            + ", skipped=" + result.skippedFiles
-                                            + ", backup=" + (result.backupDirectory == null ? "none" : result.backupDirectory));
-                                    if (!archive.delete()) {
-                                        Log.w("UpdateService", "Could not delete temporary CRMP.zip: " + archive);
-                                    }
-                                    setUpdateStatus(UpdateActivity.UpdateStatus.Undefined);
-                                } catch (Exception e) {
-                                    Log.e("UpdateService", "CRMP download/install failed", e);
-                                    archive.delete();
-                                    setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
-                                }
-                            }
-                        }, "CRMPInstall").start();
+                        installDataArchive(archive, gameDirectory, true, true);
                     }
 
                     @Override
@@ -257,6 +243,45 @@ public class UpdateService extends Service {
                         setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
                     }
                 });
+    }
+
+    private void installDataArchive(final File archive, final File gameDirectory,
+                                    final boolean deleteOnFailure, final boolean deleteOnSuccess) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (mDataArchiveSize > 0L && archive.length() != mDataArchiveSize) {
+                        throw new IOException("Ukuran CRMP.zip tidak cocok; gunakan arsip v1.0 yang utuh.");
+                    }
+                    DataGtaArchiveInstaller.InstallResult result = DataGtaArchiveInstaller.install(
+                            archive,
+                            gameDirectory,
+                            mDataArchiveSha256,
+                            mGpuType,
+                            new DataGtaArchiveInstaller.ProgressListener() {
+                                @Override
+                                public void onProgress(String label, long currentBytes, long totalBytes) {
+                                    sendDataGtaProgress(label, currentBytes, totalBytes);
+                                }
+                            }
+                    );
+                    Log.i("UpdateService", "CRMP data installed: files=" + result.installedFiles
+                            + ", skipped=" + result.skippedFiles
+                            + ", backup=" + (result.backupDirectory == null ? "none" : result.backupDirectory));
+                    if (deleteOnSuccess && !archive.delete()) {
+                        Log.w("UpdateService", "Could not delete downloaded CRMP.zip: " + archive);
+                    }
+                    setUpdateStatus(UpdateActivity.UpdateStatus.Undefined);
+                } catch (Exception e) {
+                    Log.e("UpdateService", "CRMP install failed", e);
+                    if (deleteOnFailure) {
+                        archive.delete();
+                    }
+                    setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
+                }
+            }
+        }, "CRMPInstall").start();
     }
 
     private void sendDataGtaProgress(String label, long currentBytes, long totalBytes) {
