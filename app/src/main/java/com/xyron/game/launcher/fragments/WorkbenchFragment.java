@@ -179,7 +179,7 @@ public class WorkbenchFragment extends Fragment {
                 title,
                 note,
                 hint,
-                "Criar",
+                "Buat",
                 false,
                 value -> runBackgroundAction(() -> {
                     ServerWorkbenchManager.ActionResult result =
@@ -192,7 +192,7 @@ public class WorkbenchFragment extends Fragment {
     private void promptCreateBackup() {
         showPromptDialog(
                 "Backup",
-                "Criar backup .zip",
+                "Buat cadangan .zip",
                 "Masukkan label singkat opsional. Launcher akan membuat .zip dari folder bersama host.",
                 "ex: versao_teste",
                 "Gerar",

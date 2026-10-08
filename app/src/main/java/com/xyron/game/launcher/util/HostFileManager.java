@@ -354,7 +354,7 @@ public final class HostFileManager {
         appendFileIfPresent(result, root, LocalHostManager.getSharedServerCfgFile(), "Config");
         appendFileIfPresent(result, root, LocalHostManager.getSharedOmpConfigFile(), "Config");
 
-        appendDirectory(result, root, LocalHostManager.getSharedGamemodesDirectory(), "Gamemodes");
+        appendDirectory(result, root, LocalHostManager.getSharedGamemodesDirectory(), "gamemodes");
         appendDirectory(result, root, LocalHostManager.getSharedScriptfilesDirectory(), "Scriptfiles");
         appendDirectory(result, root, LocalHostManager.getSharedPluginsDirectory(), "Plugins");
         appendDirectory(result, root, LocalHostManager.getSharedComponentsDirectory(), "Komponen");
@@ -444,7 +444,7 @@ public final class HostFileManager {
             }
             String second = parts[1].toLowerCase(Locale.US);
             if ("gamemodes".equals(second)) {
-                return "Gamemodes";
+                return "gamemodes";
             }
             if ("scriptfiles".equals(second)) {
                 return "Scriptfiles";
@@ -593,7 +593,7 @@ public final class HostFileManager {
         if ("Config".equals(category)) {
             return 0;
         }
-        if ("Gamemodes".equals(category)) {
+        if ("gamemodes".equals(category)) {
             return 1;
         }
         if ("Scriptfiles".equals(category)) {

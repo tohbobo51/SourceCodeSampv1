@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -80,6 +81,8 @@ public abstract class NvEventQueueActivity
     protected boolean paused = false;
 
     protected boolean wantsMultitouch = false;
+    private static final int MAX_NATIVE_TOUCH_POINTERS = 4;
+    private final int[] nativeTouchPointerIds = new int[] { -1, -1, -1, -1 };
 
     protected boolean supportPauseResume = true;
 
@@ -106,6 +109,19 @@ public abstract class NvEventQueueActivity
     private int surfaceWidth = 0;
     private int surfaceHeight = 0;
     private boolean nativeImGuiBridgeAvailable = true;
+    private static final int DEFAULT_FRAME_RATE_LIMIT = 120;
+    private static final int MAX_FRAME_RATE_LIMIT = 120;
+    private static final float REFRESH_RATE_EPSILON = 0.5f;
+    private volatile int frameRateLimit = DEFAULT_FRAME_RATE_LIMIT;
+    private long nextFrameNanos = 0L;
+    private volatile int measuredFrameFps = 0;
+    private int measuredFrameCount = 0;
+    private long measuredFrameStartNanos = 0L;
+    private static final long MISSING_SURFACE_LOG_INTERVAL_MS = 2500L;
+    private static final long MISSING_SURFACE_RECOVERY_INTERVAL_MS = 500L;
+    private static final long MISSING_SURFACE_IDLE_SLEEP_MS = 80L;
+    private long lastMissingSurfaceLogMs = 0L;
+    private long lastSurfaceRecoveryAttemptMs = 0L;
 
     protected boolean GetGLExtensions = false;
     public boolean HasGLExtensions = false;
@@ -352,6 +368,166 @@ public abstract class NvEventQueueActivity
                                              int x0, int y0, int x1, int y1, int x2, int y2, int x3, int y3);
     public native void nativeImGuiRenderFrame();
     public native void nativeImGuiTouchEvent(int action, int pointer, int x, int y);
+
+    protected void setFrameRateLimit(int fpsLimit) {
+        if (fpsLimit < 0) {
+            fpsLimit = 0;
+        }
+        if (fpsLimit > MAX_FRAME_RATE_LIMIT) {
+            fpsLimit = MAX_FRAME_RATE_LIMIT;
+        }
+        frameRateLimit = fpsLimit;
+        nextFrameNanos = 0L;
+        applyPreferredFrameRate(fpsLimit);
+    }
+
+    protected void requestPreferredFrameRate(int fpsLimit) {
+        applyPreferredFrameRate(fpsLimit);
+    }
+
+    private void applyPreferredFrameRate(int fpsLimit) {
+        float requestedRefreshRate = fpsLimit > 0
+                ? Math.min(fpsLimit, MAX_FRAME_RATE_LIMIT)
+                : DEFAULT_FRAME_RATE_LIMIT;
+
+        android.view.Window window = getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.preferredRefreshRate = requestedRefreshRate;
+
+            Display.Mode bestMode = chooseDisplayMode(requestedRefreshRate);
+            if (bestMode != null) {
+                params.preferredDisplayModeId = bestMode.getModeId();
+                params.preferredRefreshRate = bestMode.getRefreshRate();
+                requestedRefreshRate = bestMode.getRefreshRate();
+            }
+
+            window.setAttributes(params);
+        }
+
+        applySurfaceFrameRate(requestedRefreshRate);
+    }
+
+    private Display.Mode chooseDisplayMode(float requestedRefreshRate) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return null;
+        }
+
+        Display display = getWindowManager() != null ? getWindowManager().getDefaultDisplay() : null;
+        if (display == null) {
+            return null;
+        }
+
+        Display.Mode[] modes = display.getSupportedModes();
+        if (modes == null || modes.length == 0) {
+            return null;
+        }
+
+        Display.Mode closestAtOrAbove = null;
+        Display.Mode fastestBelow = null;
+        for (Display.Mode mode : modes) {
+            if (mode == null || mode.getRefreshRate() <= 0.0f) {
+                continue;
+            }
+
+            float refreshRate = mode.getRefreshRate();
+            if (refreshRate + REFRESH_RATE_EPSILON >= requestedRefreshRate) {
+                if (closestAtOrAbove == null || refreshRate < closestAtOrAbove.getRefreshRate()) {
+                    closestAtOrAbove = mode;
+                }
+            } else if (fastestBelow == null || refreshRate > fastestBelow.getRefreshRate()) {
+                fastestBelow = mode;
+            }
+        }
+
+        return closestAtOrAbove != null ? closestAtOrAbove : fastestBelow;
+    }
+
+    private void applySurfaceFrameRate(float refreshRate) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R || refreshRate <= 0.0f) {
+            return;
+        }
+
+        SurfaceHolder targetHolder = null;
+        if (mSurfaceView != null) {
+            targetHolder = mSurfaceView.getHolder();
+        } else if (view != null) {
+            targetHolder = view.getHolder();
+        }
+        if (targetHolder == null) {
+            return;
+        }
+
+        Surface surface = targetHolder.getSurface();
+        if (surface == null || !surface.isValid()) {
+            return;
+        }
+
+        try {
+            surface.setFrameRate(
+                    refreshRate,
+                    Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE,
+                    Surface.CHANGE_FRAME_RATE_ALWAYS
+            );
+        } catch (RuntimeException error) {
+            System.out.println("applySurfaceFrameRate failed: " + error.getMessage());
+        }
+    }
+
+    protected int getMeasuredFrameFps() {
+        return measuredFrameFps;
+    }
+
+    private void recordMeasuredFrame() {
+        long now = System.nanoTime();
+        if (measuredFrameStartNanos == 0L) {
+            measuredFrameStartNanos = now;
+            measuredFrameCount = 0;
+            return;
+        }
+
+        measuredFrameCount++;
+        long elapsedNanos = now - measuredFrameStartNanos;
+        if (elapsedNanos < 500_000_000L) {
+            return;
+        }
+
+        int fps = Math.round((measuredFrameCount * 1_000_000_000f) / elapsedNanos);
+        if (fps < 0) {
+            fps = 0;
+        } else if (fps > 240) {
+            fps = 240;
+        }
+        measuredFrameFps = fps;
+        measuredFrameCount = 0;
+        measuredFrameStartNanos = now;
+    }
+
+    private void applyFrameRateLimit() {
+        int limit = frameRateLimit;
+        if (limit <= 0) {
+            return;
+        }
+
+        long frameNanos = 1_000_000_000L / limit;
+        long now = System.nanoTime();
+        if (nextFrameNanos == 0L || nextFrameNanos < now - frameNanos) {
+            nextFrameNanos = now + frameNanos;
+            return;
+        }
+
+        long waitNanos = nextFrameNanos - now;
+        if (waitNanos > 0L) {
+            try {
+                long millis = waitNanos / 1_000_000L;
+                int nanos = (int) (waitNanos % 1_000_000L);
+                Thread.sleep(millis, nanos);
+            } catch (InterruptedException ignored) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        nextFrameNanos += frameNanos;
+    }
     public native boolean keyEvent(int action, int keycode, int unicodeChar, int state, KeyEvent event);
     /**
      * END indented block, see in comment at top of block
@@ -432,6 +608,9 @@ public abstract class NvEventQueueActivity
                     mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                     mSensorDelay);
         paused = false;
+        if (view != null) {
+            view.postDelayed(this::recoverEglSurfaceIfNeeded, 120L);
+        }
     }
 
     /**
@@ -526,6 +705,44 @@ public abstract class NvEventQueueActivity
             accelerometerEvent(event.values[0], event.values[1], event.values[2]);
     }
 
+    private void clearNativeTouchSlots() {
+        for (int i = 0; i < MAX_NATIVE_TOUCH_POINTERS; i++) {
+            nativeTouchPointerIds[i] = -1;
+        }
+    }
+
+    private int findNativeTouchSlot(int pointerId) {
+        for (int i = 0; i < MAX_NATIVE_TOUCH_POINTERS; i++) {
+            if (nativeTouchPointerIds[i] == pointerId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int ensureNativeTouchSlot(int pointerId) {
+        int existingSlot = findNativeTouchSlot(pointerId);
+        if (existingSlot >= 0) {
+            return existingSlot;
+        }
+
+        for (int i = 0; i < MAX_NATIVE_TOUCH_POINTERS; i++) {
+            if (nativeTouchPointerIds[i] == -1) {
+                nativeTouchPointerIds[i] = pointerId;
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private void releaseNativeTouchSlot(int pointerId) {
+        int slot = findNativeTouchSlot(pointerId);
+        if (slot >= 0) {
+            nativeTouchPointerIds[slot] = -1;
+        }
+    }
+
     /**
      * Implementation function: defined in libnvevent.a
      * The application does not and should not overide this; nv_event handles this internally
@@ -565,52 +782,98 @@ public abstract class NvEventQueueActivity
         }
     }
 
+    private void requestLowLatencyTouch(View sourceView, MotionEvent event) {
+        if (event == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        int action = event.getActionMasked();
+        if (action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_POINTER_DOWN) {
+            return;
+        }
+
+        View targetView = sourceView;
+        if (targetView == null) {
+            targetView = mSurfaceView != null ? mSurfaceView : view;
+        }
+        if (targetView == null) {
+            targetView = getWindow().getDecorView();
+        }
+
+        if (targetView != null) {
+            targetView.requestUnbufferedDispatch(event);
+        }
+    }
+
     @Override
     public boolean onTouch(View touchedView, MotionEvent event) {
+        requestLowLatencyTouch(touchedView, event);
         onTouchEvent(event);
         return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        requestLowLatencyTouch(null, event);
         dispatchNativeImGuiTouch(event);
 
         if (wantsMultitouch) {
             int x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 0, y3 = 0, x4 = 0, y4 = 0;
             int numEvents = event.getPointerCount();
+            int action = event.getActionMasked();
+            int actionIndex = event.getActionIndex();
+
+            if (action == MotionEvent.ACTION_DOWN) {
+                clearNativeTouchSlots();
+            }
+
+            if (actionIndex < 0 || actionIndex >= numEvents) {
+                actionIndex = 0;
+            }
 
             for (int i=0; i<numEvents; i++) {
                 int pointerId = event.getPointerId(i);
+                int nativeSlot = ensureNativeTouchSlot(pointerId);
 
-                if (pointerId == 0) {
+                if (nativeSlot == 0) {
                     x1 = (int)event.getX(i);
                     y1 = (int)event.getY(i);
-                } else if (pointerId == 1) {
+                } else if (nativeSlot == 1) {
                     x2 = (int)event.getX(i);
                     y2 = (int)event.getY(i);
-                } else if (pointerId == 2) {
+                } else if (nativeSlot == 2) {
                     x3 = (int)event.getX(i);
                     y3 = (int)event.getY(i);
-                } else if (pointerId == 3) {
+                } else if (nativeSlot == 3) {
                     x4 = (int)event.getX(i);
                     y4 = (int)event.getY(i);
                 }
             }
 
-            int pointerId = event.getPointerId(event.getActionIndex());
-            int action = event.getActionMasked();
+            int pointerId = event.getPointerId(actionIndex);
+            int nativePointer = ensureNativeTouchSlot(pointerId);
+            if (nativePointer < 0) {
+                nativePointer = 0;
+            }
 
             try {
-                multiTouchEvent4Ex(action, pointerId, x1, y1, x2, y2, x3, y3, x4, y4);
+                multiTouchEvent4Ex(action, nativePointer, x1, y1, x2, y2, x3, y3, x4, y4);
             }
             catch (UnsatisfiedLinkError e) {
                 e.printStackTrace();
+            }
+
+            if (action == MotionEvent.ACTION_POINTER_UP) {
+                releaseNativeTouchSlot(pointerId);
+            }
+            else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                clearNativeTouchSlots();
             }
         }
         else {
             touchEvent(event.getAction(), (int)event.getX(), (int)event.getY(), event);
         }
-        return super.onTouchEvent(event);
+        return true;
     }
 
 
@@ -780,6 +1043,7 @@ public abstract class NvEventQueueActivity
         view = findViewById(R.id.main_sv);
         mSurfaceView = view;
         mAndroidUI = findViewById(R.id.ui_layout);
+        applyPreferredFrameRate(frameRateLimit);
 
         holder = view.getHolder();
         holder.setType(2);
@@ -796,6 +1060,7 @@ public abstract class NvEventQueueActivity
         {
             public void surfaceCreated(SurfaceHolder holder)
             {
+                applyPreferredFrameRate(frameRateLimit);
                 boolean firstRun = cachedSurfaceHolder == null;
                 cachedSurfaceHolder = holder;
                 if (!firstRun && ResumeEventDone && shouldDispatchAutomaticPauseResume()) {
@@ -1075,6 +1340,49 @@ public abstract class NvEventQueueActivity
         System.out.println("Done. Making current and back");
     }
 
+    protected boolean recoverEglSurfaceIfNeeded() {
+        if (eglSurface != null) {
+            return true;
+        }
+        if (paused || cachedSurfaceHolder == null) {
+            return false;
+        }
+        long nowMs = System.currentTimeMillis();
+        if (nowMs - lastSurfaceRecoveryAttemptMs < MISSING_SURFACE_RECOVERY_INTERVAL_MS) {
+            return false;
+        }
+        lastSurfaceRecoveryAttemptMs = nowMs;
+        try {
+            if (eglDisplay == null || eglContext == null || eglConfig == null) {
+                return InitEGLAndGLES2(2);
+            }
+            System.out.println("Recovering missing eglSurface");
+            createEGLSurface(cachedSurfaceHolder);
+            viewIsActive = eglSurface != null;
+            SwapBufferSkip = 1;
+            return eglSurface != null;
+        } catch (Exception error) {
+            System.out.println("recoverEglSurfaceIfNeeded failed: " + error.getMessage());
+            return false;
+        }
+    }
+
+    private void logMissingSurfaceThrottled(String source) {
+        long nowMs = System.currentTimeMillis();
+        if (nowMs - lastMissingSurfaceLogMs >= MISSING_SURFACE_LOG_INTERVAL_MS) {
+            lastMissingSurfaceLogMs = nowMs;
+            System.out.println(source + ": eglSurface is NULL");
+        }
+    }
+
+    private void idleMissingSurfaceLoop() {
+        try {
+            Thread.sleep(MISSING_SURFACE_IDLE_SLEEP_MS);
+        } catch (InterruptedException ignored) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     /**
      * Destroys the EGLSurface used for rendering. This function should not be called by the inheriting
      * activity, but can be overridden if needed.
@@ -1131,17 +1439,27 @@ public abstract class NvEventQueueActivity
         }
         else if (eglSurface == null)
         {
-            System.out.println("eglSurface is NULL");
-            return false;
+            if (paused || !viewIsActive) {
+                idleMissingSurfaceLoop();
+                return true;
+            }
+            if (!recoverEglSurfaceIfNeeded()) {
+                logMissingSurfaceThrottled("swapBuffers");
+                idleMissingSurfaceLoop();
+                return true;
+            }
+            return true;
         }
         else
         {
+            applyFrameRateLimit();
             renderNativeImGuiFrame();
             if (!egl.eglSwapBuffers(eglDisplay, eglSurface))
             {
                 System.out.println("eglSwapBufferrr: " + egl.eglGetError());
                 return false;
             }
+            recordMeasuredFrame();
         }
 
         return true;
@@ -1181,7 +1499,14 @@ public abstract class NvEventQueueActivity
         }
         else if (eglSurface == null)
         {
-            System.out.println("eglSurface is NULL");
+            if (paused || !viewIsActive) {
+                idleMissingSurfaceLoop();
+                return false;
+            }
+            if (!recoverEglSurfaceIfNeeded()) {
+                logMissingSurfaceThrottled("makeCurrent");
+                idleMissingSurfaceLoop();
+            }
             return false;
         }
         else

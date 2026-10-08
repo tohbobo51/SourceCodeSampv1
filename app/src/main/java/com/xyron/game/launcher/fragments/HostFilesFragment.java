@@ -169,7 +169,7 @@ public class HostFilesFragment extends Fragment {
         nameView.setText(entry.displayName);
         metaView.setText(buildMeta(entry));
         pathView.setText(entry.relativePath);
-        openAction.setText(entry.directory ? "Buka folder" : (entry.editableText ? "Editar" : "Detalhes"));
+        openAction.setText(entry.directory ? "Buka folder" : (entry.editableText ? "Sunting" : "Detalhes"));
 
         bindAction(surface, () -> openEntry(entry));
         bindAction(openAction, () -> openEntry(entry));

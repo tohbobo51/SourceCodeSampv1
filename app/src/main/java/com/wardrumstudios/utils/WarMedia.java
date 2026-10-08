@@ -30,7 +30,6 @@ import androidx.core.app.ActivityCompat;
 import com.nvidia.devtech.NvUtil;
 
 import java.io.File;
-import java.util.Locale;
 
 public class WarMedia extends WarGamepad {
     protected boolean AllowLongPressForExit = false;
@@ -42,7 +41,7 @@ public class WarMedia extends WarGamepad {
     public XAPKFile[] xAPKS = null;
 
     private static final String PREFS_NAME = "xyron_public_war_media";
-    private int currentLocale = Locale.getDefault().getLanguage().hashCode();
+    private int currentLocale = 0;
 
     public static class XAPKFile {
         public final boolean mIsMain;
@@ -59,6 +58,7 @@ public class WarMedia extends WarGamepad {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         baseDirectory = GetGameBaseDirectory();
+        NvUtil.getInstance().setActivity(this);
         NvUtil.getInstance().setAppLocalValue("STORAGE_ROOT", baseDirectory);
         NvUtil.getInstance().setAppLocalValue("STORAGE_ROOT_BASE", baseDirectoryRoot);
         super.onCreate(savedInstanceState);
@@ -152,7 +152,7 @@ public class WarMedia extends WarGamepad {
             return;
         }
 
-        currentLocale = languageTag.trim().hashCode();
+        currentLocale = resolveLocaleId(languageTag);
         getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
                 .edit()
                 .putString("locale", languageTag.trim())
@@ -168,7 +168,7 @@ public class WarMedia extends WarGamepad {
     }
 
     public int GetDeviceLocale() {
-        return Locale.getDefault().toLanguageTag().hashCode();
+        return 0;
     }
 
     public void GetRealLocale() {
@@ -196,14 +196,36 @@ public class WarMedia extends WarGamepad {
     public String FileGetArchiveName(int type) {
         switch (type) {
             case 0:
-                return apkFileName;
             case 1:
-                return expansionFileName;
             case 2:
-                return patchFileName;
+                return "";
             default:
                 return "";
         }
+    }
+
+    private int resolveLocaleId(String languageTag) {
+        if (languageTag == null) {
+            return 0;
+        }
+
+        String normalized = languageTag.trim().toLowerCase();
+        if (normalized.startsWith("fr")) {
+            return 1;
+        }
+        if (normalized.startsWith("de")) {
+            return 2;
+        }
+        if (normalized.startsWith("it")) {
+            return 3;
+        }
+        if (normalized.startsWith("es")) {
+            return 4;
+        }
+        if (normalized.startsWith("ru")) {
+            return 7;
+        }
+        return 0;
     }
 
     public String GetConfigSetting(String key) {

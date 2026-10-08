@@ -1,8 +1,11 @@
 package com.xyron.game.main;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.Log;
 
+import com.bytedance.shadowhook.ShadowHook;
 import com.wardrumstudios.utils.WarMedia;
 
 import java.io.File;
@@ -20,15 +23,53 @@ public class GTASA extends WarMedia {
         Log.i(TAG, "**** Loading SO's");
 
         try {
+            ShadowHook.init(new ShadowHook.ConfigBuilder()
+                    .setMode(ShadowHook.Mode.UNIQUE)
+                    .build());
+
             vmVersion = System.getProperty("java.vm.version");
             Log.i(TAG, "vmVersion " + vmVersion);
 
-            System.loadLibrary("ImmEmulatorJ");
-            System.loadLibrary("SCAnd");
-            System.loadLibrary("GTASA");
+            boolean is64BitRuntime = is64BitRuntime();
+            Log.i(TAG, "Native runtime " + (is64BitRuntime ? "64-bit" : "32-bit"));
+
+            loadOptionalLibrary("ImmEmulatorJ");
+            loadOptionalLibrary(is64BitRuntime ? "OpenAL64" : "OpenAL32");
+            loadRequiredLibrary("SCAnd");
+            loadRequiredLibrary("GTASA");
+            loadRequiredLibrary("bass");
+            loadRequiredLibrary(getSampLibraryName());
         }
         catch (ExceptionInInitializerError | UnsatisfiedLinkError e) {
             Log.e(TAG, e.getMessage());
+        }
+    }
+
+    static String getSampLibraryName() {
+        return "samp";
+    }
+
+    private static boolean is64BitRuntime() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Process.is64Bit();
+        }
+
+        String osArch = System.getProperty("os.arch", "");
+        return osArch != null && osArch.contains("64");
+    }
+
+    private static void loadRequiredLibrary(String libraryName) {
+        System.loadLibrary(libraryName);
+        Log.i(TAG, "Loaded " + libraryName);
+    }
+
+    private static void loadOptionalLibrary(String libraryName) {
+        try {
+            System.loadLibrary(libraryName);
+            Log.i(TAG, "Loaded optional " + libraryName);
+        }
+        catch (UnsatisfiedLinkError error) {
+            Log.w(TAG, "Optional native library not available: " + libraryName);
         }
     }
 

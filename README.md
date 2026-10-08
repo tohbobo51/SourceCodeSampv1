@@ -19,9 +19,10 @@ app/src/main/java/com/xyron/game/main       Aktivitas game, HUD, overlay, dan pe
 app/src/main/res                            Layout XML, ikon, tema, dan gambar Android
 app/src/main/assets/interfaces              Antarmuka ponsel, inventaris, peta, dan runtime WebView
 app/src/main/assets/update_sources.json     Sumber unduhan Data Lite/Full
-app/src/main/jniLibs/armeabi-v7a            Library native yang digunakan APK
-jni/jni                                     Source C/C++ untuk libSAMP
-jni/compile.cmd                             Skrip Windows untuk mengompilasi library native
+app/src/game/jniLibs/armeabi-v7a            Library native 32-bit
+app/src/game/jniLibs/arm64-v8a              Library native 64-bit
+app/src/main/cpp                            Source C/C++/CMake untuk library native APK
+app/src/game/assets                        Aset game yang dikemas ke APK
 prdownloader                                Modul downloader lokal
 server                                      File pendukung untuk host/editor
 ```
@@ -31,7 +32,8 @@ server                                      File pendukung untuk host/editor
 - Windows dengan Android Studio terpasang.
 - Android SDK Platform 33.
 - Android Build Tools terpasang melalui Android Studio.
-- NDK dengan `ndk-build.cmd` terpasang. Skrip mencari NDK 27, 26, 25, atau 21.
+- Android NDK `26.2.11394342`.
+- Java 17.
 - Perangkat Android dengan debug USB/Wireless ADB aktif untuk memasang dan menguji.
 
 Jika Gradle tidak menemukan Java di terminal, atur `JAVA_HOME` atau edit secara lokal `gradle.properties` dan arahkan `org.gradle.java.home` ke JBR Android Studio.
@@ -61,20 +63,27 @@ adb devices
 adb install -r -d -g app/build/outputs/apk/debug/app-debug.apk
 ```
 
-## Cara mengompilasi lib native
+## Dukungan ABI dan signing release
 
-Source C/C++ berada di `jni/jni`.
+APK dikonfigurasi untuk menyertakan `armeabi-v7a` (32-bit) dan `arm64-v8a` (64-bit). Gradle/CMake membangun library proyek untuk kedua ABI; library game prebuilt yang cocok berada di `app/src/game/jniLibs`.
 
-```powershell
-cd jni
-.\compile.cmd
-```
-
-Kemudian salin lib yang dihasilkan ke APK:
+Build debug:
 
 ```powershell
-copy jni\libs\armeabi-v7a\libSAMP.so ..\app\src\main\jniLibs\armeabi-v7a\libSAMP.so
+.\gradlew.bat :app:assembleDebug --no-daemon
 ```
+
+Untuk build release bertanda tangan, simpan keystore di lokasi privat dan atur variabel environment berikut terlebih dahulu. Ambil kata sandi dari file kredensial keystore yang diberikan terpisah; jangan masukkan nilainya ke repositori atau command yang dibagikan.
+
+```powershell
+$env:SIGNING_STORE_FILE = "C:\\secure\\NewsRP-release-signing.jks"
+$env:SIGNING_STORE_PASSWORD = "<store password>"
+$env:SIGNING_KEY_ALIAS = "news-rp-upload"
+$env:SIGNING_KEY_PASSWORD = "<key password>"
+.\gradlew.bat :app:assembleRelease --no-daemon
+```
+
+Tanpa seluruh variabel signing tersebut, Gradle tidak menandatangani varian release. Jangan publikasikan APK yang belum ditandatangani atau ditandatangani dengan debug key.
 
 ## Data Lite dan Data Full
 
@@ -171,7 +180,7 @@ Jangan menebak offset. Gunakan logcat/tombstone dan bandingkan dengan lib yang b
 
 - Nama app: News RP.
 - Paket Android: `com.xyron.game`.
-- ABI utama: `armeabi-v7a`.
+- ABI: `armeabi-v7a` dan `arm64-v8a`.
 - Data default: Lite.
 - Inventaris dengan gambar lokal yang diperbaiki di `assets/interfaces/inventario/images`.
 - Pemeriksaan Data Lite diperkuat agar tidak memulai game dengan file yang tidak lengkap.

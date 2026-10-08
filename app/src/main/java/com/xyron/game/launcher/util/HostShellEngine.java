@@ -122,18 +122,18 @@ public final class HostShellEngine {
                     + "\n"
                     + "public OnGameModeInit()\n"
                     + "{\n"
-                    + "    SetGameModeText(\"News RP Host\");\n"
+                    + "    SetGameModeText(\\\"News RP Host\\\");\\n"
                     + "    ShowPlayerMarkers(PLAYER_MARKERS_MODE_OFF);\n"
                     + "    DisableInteriorEnterExits();\n"
                     + "    UsePlayerPedAnims();\n"
                     + "    AddPlayerClass(0, XYRON_SPAWN_X, XYRON_SPAWN_Y, XYRON_SPAWN_Z, XYRON_SPAWN_A, WEAPON_FIST, 0, WEAPON_FIST, 0, WEAPON_FIST, 0);\n"
-                    + "    print(\"Bootstrap SA-MP do host local carregado.\");\n"
+                    + "    print(\\\"Bootstrap SA-MP host lokal dimuat.\\\");\\n"
                     + "    return 1;\n"
                     + "}\n"
                     + "\n"
                     + "public OnPlayerConnect(playerid)\n"
                     + "{\n"
-                    + "    SendClientMessage(playerid, -1, \"Bem-vindo ao host SA-MP local do launcher News RP.\");\n"
+                    + "    SendClientMessage(playerid, -1, \\\"Selamat datang di host SA-MP lokal launcher News RP.\\\");\\n"
                     + "    return 1;\n"
                     + "}\n"
                     + "\n"
@@ -577,7 +577,7 @@ public final class HostShellEngine {
     }
 
     private static String buildHelpText() {
-        return "Host Shell\n"
+        return "Host Shell\\n"
                 + "host boot    -> menyiapkan basis, mengaktifkan loopback, dan memulai host\n"
                 + "host install  -> menyiapkan basis lokal, loopback, dan runtime internal\n"
                 + "host use-local -> menandai 127.0.0.1:7777 sebagai server aktif\n"
@@ -592,9 +592,9 @@ public final class HostShellEngine {
                 + "\n"
                 + "Struktur yang didukung:\n"
                 + "- runtime SA-MP ARM yang disertakan dalam APK\n"
-                + "- assets/host-runtime/server/samp-server\n"
-                + "- assets/host-runtime/server/components/*.so\n"
-                + "- assets/host-runtime/bin/samp03svr-arm\n"
+                + "- assets/host-runtime/server/samp-server\\n"
+                + "- assets/host-runtime/server/components/*.so\\n"
+                + "- assets/host-runtime/bin/samp03svr-arm\\n"
                 + "- jniLibs/<abi>/runtime host SA-MP";
     }
 
@@ -879,12 +879,12 @@ public final class HostShellEngine {
         for (String line : lines) {
             String value = line == null ? "" : line.trim();
             if (value.isEmpty()
-                    || value.equalsIgnoreCase("Fluxo rapido do host")
+                    || value.equalsIgnoreCase("Alur cepat host")
                     || value.equalsIgnoreCase("Proses penyiapan host")
-                    || value.equalsIgnoreCase("Aceitos no host:")) {
+                    || value.equalsIgnoreCase("Diterima di host:")) {
                 continue;
             }
-            if (value.toLowerCase(Locale.US).contains("falha")
+            if (value.toLowerCase(Locale.US).contains("gagal")
                     || value.toLowerCase(Locale.US).contains("erro")
                     || value.toLowerCase(Locale.US).contains("processo saiu")
                     || value.toLowerCase(Locale.US).contains("proses keluar")
@@ -893,13 +893,13 @@ public final class HostShellEngine {
                     || value.toLowerCase(Locale.US).contains("tidak berhasil")
                     || value.toLowerCase(Locale.US).contains("tidak dapat")
                     || value.toLowerCase(Locale.US).contains("tidak bisa")
-                    || value.toLowerCase(Locale.US).contains("nao foi possivel")) {
+                    || value.toLowerCase(Locale.US).contains("tidak dapat")) {
                 return value;
             }
         }
         for (String line : lines) {
             String value = line == null ? "" : line.trim();
-            if (!value.isEmpty() && !value.equalsIgnoreCase("Fluxo rapido do host")
+            if (!value.isEmpty() && !value.equalsIgnoreCase("Alur cepat host")
                     && !value.equalsIgnoreCase("Proses penyiapan host")) {
                 return value;
             }
@@ -1160,8 +1160,8 @@ public final class HostShellEngine {
         }
         return content.contains("News RP Host")
                 || content.contains("Xyron Host")
-                || content.contains("Bootstrap do host local")
-                || content.contains("Bootstrap SA-MP do host local");
+                || content.contains("Bootstrap host lokal")
+                || content.contains("Bootstrap SA-MP host lokal");
     }
 
     private static String readTextFile(File file) {
@@ -1233,7 +1233,7 @@ public final class HostShellEngine {
     }
 
     private static HostRuntimeState resetRuntimeState(Context context, String note) {
-        String safeNote = TextUtils.isEmpty(note) ? "Host local desligado." : note;
+        String safeNote = TextUtils.isEmpty(note) ? "Host lokal dimatikan." : note;
         writeRuntimeState(context, STATE_STOPPED, 0L, 0L, safeNote);
         return new HostRuntimeState(STATE_STOPPED, 0L, 0L, safeNote);
     }
@@ -1254,12 +1254,12 @@ public final class HostShellEngine {
         if (!TextUtils.isEmpty(prefStatus) || prefPid > 0L || prefStartedAt > 0L || !TextUtils.isEmpty(prefNote)) {
             HostRuntimeState prefState = new HostRuntimeState(prefStatus, prefPid, prefStartedAt, prefNote);
             if (prefState.pid > 0L && !isPidAlive(prefState.pid)) {
-                return resetRuntimeState(context, "Host local desligado.");
+                return resetRuntimeState(context, "Host lokal dimatikan.");
             }
             if (prefState.pid <= 0L
                     && prefState.isOnline()
                     && !prefState.startedRecently(ONLINE_STATE_GRACE_MS)) {
-                return resetRuntimeState(context, "Host local desligado.");
+                return resetRuntimeState(context, "Host lokal dimatikan.");
             }
             return prefState;
         }
@@ -1282,13 +1282,13 @@ public final class HostShellEngine {
         String note = properties.getProperty("note", "");
 
         if (pid > 0L && !isPidAlive(pid)) {
-            return resetRuntimeState(context, "Host local desligado.");
+            return resetRuntimeState(context, "Host lokal dimatikan.");
         }
         HostRuntimeState fileState = new HostRuntimeState(status, pid, startedAtMs, note);
         if (fileState.pid <= 0L
                 && fileState.isOnline()
                 && !fileState.startedRecently(ONLINE_STATE_GRACE_MS)) {
-            return resetRuntimeState(context, "Host local desligado.");
+            return resetRuntimeState(context, "Host lokal dimatikan.");
         }
 
         return fileState;

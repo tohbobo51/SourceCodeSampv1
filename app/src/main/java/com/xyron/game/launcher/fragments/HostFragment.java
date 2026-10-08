@@ -175,12 +175,12 @@ public class HostFragment extends Fragment {
         String[] lines = output.split("\\r?\\n");
         for (String rawLine : lines) {
             String line = rawLine == null ? "" : rawLine.trim();
-            if (line.isEmpty() || "Fluxo rapido do host".equalsIgnoreCase(line)
+            if (line.isEmpty() || "Alur cepat host".equalsIgnoreCase(line)
                     || "Proses penyiapan host".equalsIgnoreCase(line)) {
                 continue;
             }
             String normalized = line.toLowerCase(java.util.Locale.US);
-            if (normalized.contains("falha")
+            if (normalized.contains("gagal")
                     || normalized.contains("erro")
                     || normalized.contains("processo saiu")
                     || normalized.contains("proses keluar")
@@ -189,15 +189,15 @@ public class HostFragment extends Fragment {
                     || normalized.contains("tidak berhasil")
                     || normalized.contains("tidak dapat")
                     || normalized.contains("tidak bisa")
-                    || normalized.contains("nao foi possivel")
-                    || normalized.contains("servidor pronto")
+                    || normalized.contains("tidak dapat")
+                    || normalized.contains("server siap")
                     || normalized.contains("server siap di")) {
                 return line;
             }
         }
         for (String rawLine : lines) {
             String line = rawLine == null ? "" : rawLine.trim();
-            if (!line.isEmpty() && !"Fluxo rapido do host".equalsIgnoreCase(line)
+            if (!line.isEmpty() && !"Alur cepat host".equalsIgnoreCase(line)
                     && !"Proses penyiapan host".equalsIgnoreCase(line)) {
                 return line;
             }

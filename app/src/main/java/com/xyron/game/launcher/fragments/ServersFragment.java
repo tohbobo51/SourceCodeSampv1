@@ -285,7 +285,7 @@ public class ServersFragment extends Fragment {
 
         StringBuilder summary = new StringBuilder();
         if (isSelected) {
-            summary.append("Ativo | ");
+            summary.append("Atif | ");
         }
         summary.append("Online");
         summary.append(" | ").append(info.currentPlayers).append("/").append(info.maxPlayers);
@@ -297,7 +297,7 @@ public class ServersFragment extends Fragment {
 
     private String buildMeta(ServerLiveInfo info) {
         if (info == null) {
-            return "Buscando nome real, modo de jogo e linguagem...";
+            return "Mencari nama server asli, mode permainan, dan bahasa...";
         }
 
         if (!info.online) {

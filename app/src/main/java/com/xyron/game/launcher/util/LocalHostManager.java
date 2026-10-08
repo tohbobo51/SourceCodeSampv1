@@ -514,7 +514,7 @@ public final class LocalHostManager {
                 + "rcon_password changeme-local\n"
                 + "maxplayers 32\n"
                 + "port 7777\n"
-                + "hostname News RP Local Host\n"
+                + "hostname News RP Local Host\\n"
                 + "gamemode0 blank 1\n"
                 + "filterscripts\n"
                 + "announce 0\n"
@@ -568,7 +568,7 @@ public final class LocalHostManager {
                 + "- server/config.json\n"
                 + "- server/samp-server\n"
                 + "- server/components/\n"
-                + "- start-host.sh\n"
+                + "- start-host.sh\\n"
                 + "- bin/\n";
     }
 
@@ -608,7 +608,7 @@ public final class LocalHostManager {
                 + "  \"enable_query\": true,\n"
                 + "  \"language\": \"pt-BR\",\n"
                 + "  \"max_players\": 32,\n"
-                + "  \"name\": \"News RP Local Host\",\n"
+                + "  \\\"name\\\": \\\"News RP Local Host\\\",\\n"
                 + "  \"network\": {\n"
                 + "    \"bind\": \"\",\n"
                 + "    \"port\": 7777,\n"

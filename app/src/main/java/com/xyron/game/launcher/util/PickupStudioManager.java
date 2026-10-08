@@ -124,7 +124,7 @@ public final class PickupStudioManager {
         ExportResult exportResult = exportAll(context);
         return new SaveResult(
                 true,
-                updated ? "Pickup atualizado." : "Pickup criado.",
+                updated ? "Pickup diperbarui." : "Pickup criado.",
                 sanitized,
                 exportResult
         );

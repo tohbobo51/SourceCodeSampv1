@@ -578,7 +578,7 @@ public class EditorFragment extends Fragment {
                 + "main() {}\n\n"
                 + "public OnGameModeInit()\n"
                 + "{\n"
-                + "    print(\"" + baseName + " carregado\");\n"
+                + "    print(\"" + baseName + " dimuat\\\");\\n"
                 + "    return 1;\n"
                 + "}\n";
     }
