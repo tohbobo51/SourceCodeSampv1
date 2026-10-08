@@ -25,6 +25,21 @@ public final class NativeGoogleAuthApi {
 
     public static LoginTicket exchangeIdToken(String idToken, String nonce)
             throws IOException, AuthException {
+        return requestTicket(idToken, nonce, null);
+    }
+
+    public static LoginTicket registerIdToken(String idToken, String nonce,
+                                               RegistrationData registration)
+            throws IOException, AuthException {
+        if (registration == null) {
+            throw new AuthException("INVALID_REGISTRATION", messageFor("INVALID_REGISTRATION"));
+        }
+        return requestTicket(idToken, nonce, registration);
+    }
+
+    private static LoginTicket requestTicket(String idToken, String nonce,
+                                             RegistrationData registration)
+            throws IOException, AuthException {
         if (idToken == null || idToken.length() < 100 || idToken.length() > 8192) {
             throw new AuthException("INVALID_TOKEN", "Token Google tidak valid.");
         }
@@ -55,6 +70,17 @@ public final class NativeGoogleAuthApi {
             JSONObject request = new JSONObject();
             request.put("idToken", idToken);
             request.put("nonce", nonce);
+            if (registration != null) {
+                JSONObject registrationJson = new JSONObject();
+                if (registration.ucpName != null && !registration.ucpName.trim().isEmpty()) {
+                    registrationJson.put("ucpName", registration.ucpName.trim());
+                }
+                registrationJson.put("characterName", registration.characterName);
+                registrationJson.put("birthplace", registration.birthplace);
+                registrationJson.put("birthdate", registration.birthdate);
+                registrationJson.put("gender", registration.gender);
+                request.put("registration", registrationJson);
+            }
             byte[] requestBytes = request.toString().getBytes(StandardCharsets.UTF_8);
             connection.setFixedLengthStreamingMode(requestBytes.length);
             try (OutputStream output = connection.getOutputStream()) {
@@ -110,10 +136,20 @@ public final class NativeGoogleAuthApi {
 
     private static String messageFor(String code) {
         switch (code) {
-            case "ACCOUNT_NOT_FOUND":
-                return "Akun Google belum terdaftar di server. Hubungi admin server.";
-            case "CHARACTER_NOT_FOUND":
-                return "Akun belum memiliki karakter. Pendaftaran karakter belum tersedia di launcher.";
+            case "REGISTRATION_REQUIRED":
+                return "Akun Google belum terdaftar. Lengkapi formulir pendaftaran.";
+            case "CHARACTER_REGISTRATION_REQUIRED":
+                return "Akun belum memiliki karakter. Lengkapi formulir karakter.";
+            case "ACCOUNT_LINK_REQUIRED":
+                return "Email ini sudah terdaftar pada akun lain. Hubungi admin untuk menautkan Google.";
+            case "UCP_NAME_TAKEN":
+                return "Nama UCP sudah digunakan. Pilih nama lain.";
+            case "CHARACTER_NAME_TAKEN":
+                return "Nama karakter sudah digunakan. Pilih nama lain.";
+            case "INVALID_REGISTRATION":
+                return "Data pendaftaran belum valid. Periksa kembali isian.";
+            case "REGISTRATION_CONFLICT":
+                return "Nama akun atau karakter baru saja dipakai. Coba nama lain.";
             case "GOOGLE_TOKEN_REPLAYED":
                 return "Sesi Google sudah digunakan. Ulangi login.";
             case "RATE_LIMITED":
@@ -126,6 +162,23 @@ public final class NativeGoogleAuthApi {
                 return "Google tidak dapat memverifikasi sesi ini. Coba login ulang.";
             default:
                 return "Layanan login tidak tersedia saat ini. Coba lagi nanti.";
+        }
+    }
+
+    public static final class RegistrationData {
+        public final String ucpName;
+        public final String characterName;
+        public final String birthplace;
+        public final String birthdate;
+        public final String gender;
+
+        public RegistrationData(String ucpName, String characterName, String birthplace,
+                                String birthdate, String gender) {
+            this.ucpName = ucpName;
+            this.characterName = characterName;
+            this.birthplace = birthplace;
+            this.birthdate = birthdate;
+            this.gender = gender;
         }
     }
 
