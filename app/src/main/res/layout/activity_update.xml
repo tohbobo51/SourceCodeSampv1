@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Paket Data Full (~426 MiB) diverifikasi, lalu aset game dipasang otomatis."
+            android:text="CRMP.zip dari GitHub (~1 GB) diverifikasi SHA-256 lalu dipasang otomatis. Siapkan ruang penyimpanan yang cukup."
             android:textColor="#D8CCE4"
             android:textSize="11sp" />
 
@@ -74,29 +74,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/data_variant_lite"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/home_action_text_button"
-                android:fontFamily="@font/montserrat_black"
-                android:gravity="center"
-                android:text="Data Lite"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
-
-            <TextView
                 android:id="@+id/data_variant_full"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="72dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
                 android:background="@drawable/launcher_cta_gold"
                 android:fontFamily="@font/montserrat_black"
                 android:gravity="center"
-                android:text="Data Full (426 MiB)"
+                android:text="Data Full CRMP (±1 GB)"
                 android:textAllCaps="true"
                 android:textColor="#24120A"
                 android:textSize="12sp" />

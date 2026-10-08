@@ -22,7 +22,7 @@ import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-/** Safely installs the game-data portion of DataGta.zip into the app's game-data folder. */
+/** Safely installs the game-data portion of CRMP.zip into the app's game-data folder. */
 public final class DataGtaArchiveInstaller {
     private static final int BUFFER_SIZE = 64 * 1024;
     private static final Set<String> GAME_ROOTS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
@@ -66,7 +66,7 @@ public final class DataGtaArchiveInstaller {
             ProgressListener progressListener
     ) throws IOException {
         if (archive == null || !archive.isFile()) {
-            throw new IOException("DataGta.zip tidak ditemukan.");
+            throw new IOException("CRMP.zip tidak ditemukan.");
         }
         if (targetDirectory == null) {
             throw new IOException("Folder data game tidak tersedia.");
@@ -80,7 +80,7 @@ public final class DataGtaArchiveInstaller {
 
         String expected = normalizeSha256(expectedSha256);
         if (expected.length() != 64) {
-            throw new IOException("SHA-256 DataGta.zip tidak dikonfigurasi dengan benar.");
+            throw new IOException("SHA-256 CRMP.zip tidak dikonfigurasi dengan benar.");
         }
         verifySha256(archive, expected, progressListener);
 
@@ -98,7 +98,7 @@ public final class DataGtaArchiveInstaller {
             Enumeration<? extends ZipEntry> entries = zip.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
-                String relativePath = safeRelativePath(entry.getName());
+                String relativePath = normalizeArchivePath(entry.getName());
                 if (relativePath == null || entry.isDirectory()) {
                     continue;
                 }
@@ -120,7 +120,7 @@ public final class DataGtaArchiveInstaller {
                 throw new IOException("Arsip tidak memuat aset game yang dapat dipasang.");
             }
 
-            File backupRoot = new File(root, ".datagta-backup-" + System.currentTimeMillis());
+            File backupRoot = new File(root, ".game-data-backup-" + System.currentTimeMillis());
             ArrayList<File> installed = new ArrayList<>();
             ArrayList<Backup> backups = new ArrayList<>();
             boolean backupCreated = false;
@@ -128,7 +128,7 @@ public final class DataGtaArchiveInstaller {
             int installedCount = 0;
             try {
                 for (ZipEntry entry : installEntries) {
-                    String relativePath = safeRelativePath(entry.getName());
+                    String relativePath = normalizeArchivePath(entry.getName());
                     File destination = new File(root, relativePath);
                     File canonicalDestination = destination.getCanonicalFile();
                     if (!isWithinRoot(rootPath, canonicalDestination.getPath())) {
@@ -236,7 +236,7 @@ public final class DataGtaArchiveInstaller {
         }
         String actual = toHex(digest.digest());
         if (!actual.equals(expected)) {
-            throw new IOException("SHA-256 DataGta.zip tidak cocok. Unduh ulang arsip sebelum memasang.");
+            throw new IOException("SHA-256 CRMP.zip tidak cocok. Unduh ulang arsip sebelum memasang.");
         }
         if (listener != null) {
             listener.onProgress("SHA-256 cocok", total, total);
@@ -272,6 +272,14 @@ public final class DataGtaArchiveInstaller {
             path.append(part);
         }
         return path.toString();
+    }
+
+    private static String normalizeArchivePath(String rawName) throws IOException {
+        String path = safeRelativePath(rawName);
+        if (path == null || "files".equals(path)) {
+            return null;
+        }
+        return path.startsWith("files/") ? path.substring("files/".length()) : path;
     }
 
     private static boolean isInstallableGamePath(String path, int gpuType) {

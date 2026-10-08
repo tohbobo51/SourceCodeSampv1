@@ -1,6 +1,6 @@
 # News RP Android SA-MP
 
-Kode sumber APK Android News RP/SA-MP Mobile, dengan launcher, HUD, overlay WebView, alat host lokal, editor Pawn, downloader Data Lite/Full, dan lapisan native C/C++.
+Kode sumber APK Android News RP/SA-MP Mobile, dengan launcher, HUD, overlay WebView, alat host lokal, editor Pawn, downloader CRMP Data Full, dan lapisan native C/C++.
 
 ## Apa yang ada dalam proyek ini
 
@@ -8,7 +8,7 @@ Kode sumber APK Android News RP/SA-MP Mobile, dengan launcher, HUD, overlay WebV
 - HUD dan layar in-game dalam Java/XML.
 - Antarmuka WebView dalam HTML/CSS/JS.
 - Source C/C++ SA-MP dalam C/C++ melalui NDK.
-- Downloader Data Lite/Full melalui `update_sources.json`.
+- Downloader satu paket data penuh `CRMP.zip` melalui `update_sources.json`.
 - Editor/kompiler Pawn dan alat host lokal.
 
 ## Struktur utama
@@ -18,7 +18,7 @@ app/src/main/java/com/xyron/game/launcher   Launcher, tab, unduhan, dan pengatur
 app/src/main/java/com/xyron/game/main       Aktivitas game, HUD, overlay, dan penghubung Java/native
 app/src/main/res                            Layout XML, ikon, tema, dan gambar Android
 app/src/main/assets/interfaces              Antarmuka ponsel, inventaris, peta, dan runtime WebView
-app/src/main/assets/update_sources.json     Sumber unduhan Data Lite/Full
+app/src/game/assets/update_sources.json     Sumber unduhan CRMP.zip
 app/src/game/jniLibs/armeabi-v7a            Library native 32-bit
 app/src/game/jniLibs/arm64-v8a              Library native 64-bit
 app/src/main/cpp                            Source C/C++/CMake untuk library native APK
@@ -100,7 +100,7 @@ APK mengunduh file game ke:
 /sdcard/Android/data/com.xyron.game/files
 ```
 
-Untuk menghindari crash native saat boot, Data Lite harus berisi file kritis seperti:
+Setelah mengunduh CRMP.zip, pastikan file game kritis berikut tersedia di folder data aplikasi:
 
 - `texdb/txd/txd.*`
 - `texdb/samp/samp.*`
@@ -109,23 +109,23 @@ Untuk menghindari crash native saat boot, Data Lite harus berisi file kritis sep
 - `texdb/gta_int.img`
 - `SAMP/main.scm`
 
-Jika game crash di `libGTASA.so CCustomRoadsignMgr::Initialise`, biasanya Data Lite tidak lengkap. Unduh ulang data melalui launcher atau periksa apakah `texdb/txd` dan `texdb/samp` ada.
+Jika game crash di `libGTASA.so CCustomRoadsignMgr::Initialise`, periksa apakah instalasi CRMP.zip selesai dan folder `texdb/txd`, `texdb/samp`, serta `SAMP/main.scm` tersedia.
 
-### Data Full Indonesia (DataGta.zip)
+### Data game CRMP.zip
 
-- Pilih **Data Full** pada layar pembaruan. Launcher mengunduh `DataGta.zip` (~426 MiB), memeriksa ukuran dan SHA-256, lalu memasang aset langsung ke folder data game aplikasi: `/Android/data/com.xyron.game/files`.
-- Hanya folder aset game (`anim`, `audio`, `data`, `fonts`, `models`, `SAMP`, `TEXT`, `texdb`) dan file root yang didukung yang dipasang. Folder tool `LocalHost`/`XyronHost`, skrip, panduan, log, dan pengaturan pribadi tidak diekstrak.
-- File aset lama yang bertabrakan dipindahkan ke `.datagta-backup-*` sebelum diganti. Log dan pengaturan pengguna dipertahankan.
-- Sumber paket: [DataGta.zip pada GitHub Release](https://github.com/tohbobo51/data-samp/releases/download/data-assets-v1/DataGta.zip). Digest paket dicatat di `app/src/main/assets/update_sources.json`.
+- Launcher hanya menyediakan **Data Full CRMP**; opsi Data Lite dan sumber unduhan lamanya dihapus. Paket tunggal berukuran 1,074,673,867 byte (sekitar 1 GB).
+- Sumber resmi: [CRMP.zip — samp-game-data v1.0](https://github.com/tohbobo51/samp-game-data/releases/download/v1.0/CRMP.zip). URL, ukuran, dan SHA-256 paket tercatat di `app/src/game/assets/update_sources.json`.
+- Launcher memverifikasi ukuran dan SHA-256 sebelum instalasi. Arsip memakai prefix `files/`; installer melepas prefix tersebut, lalu hanya memasang root aset yang didukung (`anim`, `audio`, `data`, `fonts`, `models`, `SAMP`, `TEXT`, `texdb`). File log/pengaturan pengguna dilewati dan file aset yang ditimpa dicadangkan.
+- Pastikan perangkat memiliki ruang kosong yang cukup untuk arsip sekitar 1 GB dan file hasil ekstraksi.
 
-Untuk memasang ZIP secara manual di Windows, Linux, atau Termux, jalankan skrip yang sama di `tools/install_datagta.py`:
+Untuk memasang paket manual di Windows, Linux, atau Termux:
 
 ```bash
-python3 tools/install_datagta.py DataGta.zip "/path/ke/Android/data/com.xyron.game/files" --dry-run
-python3 tools/install_datagta.py DataGta.zip "/path/ke/Android/data/com.xyron.game/files"
+python3 tools/install_crmp_data.py CRMP.zip "/path/ke/Android/data/com.xyron.game/files" --dry-run
+python3 tools/install_crmp_data.py CRMP.zip "/path/ke/Android/data/com.xyron.game/files"
 ```
 
-Skrip memeriksa ukuran dan SHA-256 paket, CRC dan path arsip, meminta konfirmasi, mencadangkan file yang ditimpa, serta melewati log/pengaturan pengguna.
+Skrip memeriksa ukuran, SHA-256, CRC dan keamanan path arsip, meminta konfirmasi, mencadangkan file yang ditimpa, serta melewati log/pengaturan pengguna.
 
 ## Di mana mengedit
 

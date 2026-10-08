@@ -46,7 +46,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UpdateService extends Service {
-    private static final String DEFAULT_DATA_VARIANT_ID = "lite";
+    private static final String DEFAULT_DATA_VARIANT_ID = "full";
 
     Messenger mMessenger;
     Messenger mActivityMessenger;
@@ -190,21 +190,26 @@ public class UpdateService extends Service {
             handleSourceUnavailable();
             return;
         }
-        File archive = new File(downloadDirectory, "DataGta.zip");
+        File legacyArchive = new File(downloadDirectory, "DataGta.zip");
+        if (legacyArchive.exists() && !legacyArchive.delete()) {
+            handleSourceUnavailable();
+            return;
+        }
+        File archive = new File(downloadDirectory, "CRMP.zip");
         if (archive.exists() && !archive.delete()) {
             handleSourceUnavailable();
             return;
         }
 
         setUpdateStatus(UpdateActivity.UpdateStatus.DownloadGameData);
-        sendDataGtaProgress("Mengunduh DataGta.zip", 0L, mDataArchiveSize);
+        sendDataGtaProgress("Mengunduh CRMP.zip", 0L, mDataArchiveSize);
         PRDownloader.download(mDataArchiveUrl, downloadDirectory.getAbsolutePath(), archive.getName())
                 .build()
                 .setOnProgressListener(new OnProgressListener() {
                     @Override
                     public void onProgress(Progress progress) {
                         long total = progress.totalBytes > 0L ? progress.totalBytes : mDataArchiveSize;
-                        sendDataGtaProgress("Mengunduh DataGta.zip", progress.currentBytes, total);
+                        sendDataGtaProgress("Mengunduh CRMP.zip", progress.currentBytes, total);
                     }
                 })
                 .start(new OnDownloadListener() {
@@ -215,7 +220,7 @@ public class UpdateService extends Service {
                             public void run() {
                                 try {
                                     if (mDataArchiveSize > 0L && archive.length() != mDataArchiveSize) {
-                                        throw new IOException("Ukuran DataGta.zip tidak cocok; unduh ulang arsip.");
+                                        throw new IOException("Ukuran CRMP.zip tidak cocok; unduh ulang arsip.");
                                     }
                                     DataGtaArchiveInstaller.InstallResult result = DataGtaArchiveInstaller.install(
                                             archive,
@@ -229,25 +234,25 @@ public class UpdateService extends Service {
                                                 }
                                             }
                                     );
-                                    Log.i("UpdateService", "DataGta installed: files=" + result.installedFiles
+                                    Log.i("UpdateService", "CRMP data installed: files=" + result.installedFiles
                                             + ", skipped=" + result.skippedFiles
                                             + ", backup=" + (result.backupDirectory == null ? "none" : result.backupDirectory));
                                     if (!archive.delete()) {
-                                        Log.w("UpdateService", "Could not delete temporary DataGta.zip: " + archive);
+                                        Log.w("UpdateService", "Could not delete temporary CRMP.zip: " + archive);
                                     }
                                     setUpdateStatus(UpdateActivity.UpdateStatus.Undefined);
                                 } catch (Exception e) {
-                                    Log.e("UpdateService", "DataGta download/install failed", e);
+                                    Log.e("UpdateService", "CRMP download/install failed", e);
                                     archive.delete();
                                     setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
                                 }
                             }
-                        }, "DataGtaInstall").start();
+                        }, "CRMPInstall").start();
                     }
 
                     @Override
                     public void onError(Error error) {
-                        Log.e("UpdateService", "DataGta download failed: " + error);
+                        Log.e("UpdateService", "CRMP download failed: " + error);
                         archive.delete();
                         setUpdateStatus(UpdateActivity.UpdateStatus.SourceUnavailable);
                     }
@@ -274,11 +279,8 @@ public class UpdateService extends Service {
 
     private void updateDataVariantFromMessage(Message msg) {
         String requestedVariant = msg.getData().getString("data_variant");
-        if (requestedVariant == null || requestedVariant.trim().isEmpty()) {
-            mDataVariantId = DEFAULT_DATA_VARIANT_ID;
-            return;
-        }
-        mDataVariantId = requestedVariant.trim().toLowerCase();
+        mDataVariantId = "full".equalsIgnoreCase(requestedVariant == null ? "" : requestedVariant.trim())
+                ? "full" : DEFAULT_DATA_VARIANT_ID;
     }
 
     private void requestClientConfig(int index) {

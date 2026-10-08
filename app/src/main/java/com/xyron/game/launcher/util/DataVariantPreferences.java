@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import java.util.Locale;
 
 public final class DataVariantPreferences {
-    public static final String DATA_VARIANT_LITE = "lite";
     public static final String DATA_VARIANT_FULL = "full";
 
     private static final String PREF_SELECTED_DATA_VARIANT = "selected_data_variant";
@@ -27,7 +26,7 @@ public final class DataVariantPreferences {
 
     public static String getSelectedVariantIdOrDefault(Context context) {
         String variantId = getSelectedVariantId(context);
-        return variantId.isEmpty() ? DATA_VARIANT_LITE : variantId;
+        return variantId.isEmpty() ? DATA_VARIANT_FULL : variantId;
     }
 
     public static void saveSelectedVariantId(Context context, String variantId) {
@@ -48,8 +47,7 @@ public final class DataVariantPreferences {
 
     public static boolean isSupportedVariantId(String variantId) {
         String normalizedVariantId = normalizeVariantId(variantId);
-        return DATA_VARIANT_LITE.equals(normalizedVariantId)
-                || DATA_VARIANT_FULL.equals(normalizedVariantId);
+        return DATA_VARIANT_FULL.equals(normalizedVariantId);
     }
 
     public static String normalizeVariantId(String variantId) {

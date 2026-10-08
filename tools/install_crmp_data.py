@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate DataGta.zip and install its game assets into a selected game-data folder."""
+"""Validate CRMP.zip and install its game assets into a selected game-data folder."""
 from __future__ import annotations
 import argparse
 import datetime as dt
@@ -12,8 +12,8 @@ import sys
 import zipfile
 
 CHUNK = 1024 * 1024
-EXPECTED_SIZE = 438650686
-EXPECTED_SHA256 = "990f9e382594301f1f56e89920792636dc09756884fdf832a02a41a92348b9e6"
+EXPECTED_SIZE = 1074673867
+EXPECTED_SHA256 = "4854d4176df5a8da3da17bf4aaf58e374c395ab0e1cb68be0a83ab0f6889c7ec"
 GAME_ROOTS = {"anim", "audio", "data", "fonts", "models", "SAMP", "TEXT", "texdb"}
 GAME_ROOT_FILES = {"CINFO.BIN", "stream.ini"}
 USER_FILES = {
@@ -44,11 +44,11 @@ def is_user_owned(rel: Path) -> bool:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Pasang aset game dari DataGta.zip ke folder data game.")
-    ap.add_argument("zip_file", help="Lokasi DataGta.zip")
+    ap = argparse.ArgumentParser(description="Pasang aset game dari CRMP.zip ke folder data game.")
+    ap.add_argument("zip_file", help="Lokasi CRMP.zip")
     ap.add_argument("game_dir", help="Folder data game tujuan; untuk aplikasi ini: Android/data/com.xyron.game/files")
     ap.add_argument("--expected-size", type=int, default=EXPECTED_SIZE, help="Ukuran ZIP yang diharapkan dalam byte")
-    ap.add_argument("--sha256", default=EXPECTED_SHA256, help="SHA-256 paket DataGta yang diharapkan")
+    ap.add_argument("--sha256", default=EXPECTED_SHA256, help="SHA-256 CRMP.zip yang diharapkan")
     ap.add_argument("--yes", action="store_true", help="Lewati konfirmasi sebelum pemasangan")
     ap.add_argument("--dry-run", action="store_true", help="Validasi ZIP dan tampilkan rencana tanpa menulis file")
     args = ap.parse_args()
@@ -100,6 +100,10 @@ def main() -> int:
                 ap.error(f"ZIP berisi symlink yang tidak diizinkan: {info.filename}")
             if info.is_dir():
                 continue
+            if rel.parts[0] == "files":
+                rel = Path(*rel.parts[1:])
+                if not rel.parts:
+                    continue
             key = rel.as_posix()
             if key in seen:
                 ap.error(f"Path duplikat dalam ZIP: {key}")
@@ -124,7 +128,7 @@ def main() -> int:
             return 0
 
         target.mkdir(parents=True, exist_ok=True)
-        backup = target / f".datagta-backup-{dt.datetime.now().strftime('%Y%m%d-%H%M%S-%f')}"
+        backup = target / f".game-data-backup-{dt.datetime.now().strftime('%Y%m%d-%H%M%S-%f')}"
         backed_up = installed = 0
         try:
             for index, (info, rel) in enumerate(members, 1):
@@ -140,7 +144,7 @@ def main() -> int:
                     shutil.copy2(dest, saved)
                     backed_up += 1
 
-                tmp = dest.with_name(dest.name + ".datagta-tmp")
+                tmp = dest.with_name(dest.name + ".game-data-tmp")
                 try:
                     with zf.open(info, "r") as src, open(tmp, "wb") as out:
                         shutil.copyfileobj(src, out, CHUNK)
